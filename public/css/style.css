@@ -1,0 +1,551 @@
+/* ──────────────────────────────────────────────
+   JILI Games Mini App - Telegram Theme
+   ────────────────────────────────────────────── */
+
+:root {
+  /* Telegram theme fallbacks */
+  --tg-theme-bg-color: #ffffff;
+  --tg-theme-text-color: #000000;
+  --tg-theme-hint-color: #999999;
+  --tg-theme-link-color: #2678b6;
+  --tg-theme-button-color: #50a8eb;
+  --tg-theme-button-text-color: #ffffff;
+  --tg-theme-secondary-bg-color: #f0f0f0;
+  --tg-theme-header-bg-color: #ffffff;
+  --tg-theme-section-bg-color: #ffffff;
+  --tg-theme-accent-text-color: #2678b6;
+
+  /* Safe area */
+  --safe-top: 0px;
+  --safe-bottom: 0px;
+  --content-safe-top: 0px;
+
+  /* App vars */
+  --header-height: 56px;
+  --tabs-height: 48px;
+  --card-radius: 14px;
+  --grid-gap: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  min-height: 100vh;
+  padding-top: var(--content-safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ──────── Header ──────── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--tg-theme-bg-color);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.app-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFD700, #FF6B00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.icon-btn:active {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* ──────── Search Bar ──────── */
+.search-bar {
+  padding: 0 16px 12px;
+  background: var(--tg-theme-bg-color);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.search-bar.visible {
+  max-height: 60px;
+  opacity: 1;
+  padding: 8px 16px 12px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+  font-size: 15px;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.search-bar input:focus {
+  box-shadow: 0 0 0 2px var(--tg-theme-button-color);
+}
+
+.search-bar input::placeholder {
+  color: var(--tg-theme-hint-color);
+}
+
+/* ──────── Category Tabs ──────── */
+.category-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  background: var(--tg-theme-bg-color);
+  position: sticky;
+  top: 57px;
+  z-index: 99;
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border-radius: 22px;
+  border: none;
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-hint-color);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab:active {
+  transform: scale(0.95);
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+}
+
+/* ──────── Game Grid ──────── */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap);
+  padding: 12px 16px;
+  padding-bottom: calc(20px + var(--safe-bottom));
+}
+
+@media (min-width: 420px) {
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 640px) {
+  .game-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ──────── Game Card ──────── */
+.game-card {
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.game-card:active {
+  transform: scale(0.96);
+}
+
+.game-card .card-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: var(--tg-theme-secondary-bg-color);
+}
+
+.game-card .card-body {
+  padding: 8px 10px 10px;
+}
+
+.game-card .game-name {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.game-card .game-category {
+  font-size: 10px;
+  color: var(--tg-theme-hint-color);
+  margin-top: 2px;
+}
+
+.game-card .play-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ──────── Skeleton Loading ──────── */
+.skeleton {
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.skeleton .skeleton-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(90deg,
+    var(--tg-theme-secondary-bg-color) 25%,
+    rgba(128, 128, 128, 0.15) 50%,
+    var(--tg-theme-secondary-bg-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton .skeleton-text {
+  height: 14px;
+  margin: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    var(--tg-theme-secondary-bg-color) 25%,
+    rgba(128, 128, 128, 0.15) 50%,
+    var(--tg-theme-secondary-bg-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ──────── Empty State ──────── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--tg-theme-hint-color);
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--tg-theme-text-color);
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+/* ──────── Game Detail Page ──────── */
+.game-detail {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.game-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s;
+}
+
+.play-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.play-overlay .play-thumb {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.play-overlay .play-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
+  transition: transform 0.15s;
+}
+
+.play-overlay .play-btn:active {
+  transform: scale(0.95);
+}
+
+.play-overlay .play-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: #000;
+}
+
+.game-info-bar {
+  padding: 16px;
+  background: var(--tg-theme-bg-color);
+  border-top: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.game-info-bar h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.game-info-bar .game-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.game-info-bar .meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background: var(--tg-theme-secondary-bg-color);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tg-theme-hint-color);
+}
+
+.game-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 16px 20px;
+  padding-bottom: calc(20px + var(--safe-bottom));
+  background: var(--tg-theme-bg-color);
+}
+
+.game-actions .action-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.15s;
+}
+
+.game-actions .action-btn:active {
+  transform: scale(0.96);
+}
+
+.game-actions .btn-fullscreen {
+  background: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+}
+
+.game-actions .btn-external {
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+}
+
+/* ──────── Loader ──────── */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--tg-theme-secondary-bg-color);
+  border-top-color: var(--tg-theme-button-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ──────── Stats Banner ──────── */
+.stats-banner {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 16px;
+  margin: 0 16px 8px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+  border-radius: 14px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700, #FF6B00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-item .stat-label {
+  font-size: 10px;
+  color: var(--tg-theme-hint-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ──────── Scroll to top ──────── */
+.scroll-top-btn {
+  position: fixed;
+  bottom: calc(20px + var(--safe-bottom));
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 50;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-top-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>JILI Games</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <h1>JILI GAMES</h1>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggle" aria-label="Search">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-bar" id="searchBar">
+    <input type="text" id="searchInput" placeholder="Search games..." autocomplete="off">
+  </div>
+
+  <!-- Stats Banner -->
+  <div class="stats-banner" id="statsBanner">
+    <div class="stat-item">
+      <div class="stat-value" id="totalGamesCount">--</div>
+      <div class="stat-label">Games</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">FREE</div>
+      <div class="stat-label">Demo Play</div>
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <nav class="category-tabs" id="categoryTabs">
+    <button class="tab active" data-category="all">All</button>
+    <button class="tab" data-category="slot">Slots</button>
+    <button class="tab" data-category="fishing">Fishing</button>
+    <button class="tab" data-category="tableandcard">Table & Card</button>
+    <button class="tab" data-category="bingo">Bingo</button>
+    <button class="tab" data-category="casino">Casino</button>
+  </nav>
+
+  <!-- Game Grid -->
+  <main class="game-grid" id="gameGrid">
+    <!-- Game cards injected by JS -->
+  </main>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" id="loadingSpinner" style="display:none;">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+  </button>
+
+  <script src="/js/telegram.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

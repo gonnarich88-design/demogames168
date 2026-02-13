@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/games.json
+*.log
+.DS_Store
+.claude/
