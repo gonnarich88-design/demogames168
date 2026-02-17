@@ -8,7 +8,7 @@ BOT_TOKEN="8118107198:AAHjV9vuAFaqdd5f5JHIC3w3xwzjF_EqYKU"
 NODE_BIN="$HOME/.local/node/bin/node"
 APP_DIR="$HOME/works/miniapp"
 CURL_BIN="/usr/bin/curl"
-WEBAPP_URL="https://demo.taladsod.online"
+WEBAPP_URL="https://demogames.sky168.info"
 
 echo ""
 echo "🎮 JILI Games Mini App - Starting..."
