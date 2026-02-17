@@ -553,9 +553,10 @@ body {
 /* ──────── App Version Footer ──────── */
 .app-version {
   text-align: center;
-  padding: 12px 0 calc(8px + var(--safe-bottom));
-  font-size: 11px;
-  color: var(--tg-theme-hint-color);
-  opacity: 0.5;
-  letter-spacing: 0.5px;
+  padding: 16px 0 calc(12px + var(--safe-bottom));
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFD700;
+  opacity: 0.8;
+  letter-spacing: 1px;
 }
