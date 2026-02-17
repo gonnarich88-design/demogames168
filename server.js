@@ -272,7 +272,7 @@ function serveInlineHtml(htmlFile, jsFiles) {
     });
     // Remove any Date.now() cache-bust loaders
     html = html.replace(/<script>\s*\/\/ Cache-bust[\s\S]*?<\/script>/g, '');
-    // Inject live version from package.json into footer
+    // Inject live version from package.json into footer (works with both class-based and inline-style footers)
     html = html.replace(/v[\d.]+<\/footer>/, `v${APP_VERSION}</footer>`);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
