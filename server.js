@@ -258,6 +258,7 @@ app.use('/proxy', (req, res) => {
 // Dynamic HTML pages — serve with inline JS to bypass Telegram WebView cache
 // ──────────────────────────────────────────────
 const APP_VERSION = require('./package.json').version;
+const WEBAPP_URL_VERSIONED = WEBAPP_URL + '?v=' + APP_VERSION;
 
 function serveInlineHtml(htmlFile, jsFiles) {
   const htmlPath = path.join(__dirname, 'public', htmlFile);
@@ -283,10 +284,13 @@ function serveInlineHtml(htmlFile, jsFiles) {
   };
 }
 
-// Intercept HTML pages BEFORE express.static to prevent cached JS from loading
-app.get('/game.html', (req, res, next) => {
-  if (!req.query.id) return res.redirect('/');
-  serveInlineHtml('game.html', ['js/game.js'])(req, res);
+// Intercept game.html — redirect to /play/:id so the game loads directly
+// This fixes Telegram WebView cache: even if old JS links to /game.html?id=X,
+// the server redirects to /play/X which resolves and loads the game
+app.get('/game.html', (req, res) => {
+  const gameId = req.query.id;
+  if (!gameId) return res.redirect('/');
+  res.redirect(302, '/play/' + gameId);
 });
 
 app.get('/', serveInlineHtml('index.html', ['js/app.js']));
@@ -568,7 +572,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
             + 'ทดลองเล่นฟรี กดปุ่มด้านล่างนี้ได้เลย! 👇',
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
-            [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL)],
+            [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
             [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
             [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register')]
           ])
@@ -579,13 +583,13 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
       await ctx.setChatMenuButton({
         type: 'web_app',
         text: '🎮 เล่นเกมส์',
-        web_app: { url: WEBAPP_URL }
+        web_app: { url: WEBAPP_URL_VERSIONED }
       });
     } catch (err) {
       console.error('Error in /start:', err.message);
       await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
         Markup.inlineKeyboard([
-          [Markup.button.webApp('🎮 Open Game Catalog', WEBAPP_URL)]
+          [Markup.button.webApp('🎮 Open Game Catalog', WEBAPP_URL_VERSIONED)]
         ])
       );
     }
@@ -596,16 +600,16 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
     await ctx.reply(
       '🎰 Choose a category or browse all games:',
       Markup.inlineKeyboard([
-        [Markup.button.webApp('🎮 All Games', WEBAPP_URL)],
+        [Markup.button.webApp('🎮 All Games', WEBAPP_URL_VERSIONED)],
         [
-          Markup.button.webApp('🎰 Slots', `${WEBAPP_URL}?cat=slot`),
-          Markup.button.webApp('🐟 Fishing', `${WEBAPP_URL}?cat=fishing`)
+          Markup.button.webApp('🎰 Slots', `${WEBAPP_URL}?v=${APP_VERSION}&cat=slot`),
+          Markup.button.webApp('🐟 Fishing', `${WEBAPP_URL}?v=${APP_VERSION}&cat=fishing`)
         ],
         [
-          Markup.button.webApp('🃏 Table', `${WEBAPP_URL}?cat=tableandcard`),
-          Markup.button.webApp('🔢 Bingo', `${WEBAPP_URL}?cat=bingo`)
+          Markup.button.webApp('🃏 Table', `${WEBAPP_URL}?v=${APP_VERSION}&cat=tableandcard`),
+          Markup.button.webApp('🔢 Bingo', `${WEBAPP_URL}?v=${APP_VERSION}&cat=bingo`)
         ],
-        [Markup.button.webApp('🎲 Casino', `${WEBAPP_URL}?cat=casino`)]
+        [Markup.button.webApp('🎲 Casino', `${WEBAPP_URL}?v=${APP_VERSION}&cat=casino`)]
       ])
     );
   });
