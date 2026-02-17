@@ -400,8 +400,9 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
             + 'ทดลองเล่นฟรี กดปุ่มด้านล่างนี้ได้เลย! 👇',
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
-            [Markup.button.webApp('🎮 Jili Games', WEBAPP_URL)],
-            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')]
+            [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL)],
+            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
+            [Markup.button.url('🌐 สมัครสมาชิก', 'https://co168.bz/register')]
           ])
         }
       );
