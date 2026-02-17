@@ -393,15 +393,15 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
   bot.start(async (ctx) => {
     try {
       await ctx.replyWithPhoto(
-        'https://storage.googleapis.com/tada-cdn-asia/All-In-One/production/img/jiliPlusPlayer/games/GdEFoX3ljSMUSS38e7vSoOtjDB6WqqugErp0yxsJ.png',
+        'https://co168.bz/assets/images/all_slot_games_in_co168.png',
         {
-          caption: '🎰 *Welcome to JILI Games!*\n\n'
-            + 'Browse 200+ exciting games including Slots, Fishing, Table Games, Bingo & Casino.\n\n'
-            + 'Tap the button below to start playing! 👇',
+          caption: '🎰 *ยินดีต้อนรับสู่ Co168 เว็บหลัก*\n\n'
+            + 'เว็บรวมเกมส์คาสิโนออนไลน์ สล็อต, ยิงปลา, บาคาร่า และอื่น ๆ อีกมากมาย\n\n'
+            + 'ทดลองเล่นฟรี กดปุ่มด้านล่างนี้ได้เลย! 👇',
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
-            [Markup.button.webApp('🎮 Open Game Catalog', WEBAPP_URL)],
-            [Markup.button.url('🌐 Visit JILI Games', 'https://jiligames.com')]
+            [Markup.button.webApp('🎮 Jili Games', WEBAPP_URL)],
+            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')]
           ])
         }
       );
