@@ -385,7 +385,9 @@ app.get('/api/game-url/:id', async (req, res) => {
 let bot = null;
 
 if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
-  bot = new Telegraf(BOT_TOKEN);
+  // Use custom HTTPS agent to bypass SSL cert verification (e.g. corporate proxy / missing CA)
+  const telegramAgent = new https.Agent({ rejectUnauthorized: false });
+  bot = new Telegraf(BOT_TOKEN, { telegram: { agent: telegramAgent } });
 
   // /start command
   bot.start(async (ctx) => {
@@ -455,10 +457,11 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
     );
   });
 
-  // Launch bot
-  bot.launch()
-    .then(() => console.log('🤖 Telegram bot started'))
-    .catch(err => console.error('Failed to start bot:', err.message));
+  // Launch bot with onLaunch callback (launch() Promise never resolves because polling loop is infinite)
+  console.log('[BOT] Connecting to Telegram API...');
+  bot.launch({}, () => {
+    console.log(`🤖 Telegram bot started — @${bot.botInfo?.username}`);
+  }).catch(err => console.error('[BOT] Failed to start bot:', err.message));
 
   // Graceful stop
   process.once('SIGINT', () => bot.stop('SIGINT'));

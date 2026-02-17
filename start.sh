@@ -53,7 +53,7 @@ $CURL_BIN -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/setChatMenuButton" 
 echo "✅ Bot menu updated"
 
 # Step 5: Start Express server
-$NODE_BIN "$APP_DIR/server.js" > /tmp/miniapp.log 2>&1 &
+NODE_TLS_REJECT_UNAUTHORIZED=0 $NODE_BIN "$APP_DIR/server.js" > /tmp/miniapp.log 2>&1 &
 SERVER_PID=$!
 sleep 3
 echo "✅ Server started (PID: $SERVER_PID)"
