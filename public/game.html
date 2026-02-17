@@ -58,6 +58,11 @@
   </div>
 
   <script src="/js/telegram.js"></script>
-  <script src="/js/game.js?v=3"></script>
+  <script>
+    // Cache-bust: load game.js with current timestamp to bypass aggressive caching
+    var s = document.createElement('script');
+    s.src = '/js/game.js?t=' + Date.now();
+    document.body.appendChild(s);
+  </script>
 </body>
 </html>

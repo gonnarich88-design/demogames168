@@ -257,7 +257,18 @@ app.use('/proxy', (req, res) => {
 // ──────────────────────────────────────────────
 // Express - Static files & API
 // ──────────────────────────────────────────────
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  etag: false,
+  lastModified: false,
+  setHeaders(res, filePath) {
+    // Prevent Cloudflare and browser from caching JS/CSS/HTML
+    if (/\.(js|css|html)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+  }
+}));
 app.use(express.json());
 
 // API: Get all games (with optional category, search, pagination)
