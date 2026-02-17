@@ -114,12 +114,30 @@
       console.log('Resolving game URL for:', gameId);
 
       const resp = await fetch(`/api/game-url/${gameId}`);
-      if (!resp.ok) throw new Error('Failed to resolve game URL, status: ' + resp.status);
+      if (!resp.ok) {
+        let errorMsg = '';
+        let hintMsg = '';
+        try {
+          const errBody = await resp.json();
+          if (errBody.error) errorMsg = errBody.error;
+          if (errBody.hint) hintMsg = errBody.hint;
+        } catch (_) {}
+        if (!errorMsg) errorMsg = 'Failed to resolve game URL, status: ' + resp.status;
+        isPlaying = false;
+        iframeLoader.style.display = 'none';
+        showIframeError(errorMsg, hintMsg);
+        return;
+      }
 
       const data = await resp.json();
       console.log('Resolved game URL:', data.url);
 
-      if (!data.url) throw new Error('Empty game URL returned');
+      if (!data.url) {
+        isPlaying = false;
+        iframeLoader.style.display = 'none';
+        showIframeError('Empty game URL returned');
+        return;
+      }
 
       // Navigate directly to the game page (avoid iframe restrictions in Telegram WebView)
       // User can use Telegram's Back button to return to game detail page
@@ -129,7 +147,7 @@
       console.error('Failed to start game:', err);
       isPlaying = false;
       iframeLoader.style.display = 'none';
-      showIframeError();
+      showIframeError(err.message || 'Game loading failed');
     }
   }
 
@@ -183,19 +201,21 @@
   }
 
   // ──────── Show Iframe Error ────────
-  function showIframeError() {
+  function showIframeError(message, hint) {
     const iframe = document.getElementById('gameFrame');
     if (iframe) iframe.remove();
     isPlaying = false;
+
+    const escape = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const title = escape(message || 'Game loading failed');
+    const sub = escape(hint || 'Please try again or go back to catalog.');
 
     playOverlay.classList.remove('hidden');
     playOverlay.innerHTML = `
       <div style="text-align: center; color: #fff; padding: 20px;">
         <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
-        <h3 style="margin-bottom: 8px;">Game loading failed</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
-          Please try again or go back to catalog.
-        </p>
+        <h3 style="margin-bottom: 8px;">${title}</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">${sub}</p>
         <a href="/" style="color: #FFD700; text-decoration: underline; font-size: 16px;">Back to Games</a>
       </div>
     `;

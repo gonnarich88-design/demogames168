@@ -5,11 +5,24 @@ const fs = require('fs');
 const { Telegraf, Markup } = require('telegraf');
 const https = require('https');
 const url = require('url');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const WEBAPP_URL = process.env.WEBAPP_URL || `http://localhost:${PORT}`;
+const OUTBOUND_PROXY_URL = process.env.OUTBOUND_PROXY_URL;
+
+// Cached proxy agent for outbound requests (for bypassing regional blocks)
+let _jiliProxyAgent = null;
+function getJiliOutboundAgent(hostname) {
+  if (!OUTBOUND_PROXY_URL) return undefined;
+  if (!hostname || !hostname.endsWith('jiligames.com')) return undefined;
+  if (!_jiliProxyAgent) {
+    _jiliProxyAgent = new HttpsProxyAgent(OUTBOUND_PROXY_URL);
+  }
+  return _jiliProxyAgent;
+}
 
 // Request logging
 app.use((req, res, next) => {
@@ -152,6 +165,7 @@ app.use('/jili', (req, res) => {
     hostname: targetHost,
     path: targetPath,
     method: req.method,
+    agent: getJiliOutboundAgent(targetHost),
     headers: {
       'User-Agent': req.headers['user-agent'] || 'Mozilla/5.0',
       'Accept': req.headers['accept'] || '*/*',
@@ -309,6 +323,7 @@ function httpsGet(targetUrl) {
       hostname: u.hostname,
       path: u.pathname + u.search,
       method: 'GET',
+      agent: getJiliOutboundAgent(u.hostname),
       headers: {
         'User-Agent': 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36',
         'Accept': 'text/html,*/*',
@@ -375,7 +390,12 @@ app.get('/api/game-url/:id', async (req, res) => {
 
   } catch (err) {
     console.error('[RESOLVE] Error:', err.message);
-    res.status(500).json({ error: 'Failed to resolve game URL: ' + err.message });
+    const msg = 'Failed to resolve game URL: ' + err.message;
+    const isNetwork = /ECONNREFUSED|ETIMEDOUT|ENOTFOUND|Timeout|socket hang up/i.test(err.message);
+    const hint = isNetwork && !OUTBOUND_PROXY_URL
+      ? 'Server may be in Thailand. Set OUTBOUND_PROXY_URL in .env (proxy outside Thailand) and restart.'
+      : undefined;
+    res.status(500).json({ error: msg, ...(hint && { hint }) });
   }
 });
 
