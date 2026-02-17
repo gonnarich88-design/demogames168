@@ -402,7 +402,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
           ...Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL)],
             [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
-            [Markup.button.url('🌐 สมัครสมาชิก', 'https://co168.bz/register')]
+            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register')]
           ])
         }
       );
@@ -410,12 +410,12 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
       // Set menu button for this chat
       await ctx.setChatMenuButton({
         type: 'web_app',
-        text: '🎮 Play Games',
+        text: '🎮 เล่นเกมส์',
         web_app: { url: WEBAPP_URL }
       });
     } catch (err) {
       console.error('Error in /start:', err.message);
-      await ctx.reply('Welcome! Tap the button below to play games.',
+      await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
         Markup.inlineKeyboard([
           [Markup.button.webApp('🎮 Open Game Catalog', WEBAPP_URL)]
         ])
@@ -445,15 +445,15 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
   // /help command
   bot.command('help', async (ctx) => {
     await ctx.reply(
-      '📖 *How to use JILI Games Bot*\n\n'
-      + '1️⃣ Tap *"Play Games"* button at the bottom\n'
-      + '2️⃣ Browse games by category or search\n'
-      + '3️⃣ Tap a game to see details\n'
-      + '4️⃣ Tap *"Play Demo"* to try the game for free!\n\n'
-      + '*Commands:*\n'
-      + '/start - Open the game catalog\n'
-      + '/games - Browse games by category\n'
-      + '/help - Show this help message',
+      '📖 *วิธีใช้งาน Co168 Bot*\n\n'
+      + '1️⃣ กดปุ่ม *"เล่นเกมส์"* ที่ปุ่มซ้ายล่าง\n'
+      + '2️⃣ ดูเกมส์ตามหมวดหมู่หรือค้นหา\n'
+      + '3️⃣ กดเกมส์เพื่อดูรายละเอียด\n'
+      + '4️⃣ กด *"ทดลองเล่นฟรี"* เพื่อทดลองเล่นเกมส์ฟรี!\n\n'
+      + '*คำสั่ง:*\n'
+      + '/start - เปิดหน้าเกมส์\n'
+      + '/games - ดูเกมส์ตามหมวดหมู่\n'
+      + '/help - ดูวิธีใช้งาน',
       { parse_mode: 'Markdown' }
     );
   });
