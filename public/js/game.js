@@ -21,26 +21,33 @@
   const iframeLoader = document.getElementById('iframeLoader');
 
   // ──────── Init ────────
-  function init() {
+  async function init() {
     TelegramApp.init();
 
-    // Setup Telegram back button
     TelegramApp.showBackButton(() => {
       if (isPlaying) stopGame();
       window.location.href = '/';
     });
 
-    // Get game ID from URL
     const params = new URLSearchParams(window.location.search);
     const gameId = params.get('id');
+    const errorFromUrl = params.get('error');
+    const hintFromUrl = params.get('hint');
 
     if (!gameId) {
       showError('No game specified');
       return;
     }
 
-    loadGame(gameId);
     setupEventListeners();
+
+    if (errorFromUrl) {
+      await loadGame(gameId);
+      showIframeError(decodeURIComponent(errorFromUrl), hintFromUrl ? decodeURIComponent(hintFromUrl) : '');
+      return;
+    }
+
+    await loadGame(gameId);
   }
 
   // ──────── Event Listeners ────────
@@ -97,105 +104,15 @@
     }
   }
 
-  // ──────── Start Game (resolve URL server-side, then load in iframe) ────────
-  async function startGame() {
+  // ──────── Start Game: go to /play/:id so server redirects to game (no fetch in WebView) ────────
+  function startGame() {
     if (!gameData || isPlaying) return;
 
     try { TelegramApp.hapticFeedback('success'); } catch (_) {}
-    isPlaying = true;
-
-    iframeLoader.style.display = 'flex';
-    playOverlay.classList.add('hidden');
-
-    try {
-      const gameId = new URLSearchParams(window.location.search).get('id');
-      console.log('[GAME] Resolving game URL for:', gameId);
-
-      const resp = await fetch(`/api/game-url/${gameId}`);
-      console.log('[GAME] API response status:', resp.status);
-
-      if (!resp.ok) {
-        let errorMsg = '';
-        let hintMsg = '';
-        try {
-          const errBody = await resp.json();
-          if (errBody.error) errorMsg = errBody.error;
-          if (errBody.hint) hintMsg = errBody.hint;
-        } catch (_) {}
-        if (!errorMsg) errorMsg = 'Server error ' + resp.status;
-        isPlaying = false;
-        iframeLoader.style.display = 'none';
-        showIframeError(errorMsg, hintMsg);
-        return;
-      }
-
-      const data = await resp.json();
-      console.log('[GAME] Resolved URL:', data.url);
-
-      if (!data.url) {
-        isPlaying = false;
-        iframeLoader.style.display = 'none';
-        showIframeError('Empty game URL returned from server');
-        return;
-      }
-
-      // Load in iframe (more reliable than window.location.href in Telegram WebView)
-      loadGameIframe(data.url);
-
-    } catch (err) {
-      console.error('[GAME] startGame error:', err);
-      isPlaying = false;
-      iframeLoader.style.display = 'none';
-      const detail = (err && (err.message || err.toString())) || 'Network or script error';
-      showIframeError('Could not load game: ' + detail, 'Try again or use Back to Games.');
-    }
-  }
-
-  // ──────── Load Game: try iframe first, fallback to full-page navigation ────────
-  function loadGameIframe(gameUrl) {
-    const existing = document.getElementById('gameFrame');
-    if (existing) existing.remove();
-
-    const iframe = document.createElement('iframe');
-    iframe.id = 'gameFrame';
-    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;top:0;left:0;z-index:3;background:#000;';
-    iframe.setAttribute('allowfullscreen', 'true');
-    iframe.setAttribute('allow', 'autoplay; fullscreen; accelerometer; gyroscope');
-
-    let resolved = false;
-    let fallbackTimer = null;
-
-    function fallbackToFullPage() {
-      if (resolved) return;
-      resolved = true;
-      if (fallbackTimer) clearTimeout(fallbackTimer);
-      const el = document.getElementById('gameFrame');
-      if (el) el.remove();
-      iframeLoader.style.display = 'none';
-      console.log('[GAME] Fallback: opening game in same window');
-      window.location.href = gameUrl;
-    }
-
-    iframe.onload = function () {
-      if (resolved) return;
-      if (fallbackTimer) clearTimeout(fallbackTimer);
-      resolved = true;
-      console.log('[GAME] iframe loaded');
-      iframeLoader.style.display = 'none';
-    };
-
-    iframe.onerror = function () {
-      console.warn('[GAME] iframe onerror, using full-page fallback');
-      fallbackToFullPage();
-    };
-
-    gameContainer.appendChild(iframe);
-    resizeIframe();
-
-    // If iframe doesn't finish loading in 3s, open game in same window (works in Telegram WebView)
-    fallbackTimer = setTimeout(fallbackToFullPage, 3000);
-
-    iframe.src = gameUrl;
+    const gameId = new URLSearchParams(window.location.search).get('id');
+    if (!gameId) return;
+    // Single navigation — server resolves and redirects; works in Telegram WebView without fetch
+    window.location.href = '/play/' + gameId;
   }
 
   // ──────── Stop Game ────────

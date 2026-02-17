@@ -314,7 +314,6 @@ app.get('/api/games/:id', (req, res) => {
 // ──────────────────────────────────────────────
 // API: Resolve game URL (server-side redirect chain)
 // Follows: PlusTrial → LoginTrial → final game URL
-// Returns the final proxied URL for direct iframe loading
 // ──────────────────────────────────────────────
 function httpsGet(targetUrl) {
   return new Promise((resolve, reject) => {
@@ -347,47 +346,66 @@ function httpsGet(targetUrl) {
   });
 }
 
+// Shared: resolve game ID to proxy path. Returns { proxyPath } or { error, hint }.
+async function resolveGameUrl(gameId) {
+  const step1 = await httpsGet(`https://jiligames.com/PlusTrial/${gameId}/en-us`);
+  const metaMatch = step1.body.match(/url='([^']+)'/i) || step1.body.match(/url="([^"]+)"/i);
+  if (!metaMatch) return { error: 'Could not find game redirect URL' };
+  const loginTrialUrl = metaMatch[1].replace(/&amp;/g, '&');
+  const step3 = await httpsGet(loginTrialUrl);
+  let finalUrl;
+  if (step3.statusCode >= 300 && step3.statusCode < 400 && step3.headers.location) {
+    finalUrl = step3.headers.location;
+  } else if (step3.statusCode === 200) {
+    finalUrl = loginTrialUrl;
+  } else {
+    return { error: 'Game server returned unexpected response' };
+  }
+  const proxyPath = toProxyPath(finalUrl);
+  if (!proxyPath) return { error: 'Could not convert game URL to proxy path' };
+  return { proxyPath };
+}
+
+// GET /play/:id — redirect to game (no fetch in WebView; works in Telegram)
+app.get('/play/:id', async (req, res) => {
+  const gameId = req.params.id;
+  console.log(`[PLAY] Resolving game ${gameId} for redirect`);
+  try {
+    const result = await resolveGameUrl(gameId);
+    if (result.error) {
+      const hint = /ECONNREFUSED|ETIMEDOUT|ENOTFOUND|Timeout/i.test(result.error) && !OUTBOUND_PROXY_URL
+        ? 'Set OUTBOUND_PROXY_URL if server is in blocked region.'
+        : '';
+      const q = new URLSearchParams({ id: gameId, error: result.error });
+      if (hint) q.set('hint', hint);
+      return res.redirect(302, '/game.html?' + q.toString());
+    }
+    res.redirect(302, result.proxyPath);
+  } catch (err) {
+    console.error('[PLAY] Error:', err.message);
+    const msg = 'Failed to resolve: ' + err.message;
+    const hint = /ECONNREFUSED|ETIMEDOUT|ENOTFOUND|Timeout/i.test(err.message) && !OUTBOUND_PROXY_URL
+      ? 'Set OUTBOUND_PROXY_URL if server is in blocked region.'
+      : '';
+    const q = new URLSearchParams({ id: gameId, error: msg });
+    if (hint) q.set('hint', hint);
+    res.redirect(302, '/game.html?' + q.toString());
+  }
+});
+
 app.get('/api/game-url/:id', async (req, res) => {
   const gameId = req.params.id;
   console.log(`[RESOLVE] Starting resolve for game ${gameId}`);
-
   try {
-    // Step 1: Fetch PlusTrial page from jiligames.com
-    const step1 = await httpsGet(`https://jiligames.com/PlusTrial/${gameId}/en-us`);
-    console.log(`[RESOLVE] Step1 PlusTrial: HTTP ${step1.statusCode}`);
-
-    // Step 2: Parse meta refresh URL
-    const metaMatch = step1.body.match(/url='([^']+)'/i) || step1.body.match(/url="([^"]+)"/i);
-    if (!metaMatch) {
-      return res.status(500).json({ error: 'Could not find game redirect URL' });
+    const result = await resolveGameUrl(gameId);
+    if (result.error) {
+      const isNetwork = /ECONNREFUSED|ETIMEDOUT|ENOTFOUND|Timeout|socket hang up/i.test(result.error);
+      const hint = isNetwork && !OUTBOUND_PROXY_URL
+        ? 'Server may be in Thailand. Set OUTBOUND_PROXY_URL in .env (proxy outside Thailand) and restart.'
+        : undefined;
+      return res.status(500).json({ error: result.error, ...(hint && { hint }) });
     }
-    const loginTrialUrl = metaMatch[1].replace(/&amp;/g, '&');
-    console.log(`[RESOLVE] Step2 LoginTrial URL: ${loginTrialUrl.substring(0, 80)}...`);
-
-    // Step 3: Follow LoginTrial redirect (302)
-    const step3 = await httpsGet(loginTrialUrl);
-    console.log(`[RESOLVE] Step3 LoginTrial: HTTP ${step3.statusCode}`);
-
-    let finalUrl;
-    if (step3.statusCode >= 300 && step3.statusCode < 400 && step3.headers.location) {
-      finalUrl = step3.headers.location;
-    } else if (step3.statusCode === 200) {
-      // Sometimes it returns 200 directly
-      finalUrl = loginTrialUrl;
-    } else {
-      return res.status(500).json({ error: 'Game server returned unexpected response' });
-    }
-
-    console.log(`[RESOLVE] Final game URL: ${finalUrl.substring(0, 80)}...`);
-
-    // Step 4: Convert to proxy path
-    const proxyPath = toProxyPath(finalUrl);
-    if (!proxyPath) {
-      return res.status(500).json({ error: 'Could not convert game URL to proxy path' });
-    }
-
-    res.json({ url: proxyPath });
-
+    res.json({ url: result.proxyPath });
   } catch (err) {
     console.error('[RESOLVE] Error:', err.message);
     const msg = 'Failed to resolve game URL: ' + err.message;
@@ -584,7 +602,7 @@ app.use((req, res, next) => {
   // Only intercept paths that are NOT our own app resources
   if (req.path === '/' || req.path === '/game.html' ||
       req.path.startsWith('/api/') || req.path.startsWith('/proxy/') ||
-      req.path.startsWith('/jili/') ||
+      req.path.startsWith('/play/') || req.path.startsWith('/jili/') ||
       req.path.startsWith('/css/') || req.path.startsWith('/js/') ||
       req.path.startsWith('/images/')) {
     return next();
