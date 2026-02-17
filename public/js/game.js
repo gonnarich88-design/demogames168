@@ -97,23 +97,23 @@
     }
   }
 
-  // ──────── Start Game (resolve URL server-side, then navigate directly) ────────
+  // ──────── Start Game (resolve URL server-side, then load in iframe) ────────
   async function startGame() {
     if (!gameData || isPlaying) return;
 
-    TelegramApp.hapticFeedback('success');
+    try { TelegramApp.hapticFeedback('success'); } catch (_) {}
     isPlaying = true;
 
-    // Show loader, hide overlay
     iframeLoader.style.display = 'flex';
     playOverlay.classList.add('hidden');
 
     try {
-      // Resolve the game URL server-side (follows redirect chain)
       const gameId = new URLSearchParams(window.location.search).get('id');
-      console.log('Resolving game URL for:', gameId);
+      console.log('[GAME] Resolving game URL for:', gameId);
 
       const resp = await fetch(`/api/game-url/${gameId}`);
+      console.log('[GAME] API response status:', resp.status);
+
       if (!resp.ok) {
         let errorMsg = '';
         let hintMsg = '';
@@ -122,7 +122,7 @@
           if (errBody.error) errorMsg = errBody.error;
           if (errBody.hint) hintMsg = errBody.hint;
         } catch (_) {}
-        if (!errorMsg) errorMsg = 'Failed to resolve game URL, status: ' + resp.status;
+        if (!errorMsg) errorMsg = 'Server error ' + resp.status;
         isPlaying = false;
         iframeLoader.style.display = 'none';
         showIframeError(errorMsg, hintMsg);
@@ -130,25 +130,65 @@
       }
 
       const data = await resp.json();
-      console.log('Resolved game URL:', data.url);
+      console.log('[GAME] Resolved URL:', data.url);
 
       if (!data.url) {
         isPlaying = false;
         iframeLoader.style.display = 'none';
-        showIframeError('Empty game URL returned');
+        showIframeError('Empty game URL returned from server');
         return;
       }
 
-      // Navigate directly to the game page (avoid iframe restrictions in Telegram WebView)
-      // User can use Telegram's Back button to return to game detail page
-      window.location.href = data.url;
+      // Load in iframe (more reliable than window.location.href in Telegram WebView)
+      loadGameIframe(data.url);
 
     } catch (err) {
-      console.error('Failed to start game:', err);
+      console.error('[GAME] startGame error:', err.name, err.message, err.stack);
       isPlaying = false;
       iframeLoader.style.display = 'none';
-      showIframeError(err.message || 'Game loading failed');
+      const detail = err.message || err.toString() || 'Unknown error';
+      showIframeError('Game loading failed: ' + detail);
     }
+  }
+
+  // ──────── Load Game in iframe ────────
+  function loadGameIframe(gameUrl) {
+    const existing = document.getElementById('gameFrame');
+    if (existing) existing.remove();
+
+    const iframe = document.createElement('iframe');
+    iframe.id = 'gameFrame';
+    iframe.src = gameUrl;
+    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;top:0;left:0;z-index:3;background:#000;';
+    iframe.setAttribute('allowfullscreen', 'true');
+    iframe.setAttribute('allow', 'autoplay; fullscreen; accelerometer; gyroscope');
+
+    let loaded = false;
+
+    iframe.onload = function () {
+      loaded = true;
+      console.log('[GAME] iframe loaded successfully');
+      iframeLoader.style.display = 'none';
+    };
+
+    iframe.onerror = function () {
+      console.error('[GAME] iframe onerror fired');
+      isPlaying = false;
+      iframeLoader.style.display = 'none';
+      iframe.remove();
+      showIframeError('Game page failed to load');
+    };
+
+    gameContainer.appendChild(iframe);
+    resizeIframe();
+
+    // Fallback timeout: if iframe doesn't load within 15s, hide loader anyway
+    setTimeout(() => {
+      if (!loaded && iframeLoader.style.display !== 'none') {
+        console.warn('[GAME] iframe load timeout, hiding loader');
+        iframeLoader.style.display = 'none';
+      }
+    }, 15000);
   }
 
   // ──────── Stop Game ────────
@@ -193,10 +233,13 @@
 
   // ──────── Resize iframe ────────
   function resizeIframe() {
+    const iframe = document.getElementById('gameFrame');
     if (isFullscreen) {
       gameContainer.style.minHeight = '100vh';
+      if (iframe) { iframe.style.width = '100vw'; iframe.style.height = '100vh'; }
     } else {
       gameContainer.style.minHeight = '60vh';
+      if (iframe) { iframe.style.width = '100%'; iframe.style.height = '100%'; }
     }
   }
 

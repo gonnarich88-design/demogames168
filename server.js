@@ -400,6 +400,89 @@ app.get('/api/game-url/:id', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// API: Server info / debug (check hosting location & jiligames reachability)
+// ──────────────────────────────────────────────
+app.get('/api/server-info', async (req, res) => {
+  const info = { timestamp: new Date().toISOString() };
+
+  // 1. Check server IP & geo location via external service
+  try {
+    const geoRes = await httpsGet('https://ipinfo.io/json');
+    if (geoRes.statusCode === 200) {
+      const geo = JSON.parse(geoRes.body);
+      info.server = { ip: geo.ip, city: geo.city, region: geo.region, country: geo.country, org: geo.org };
+    }
+  } catch (err) {
+    info.server = { error: err.message };
+  }
+
+  // 2. Check if server can reach jiligames.com
+  try {
+    const start = Date.now();
+    const jiliRes = await httpsGet('https://jiligames.com/');
+    info.jiligames = {
+      reachable: jiliRes.statusCode < 500,
+      statusCode: jiliRes.statusCode,
+      latencyMs: Date.now() - start
+    };
+  } catch (err) {
+    info.jiligames = { reachable: false, error: err.message };
+  }
+
+  // 3. Config info
+  info.config = {
+    outboundProxy: OUTBOUND_PROXY_URL ? 'configured' : 'not set',
+    nodeEnv: process.env.NODE_ENV || 'not set',
+    uptime: Math.floor(process.uptime()) + 's'
+  };
+
+  res.json(info);
+});
+
+// API: Debug test game URL resolution step-by-step
+app.get('/api/debug/test-game/:id', async (req, res) => {
+  const gameId = req.params.id;
+  const steps = [];
+
+  try {
+    // Step 1
+    const t1 = Date.now();
+    const step1 = await httpsGet(`https://jiligames.com/PlusTrial/${gameId}/en-us`);
+    steps.push({ step: 1, name: 'PlusTrial', statusCode: step1.statusCode, latencyMs: Date.now() - t1, bodyLength: step1.body.length });
+
+    // Step 2: parse meta refresh
+    const metaMatch = step1.body.match(/url='([^']+)'/i) || step1.body.match(/url="([^"]+)"/i);
+    if (!metaMatch) {
+      steps.push({ step: 2, name: 'ParseMetaRefresh', error: 'No meta refresh found', bodyPreview: step1.body.substring(0, 300) });
+      return res.json({ success: false, steps });
+    }
+    const loginTrialUrl = metaMatch[1].replace(/&amp;/g, '&');
+    steps.push({ step: 2, name: 'ParseMetaRefresh', url: loginTrialUrl.substring(0, 120) + '...' });
+
+    // Step 3: follow LoginTrial
+    const t3 = Date.now();
+    const step3 = await httpsGet(loginTrialUrl);
+    steps.push({ step: 3, name: 'LoginTrial', statusCode: step3.statusCode, latencyMs: Date.now() - t3, hasLocation: !!step3.headers.location });
+
+    let finalUrl;
+    if (step3.statusCode >= 300 && step3.statusCode < 400 && step3.headers.location) {
+      finalUrl = step3.headers.location;
+    } else if (step3.statusCode === 200) {
+      finalUrl = loginTrialUrl;
+    }
+
+    // Step 4: convert to proxy path
+    const proxyPath = finalUrl ? toProxyPath(finalUrl) : null;
+    steps.push({ step: 4, name: 'ProxyPath', finalUrl: finalUrl ? finalUrl.substring(0, 120) + '...' : null, proxyPath: proxyPath ? proxyPath.substring(0, 120) + '...' : null });
+
+    res.json({ success: !!proxyPath, steps });
+  } catch (err) {
+    steps.push({ step: 'error', message: err.message });
+    res.json({ success: false, steps });
+  }
+});
+
+// ──────────────────────────────────────────────
 // Telegram Bot
 // ──────────────────────────────────────────────
 let bot = null;
