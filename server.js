@@ -255,13 +255,45 @@ app.use('/proxy', (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// Dynamic HTML pages — serve with inline JS to bypass Telegram WebView cache
+// ──────────────────────────────────────────────
+function serveInlineHtml(htmlFile, jsFiles) {
+  const htmlPath = path.join(__dirname, 'public', htmlFile);
+  return (req, res) => {
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+    // For each JS file: remove external <script> reference and inline the content
+    jsFiles.forEach(jsFile => {
+      const jsName = jsFile.split('/').pop();
+      // Remove static and dynamic script tags for this file
+      html = html.replace(new RegExp(`<script[^>]*${jsName}[^<]*</script>`, 'g'), '');
+      const jsContent = fs.readFileSync(path.join(__dirname, 'public', jsFile), 'utf-8');
+      html = html.replace('</body>', `<script>\n${jsContent}\n</script>\n</body>`);
+    });
+    // Remove any Date.now() cache-bust loaders
+    html = html.replace(/<script>\s*\/\/ Cache-bust[\s\S]*?<\/script>/g, '');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.send(html);
+  };
+}
+
+// Intercept HTML pages BEFORE express.static to prevent cached JS from loading
+app.get('/game.html', (req, res, next) => {
+  if (!req.query.id) return res.redirect('/');
+  serveInlineHtml('game.html', ['js/game.js'])(req, res);
+});
+
+app.get('/', serveInlineHtml('index.html', ['js/app.js']));
+
+// ──────────────────────────────────────────────
 // Express - Static files & API
 // ──────────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public'), {
   etag: false,
   lastModified: false,
   setHeaders(res, filePath) {
-    // Prevent Cloudflare and browser from caching JS/CSS/HTML
     if (/\.(js|css|html)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
       res.setHeader('Pragma', 'no-cache');
