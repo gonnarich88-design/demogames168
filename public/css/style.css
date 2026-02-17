@@ -549,3 +549,13 @@ body {
   height: 20px;
   fill: currentColor;
 }
+
+/* ──────── App Version Footer ──────── */
+.app-version {
+  text-align: center;
+  padding: 12px 0 calc(8px + var(--safe-bottom));
+  font-size: 11px;
+  color: var(--tg-theme-hint-color);
+  opacity: 0.5;
+  letter-spacing: 0.5px;
+}

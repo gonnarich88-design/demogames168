@@ -257,6 +257,8 @@ app.use('/proxy', (req, res) => {
 // ──────────────────────────────────────────────
 // Dynamic HTML pages — serve with inline JS to bypass Telegram WebView cache
 // ──────────────────────────────────────────────
+const APP_VERSION = require('./package.json').version;
+
 function serveInlineHtml(htmlFile, jsFiles) {
   const htmlPath = path.join(__dirname, 'public', htmlFile);
   return (req, res) => {
@@ -264,13 +266,14 @@ function serveInlineHtml(htmlFile, jsFiles) {
     // For each JS file: remove external <script> reference and inline the content
     jsFiles.forEach(jsFile => {
       const jsName = jsFile.split('/').pop();
-      // Remove static and dynamic script tags for this file
       html = html.replace(new RegExp(`<script[^>]*${jsName}[^<]*</script>`, 'g'), '');
       const jsContent = fs.readFileSync(path.join(__dirname, 'public', jsFile), 'utf-8');
       html = html.replace('</body>', `<script>\n${jsContent}\n</script>\n</body>`);
     });
     // Remove any Date.now() cache-bust loaders
     html = html.replace(/<script>\s*\/\/ Cache-bust[\s\S]*?<\/script>/g, '');
+    // Inject live version from package.json into footer
+    html = html.replace(/v[\d.]+<\/footer>/, `v${APP_VERSION}</footer>`);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
