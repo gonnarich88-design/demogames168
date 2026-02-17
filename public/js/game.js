@@ -143,52 +143,59 @@
       loadGameIframe(data.url);
 
     } catch (err) {
-      console.error('[GAME] startGame error:', err.name, err.message, err.stack);
+      console.error('[GAME] startGame error:', err);
       isPlaying = false;
       iframeLoader.style.display = 'none';
-      const detail = err.message || err.toString() || 'Unknown error';
-      showIframeError('Game loading failed: ' + detail);
+      const detail = (err && (err.message || err.toString())) || 'Network or script error';
+      showIframeError('Could not load game: ' + detail, 'Try again or use Back to Games.');
     }
   }
 
-  // ──────── Load Game in iframe ────────
+  // ──────── Load Game: try iframe first, fallback to full-page navigation ────────
   function loadGameIframe(gameUrl) {
     const existing = document.getElementById('gameFrame');
     if (existing) existing.remove();
 
     const iframe = document.createElement('iframe');
     iframe.id = 'gameFrame';
-    iframe.src = gameUrl;
     iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;top:0;left:0;z-index:3;background:#000;';
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('allow', 'autoplay; fullscreen; accelerometer; gyroscope');
 
-    let loaded = false;
+    let resolved = false;
+    let fallbackTimer = null;
+
+    function fallbackToFullPage() {
+      if (resolved) return;
+      resolved = true;
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      const el = document.getElementById('gameFrame');
+      if (el) el.remove();
+      iframeLoader.style.display = 'none';
+      console.log('[GAME] Fallback: opening game in same window');
+      window.location.href = gameUrl;
+    }
 
     iframe.onload = function () {
-      loaded = true;
-      console.log('[GAME] iframe loaded successfully');
+      if (resolved) return;
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      resolved = true;
+      console.log('[GAME] iframe loaded');
       iframeLoader.style.display = 'none';
     };
 
     iframe.onerror = function () {
-      console.error('[GAME] iframe onerror fired');
-      isPlaying = false;
-      iframeLoader.style.display = 'none';
-      iframe.remove();
-      showIframeError('Game page failed to load');
+      console.warn('[GAME] iframe onerror, using full-page fallback');
+      fallbackToFullPage();
     };
 
     gameContainer.appendChild(iframe);
     resizeIframe();
 
-    // Fallback timeout: if iframe doesn't load within 15s, hide loader anyway
-    setTimeout(() => {
-      if (!loaded && iframeLoader.style.display !== 'none') {
-        console.warn('[GAME] iframe load timeout, hiding loader');
-        iframeLoader.style.display = 'none';
-      }
-    }, 15000);
+    // If iframe doesn't finish loading in 3s, open game in same window (works in Telegram WebView)
+    fallbackTimer = setTimeout(fallbackToFullPage, 3000);
+
+    iframe.src = gameUrl;
   }
 
   // ──────── Stop Game ────────
