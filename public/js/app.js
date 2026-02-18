@@ -9,6 +9,14 @@
   const pathParts = window.location.pathname.split('/').filter(Boolean);
   const currentProvider = (pathParts[0] === 'catalog' && pathParts[1]) ? pathParts[1] : 'jili';
 
+  // Provider logo paths (match data/providers.json) — used when game has no image
+  const PROVIDER_LOGO = {
+    jili: '/images/jili-logo.png',
+    pp: '/images/pragmatic-logo.png',
+    pg: '/images/pgsoft-logo.png'
+  };
+  const providerLogoUrl = PROVIDER_LOGO[currentProvider] || PROVIDER_LOGO.jili;
+
   // State
   let allGames = [];
   let currentCategory = 'all';
@@ -203,7 +211,7 @@
     card.className = 'game-card';
 
     const hasRealImage = game.image && !game.image.includes('placeholder');
-    const imgSrc = hasRealImage ? game.image : gamePlaceholderDataUri(game.name);
+    const imgSrc = hasRealImage ? game.image : providerLogoUrl;
     const fallbackSrc = gamePlaceholderDataUri(game.name);
 
     card.innerHTML = `
