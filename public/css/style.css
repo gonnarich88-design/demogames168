@@ -649,6 +649,12 @@ body {
   height: 28px;
 }
 
+.provider-card-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .provider-card-body {
   flex: 1;
   min-width: 0;
@@ -695,4 +701,120 @@ body {
 .provider-card-arrow svg {
   width: 24px;
   height: 24px;
+}
+
+/* ═══════════════════════════════════════════════
+   Home Page Dark Theme (scoped to .home-page)
+   โทนเข้ม + ทอง อิง co168.bz
+   ═══════════════════════════════════════════════ */
+
+body.home-page {
+  background: #0d0d0d;
+  color: #f0f0f0;
+}
+
+.home-page .app-header {
+  background: #0d0d0d;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.12);
+}
+
+.home-page .home-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.home-page .home-hero {
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.06) 0%, transparent 100%);
+  padding: 32px 20px 24px;
+}
+
+.home-page .home-hero h2 {
+  font-size: 24px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.home-page .home-hero p {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.home-page .home-section {
+  padding: 4px 16px 24px;
+}
+
+.home-page .home-section-title {
+  color: #e8e8e8;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.home-page .provider-card {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 16px;
+}
+
+.home-page .provider-card:not(.disabled):hover {
+  box-shadow: 0 4px 24px rgba(255, 215, 0, 0.12);
+  border-color: rgba(255, 215, 0, 0.35);
+}
+
+.home-page .provider-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px;
+}
+
+.home-page .provider-card.disabled .provider-card-logo {
+  opacity: 0.45;
+  filter: grayscale(0.3);
+}
+
+.home-page .provider-card-name {
+  color: #ffffff;
+}
+
+.home-page .provider-card-desc {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.home-page .provider-card-count {
+  color: #FFD700;
+}
+
+.home-page .provider-card-badge {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.home-page .provider-card-arrow {
+  color: rgba(255, 215, 0, 0.5);
+}
+
+.home-page .provider-card.disabled .provider-card-arrow {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.home-page footer {
+  color: rgba(255, 215, 0, 0.4);
+}
+
+.home-page .loading-spinner .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #FFD700;
+}
+
+.home-page .empty-state {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.home-page .empty-state h3 {
+  color: #e8e8e8;
 }

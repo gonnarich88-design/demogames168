@@ -10,12 +10,6 @@
     pg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>'
   };
 
-  const PROVIDER_COLORS = {
-    jili: { bg: 'linear-gradient(135deg, #FFD700, #FF8C00)', text: '#000' },
-    pp: { bg: 'linear-gradient(135deg, #4A90D9, #2C5F8A)', text: '#fff' },
-    pg: { bg: 'linear-gradient(135deg, #7B2D8E, #4A1A5E)', text: '#fff' }
-  };
-
   function init() {
     if (typeof TelegramApp !== 'undefined') TelegramApp.init();
     loadProviders();
@@ -37,24 +31,29 @@
 
   function renderProviders(providers) {
     providerGrid.innerHTML = '';
-    const fragment = document.createDocumentFragment();
-    providers.forEach(provider => {
+    var fragment = document.createDocumentFragment();
+    providers.forEach(function (provider) {
       fragment.appendChild(createProviderCard(provider));
     });
     providerGrid.appendChild(fragment);
   }
 
   function createProviderCard(provider) {
-    const card = document.createElement('div');
+    var card = document.createElement('div');
     card.className = 'provider-card' + (provider.enabled ? '' : ' disabled');
 
-    const colors = PROVIDER_COLORS[provider.slug] || PROVIDER_COLORS.jili;
-    const icon = PROVIDER_ICONS[provider.slug] || PROVIDER_ICONS.jili;
+    var iconHtml;
+    if (provider.logo) {
+      iconHtml = '<div class="provider-card-icon">' +
+        '<img src="' + provider.logo + '" alt="' + provider.name + '" class="provider-card-logo">' +
+        '</div>';
+    } else {
+      var fallbackSvg = PROVIDER_ICONS[provider.slug] || PROVIDER_ICONS.jili;
+      iconHtml = '<div class="provider-card-icon"><span style="color:#FFD700;">' + fallbackSvg + '</span></div>';
+    }
 
     card.innerHTML =
-      '<div class="provider-card-icon" style="background:' + colors.bg + ';color:' + colors.text + ';">' +
-        icon +
-      '</div>' +
+      iconHtml +
       '<div class="provider-card-body">' +
         '<div class="provider-card-name">' + provider.name + '</div>' +
         '<div class="provider-card-desc">' + provider.description + '</div>' +

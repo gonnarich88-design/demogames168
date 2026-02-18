@@ -6,7 +6,7 @@
     "enabled": true,
     "description": "สล็อต ยิงปลา บาคาร่า",
     "gameCount": 52,
-    "logo": "https://storage.googleapis.com/tada-cdn-asia/All-In-One/production/img/jiliPlusPlayer/games/GdEFoX3ljSMUSS38e7vSoOtjDB6WqqugErp0yxsJ.png"
+    "logo": "/images/jili-logo.png"
   },
   {
     "id": "pp",
@@ -15,7 +15,7 @@
     "enabled": false,
     "description": "เร็วๆ นี้",
     "gameCount": 0,
-    "logo": null
+    "logo": "/images/pragmatic-logo.png"
   },
   {
     "id": "pg",
@@ -24,6 +24,6 @@
     "enabled": false,
     "description": "เร็วๆ นี้",
     "gameCount": 0,
-    "logo": null
+    "logo": "/images/pgsoft-logo.png"
   }
 ]
