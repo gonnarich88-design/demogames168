@@ -163,21 +163,33 @@
   }
 
   // ──────── Create Game Card ────────
+  // Fallback image when no URL or placeholder: SVG data URI (works without external requests, e.g. in WebView)
+  function gamePlaceholderDataUri(name) {
+    const text = String(name).slice(0, 12);
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">' +
+      '<rect width="300" height="300" fill="#1a1a2e"/>' +
+      '<text x="150" y="158" text-anchor="middle" fill="#FFD700" font-family="system-ui,sans-serif" font-size="20" font-weight="600">' +
+      text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') +
+      '</text></svg>';
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
   function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
 
-    const imgSrc = game.image && !game.image.includes('placeholder')
-      ? game.image
-      : `https://via.placeholder.com/300x300/1a1a2e/FFD700?text=${encodeURIComponent(game.name)}`;
+    const hasRealImage = game.image && !game.image.includes('placeholder');
+    const imgSrc = hasRealImage ? game.image : gamePlaceholderDataUri(game.name);
+    const fallbackSrc = gamePlaceholderDataUri(game.name);
 
     card.innerHTML = `
       <span class="play-badge">DEMO</span>
       <img class="card-img"
            src="${imgSrc}"
-           alt="${game.name}"
+           alt="${game.name.replace(/"/g, '&quot;')}"
            loading="lazy"
-           onerror="this.src='https://via.placeholder.com/300x300/1a1a2e/FFD700?text=${encodeURIComponent(game.name)}'">
+           onerror="this.src=this.dataset.fallback;this.onerror=null;"
+           data-fallback="${fallbackSrc}">
       <div class="card-body">
         <div class="game-name">${game.name}</div>
         <div class="game-category">${game.category}</div>
