@@ -165,12 +165,36 @@
   // ──────── Create Game Card ────────
   // Fallback image when no URL or placeholder: SVG data URI (works without external requests, e.g. in WebView)
   function gamePlaceholderDataUri(name) {
-    const text = String(name).slice(0, 12);
+    const s = String(name).trim();
+    const maxLen = 14;
+    let line1, line2;
+    const parts = s.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      const mid = Math.ceil(parts.length / 2);
+      line1 = parts.slice(0, mid).join(' ');
+      line2 = parts.slice(mid).join(' ');
+    } else {
+      const n = s.length;
+      const half = Math.ceil(n / 2);
+      line1 = s.slice(0, half);
+      line2 = s.slice(half);
+    }
+    if (line1.length > maxLen) line1 = line1.slice(0, maxLen);
+    if (line2.length > maxLen) line2 = line2.slice(0, maxLen);
+    function esc(t) {
+      return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">' +
-      '<rect width="300" height="300" fill="#1a1a2e"/>' +
-      '<text x="150" y="158" text-anchor="middle" fill="#FFD700" font-family="system-ui,sans-serif" font-size="20" font-weight="600">' +
-      text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') +
-      '</text></svg>';
+      '<defs>' +
+      '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a2e"/><stop offset="50%" stop-color="#252542"/><stop offset="100%" stop-color="#1a1a2e"/></linearGradient>' +
+      '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA500"/></linearGradient>' +
+      '<filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.5"/></filter>' +
+      '</defs>' +
+      '<rect width="300" height="300" fill="url(#bg)"/>' +
+      '<rect x="1" y="1" width="298" height="298" fill="none" stroke="rgba(255,215,0,0.25)" stroke-width="1" rx="8"/>' +
+      '<text x="150" y="142" text-anchor="middle" fill="url(#gold)" font-family="system-ui,sans-serif" font-size="17" font-weight="600" filter="url(#sh)">' + esc(line1) + '</text>' +
+      '<text x="150" y="165" text-anchor="middle" fill="url(#gold)" font-family="system-ui,sans-serif" font-size="17" font-weight="600" filter="url(#sh)">' + esc(line2) + '</text>' +
+      '</svg>';
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
   }
 
