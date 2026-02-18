@@ -5,6 +5,10 @@
 (function () {
   'use strict';
 
+  // Detect provider from URL path: /catalog/jili → "jili"
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const currentProvider = (pathParts[0] === 'catalog' && pathParts[1]) ? pathParts[1] : 'jili';
+
   // State
   let allGames = [];
   let currentCategory = 'all';
@@ -98,7 +102,7 @@
     showSkeletons();
 
     try {
-      const res = await fetch('/api/games?limit=500');
+      const res = await fetch('/api/providers/' + currentProvider + '/games?limit=500');
       const data = await res.json();
       allGames = data.games || [];
       totalGamesCount.textContent = allGames.length;
@@ -182,7 +186,7 @@
 
     card.addEventListener('click', () => {
       TelegramApp.hapticFeedback('medium');
-      window.location.href = `/play/${game.id}`;
+      window.location.href = '/play/' + currentProvider + '/' + game.id;
     });
 
     return card;

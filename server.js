@@ -54,6 +54,19 @@ function loadGames() {
 }
 
 // ──────────────────────────────────────────────
+// Load provider data
+// ──────────────────────────────────────────────
+function loadProviders() {
+  const providersPath = path.join(__dirname, 'data', 'providers.json');
+  try {
+    return JSON.parse(fs.readFileSync(providersPath, 'utf-8'));
+  } catch (err) {
+    console.error('Failed to load providers.json:', err.message);
+    return [];
+  }
+}
+
+// ──────────────────────────────────────────────
 // Multi-domain Reverse Proxy for JILI Games
 // Proxies: jiligames.com, uat-wb-api.jiligames.com, casino-wbgame.jiligames.com
 // ──────────────────────────────────────────────
@@ -293,7 +306,11 @@ app.get('/game.html', (req, res) => {
   res.redirect(302, '/play/' + gameId);
 });
 
-app.get('/', serveInlineHtml('index.html', ['js/app.js']));
+// Home page: Co168 provider selection
+app.get('/', serveInlineHtml('home.html', ['js/home.js']));
+
+// Catalog pages per provider
+app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 
 // ──────────────────────────────────────────────
 // Express - Static files & API
@@ -362,6 +379,47 @@ app.get('/api/games/:id', (req, res) => {
   });
 });
 
+// API: List providers
+app.get('/api/providers', (req, res) => {
+  const providers = loadProviders();
+  res.json(providers);
+});
+
+// API: Get games for a specific provider
+app.get('/api/providers/:provider/games', (req, res) => {
+  const provider = req.params.provider.toLowerCase();
+  if (provider === 'jili') {
+    let games = loadGames();
+    const { category, search, page = 1, limit = 50 } = req.query;
+    if (category && category.toLowerCase() !== 'all') {
+      games = games.filter(g =>
+        g.category.toLowerCase().replace(/\s+/g, '') === category.toLowerCase().replace(/\s+/g, '')
+      );
+    }
+    if (search) {
+      const term = search.toLowerCase();
+      games = games.filter(g => g.name.toLowerCase().includes(term));
+    }
+    const total = games.length;
+    const p = parseInt(page) || 1;
+    const l = parseInt(limit) || 50;
+    const start = (p - 1) * l;
+    const paged = games.slice(start, start + l);
+    return res.json({
+      games: paged.map(g => ({
+        ...g,
+        playUrl: `/play/jili/${g.id}`
+      })),
+      total, page: p, limit: l,
+      totalPages: Math.ceil(total / l)
+    });
+  }
+  const providers = loadProviders();
+  const found = providers.find(p => p.slug === provider);
+  if (!found) return res.status(404).json({ error: 'Provider not found' });
+  res.json({ games: [], total: 0, page: 1, limit: 50, totalPages: 0 });
+});
+
 // ──────────────────────────────────────────────
 // API: Resolve game URL (server-side redirect chain)
 // Follows: PlusTrial → LoginTrial → final game URL
@@ -417,10 +475,10 @@ async function resolveGameUrl(gameId) {
   return { proxyPath };
 }
 
-// GET /play/:id — redirect to game (no fetch in WebView; works in Telegram)
-app.get('/play/:id', async (req, res) => {
+// GET /play/jili/:id — resolve JILI game and redirect to proxy path
+app.get('/play/jili/:id', async (req, res) => {
   const gameId = req.params.id;
-  console.log(`[PLAY] Resolving game ${gameId} for redirect`);
+  console.log(`[PLAY] Resolving JILI game ${gameId} for redirect`);
   try {
     const result = await resolveGameUrl(gameId);
     if (result.error) {
@@ -442,6 +500,11 @@ app.get('/play/:id', async (req, res) => {
     if (hint) q.set('hint', hint);
     res.redirect(302, '/game.html?' + q.toString());
   }
+});
+
+// GET /play/:id — backward compatibility, redirect to /play/jili/:id
+app.get('/play/:id', (req, res) => {
+  res.redirect(302, '/play/jili/' + req.params.id);
 });
 
 app.get('/api/game-url/:id', async (req, res) => {
@@ -654,6 +717,7 @@ app.use((req, res, next) => {
   if (req.path === '/' || req.path === '/game.html' ||
       req.path.startsWith('/api/') || req.path.startsWith('/proxy/') ||
       req.path.startsWith('/play/') || req.path.startsWith('/jili/') ||
+      req.path.startsWith('/catalog/') ||
       req.path.startsWith('/css/') || req.path.startsWith('/js/') ||
       req.path.startsWith('/images/')) {
     return next();
@@ -672,7 +736,7 @@ app.use((req, res, next) => {
 // Start Express server
 // ──────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n🚀 JILI Games Mini App Server`);
+  console.log(`\n🚀 Co168 Mini App Server`);
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Co168</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <h1>CO168</h1>
+      <span style="font-size:11px;font-weight:600;color:#FFD700;opacity:0.7;">v1.2.0</span>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <div class="home-hero">
+    <div class="home-hero-text">
+      <h2>ยินดีต้อนรับสู่ Co168</h2>
+      <p>เว็บรวมเกมส์คาสิโนออนไลน์ ทดลองเล่นฟรี!</p>
+    </div>
+  </div>
+
+  <!-- Provider Grid -->
+  <section class="home-section">
+    <h3 class="home-section-title">เลือกค่ายเกม</h3>
+    <div class="provider-grid" id="providerGrid">
+      <!-- Provider cards injected by JS -->
+    </div>
+  </section>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" id="loadingSpinner" style="display:none;">
+    <div class="spinner"></div>
+  </div>
+
+  <footer style="text-align:center;padding:24px 0 calc(12px + env(safe-area-inset-bottom));font-size:12px;color:#FFD700;opacity:0.6;">v1.2.0</footer>
+
+  <script src="/js/telegram.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>
