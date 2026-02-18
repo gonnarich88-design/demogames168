@@ -208,9 +208,9 @@
 
   function createGameCard(game) {
     const card = document.createElement('div');
-    card.className = 'game-card';
-
     const hasRealImage = game.image && !game.image.includes('placeholder');
+    card.className = 'game-card' + (hasRealImage ? '' : ' game-card--logo-placeholder');
+
     const imgSrc = hasRealImage ? game.image : providerLogoUrl;
     const fallbackSrc = gamePlaceholderDataUri(game.name);
 
