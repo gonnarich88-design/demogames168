@@ -77,6 +77,29 @@ function loadPPGames() {
 }
 
 // ──────────────────────────────────────────────
+// Load Joker Gaming game data
+// ──────────────────────────────────────────────
+function loadJokerGames() {
+  const gamesPath = path.join(__dirname, 'data', 'joker-games.json');
+  const seedPath = path.join(__dirname, 'data', 'joker-seed-games.json');
+
+  try {
+    if (fs.existsSync(gamesPath)) {
+      return JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+    }
+  } catch (err) {
+    console.warn('Failed to load joker-games.json, falling back to seed data:', err.message);
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+  } catch (err) {
+    console.error('Failed to load joker-seed-games.json:', err.message);
+    return [];
+  }
+}
+
+// ──────────────────────────────────────────────
 // Load provider data
 // ──────────────────────────────────────────────
 function loadProviders() {
@@ -510,15 +533,18 @@ app.get('/', serveInlineHtml('home.html', ['js/home.js']));
 // Catalog pages per provider
 app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
+app.get('/catalog/joker', serveInlineHtml('index.html', ['js/app.js']));
 
 // ──────────────────────────────────────────────
 // API: Proxy external images (fix PP thumbnails not loading in WebView/CORS)
 // Supports OUTBOUND_PROXY_URL for regions where pragmaticplay.com is blocked
 // Also caches downloaded images locally in public/images/pp/
 // ──────────────────────────────────────────────
-const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com'];
+const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com', 'dl.zhenwudadi.net'];
+const IMG_CACHE_DIR = path.join(__dirname, 'public', 'images', 'cache');
 const PP_IMG_CACHE_DIR = path.join(__dirname, 'public', 'images', 'pp');
 if (!fs.existsSync(PP_IMG_CACHE_DIR)) fs.mkdirSync(PP_IMG_CACHE_DIR, { recursive: true });
+if (!fs.existsSync(IMG_CACHE_DIR)) fs.mkdirSync(IMG_CACHE_DIR, { recursive: true });
 
 app.get('/api/proxy-image', (req, res) => {
   const rawUrl = req.query.url;
@@ -673,6 +699,9 @@ app.get('/api/providers/:provider/games', (req, res) => {
   } else if (provider === 'pp') {
     rawGames = loadPPGames();
     playUrlFn = g => `/play/pp/${g.slug}`;
+  } else if (provider === 'joker') {
+    rawGames = loadJokerGames();
+    playUrlFn = g => `/play/joker/${encodeURIComponent(g.code)}`;
   } else {
     const providers = loadProviders();
     const found = providers.find(p => p.slug === provider);
@@ -917,6 +946,133 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   } catch (err) {
     console.error('[PLAY-PP] Error:', err.message);
     const q = new URLSearchParams({ id: slug, provider: 'pp', error: 'Failed to resolve: ' + err.message });
+    res.redirect(302, '/game.html?' + q.toString());
+  }
+});
+
+// ──────────────────────────────────────────────
+// Joker Gaming: Resolve demo game URL
+// Calls joker123.net API to get a free-play session URL, then follows redirects
+// to get the final game page URL on the game server.
+// ──────────────────────────────────────────────
+async function resolveJokerGameUrl(gameCode) {
+  const apiUrl = `https://www.joker123.net/Service/PlayFreeGame?gameCode=${encodeURIComponent(gameCode)}`;
+  console.log(`[JOKER-RESOLVE] POST ${apiUrl}`);
+
+  const resp = await httpsPostSimple(apiUrl);
+  if (resp.statusCode !== 200) {
+    return { error: `Joker API returned status ${resp.statusCode}` };
+  }
+
+  let json;
+  try { json = JSON.parse(resp.body); } catch { return { error: 'Invalid JSON from Joker API' }; }
+  if (!json.Success || !json.Data || !json.Data.GameUrl) {
+    return { error: json.Message || 'Joker API returned no GameUrl' };
+  }
+
+  let gameUrl = json.Data.GameUrl;
+  if (!gameUrl.startsWith('http')) {
+    gameUrl = 'https://www.joker123.net' + (gameUrl.startsWith('/') ? '' : '/') + gameUrl;
+  }
+  console.log(`[JOKER-RESOLVE] Initial GameUrl: ${gameUrl}`);
+
+  const maxRedirects = 5;
+  for (let i = 0; i < maxRedirects; i++) {
+    const r = await httpsGetInsecure(gameUrl);
+    if ((r.statusCode === 301 || r.statusCode === 302) && r.headers.location) {
+      const loc = r.headers.location;
+      gameUrl = loc.startsWith('http') ? loc : new URL(loc, gameUrl).href;
+      console.log(`[JOKER-RESOLVE] Following ${r.statusCode} → ${gameUrl}`);
+      continue;
+    }
+    break;
+  }
+
+  console.log(`[JOKER-RESOLVE] Final URL: ${gameUrl}`);
+  return { demoUrl: gameUrl };
+}
+
+function httpsPostSimple(targetUrl) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(targetUrl);
+    const opts = {
+      hostname: u.hostname,
+      path: u.pathname + u.search,
+      method: 'POST',
+      agent: new https.Agent({ rejectUnauthorized: false }),
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36',
+        'Accept': 'application/json',
+        'Content-Length': 0,
+        'Referer': 'https://www.joker123.net/GameIndex',
+        'Origin': 'https://www.joker123.net',
+      }
+    };
+    const req = https.request(opts, (res) => {
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => resolve({ statusCode: res.statusCode, headers: res.headers, body: Buffer.concat(chunks).toString('utf-8') }));
+    });
+    req.on('error', reject);
+    req.setTimeout(15000, () => { req.destroy(); reject(new Error('Timeout')); });
+    req.end();
+  });
+}
+
+// GET /play/joker/:code — resolve Joker demo game and serve full-screen iframe page
+app.get('/play/joker/:code', async (req, res) => {
+  const code = req.params.code;
+  console.log(`[PLAY] Resolving Joker game "${code}"`);
+  try {
+    const result = await resolveJokerGameUrl(code);
+    if (result.error) {
+      const q = new URLSearchParams({ id: code, provider: 'joker', error: result.error });
+      return res.redirect(302, '/game.html?' + q.toString());
+    }
+
+    const gameName = code.replace(/([A-Z])/g, ' $1').replace(/GW$/, '').trim();
+    const html = `<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>${gameName} - Joker Gaming Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d0d0d;font-family:system-ui,sans-serif}
+.jk-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:10px;padding:8px 12px;
+  background:rgba(13,13,13,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,215,0,0.15)}
+.jk-bar a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;
+  justify-content:center;text-decoration:none;flex-shrink:0}
+.jk-bar a svg{width:18px;height:18px;fill:#e8e8e8}
+.jk-bar .jk-name{color:#e8e8e8;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jk-bar .jk-badge{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000;font-size:9px;font-weight:700;
+  padding:2px 8px;border-radius:10px;flex-shrink:0}
+iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:none;background:#0d0d0d}
+.jk-loading{position:fixed;top:52px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:#0d0d0d;color:rgba(255,255,255,0.6);font-size:14px;z-index:50}
+.jk-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FFD700;
+  border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head><body>
+<div class="jk-bar">
+  <a href="/catalog/joker"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+  <span class="jk-name">${gameName}</span>
+  <span class="jk-badge">DEMO</span>
+</div>
+<div class="jk-loading" id="loader"><div class="jk-spinner"></div>กำลังโหลดเกม...</div>
+<iframe src="${result.demoUrl}" allow="autoplay; fullscreen" allowfullscreen
+  referrerpolicy="no-referrer"
+  onload="document.getElementById('loader').style.display='none'"></iframe>
+</body></html>`;
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store');
+    res.send(html);
+  } catch (err) {
+    console.error('[PLAY-JOKER] Error:', err.message);
+    const q = new URLSearchParams({ id: code, provider: 'joker', error: 'Failed to resolve: ' + err.message });
     res.redirect(302, '/game.html?' + q.toString());
   }
 });
@@ -1167,5 +1323,6 @@ app.listen(PORT, () => {
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);
   console.log(`   JILI:    ${loadGames().length} games loaded`);
-  console.log(`   PP:      ${loadPPGames().length} games loaded\n`);
+  console.log(`   PP:      ${loadPPGames().length} games loaded`);
+  console.log(`   Joker:   ${loadJokerGames().length} games loaded\n`);
 });

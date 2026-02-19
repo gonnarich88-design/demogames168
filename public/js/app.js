@@ -31,6 +31,17 @@
         { key: 'slot', label: 'สล็อต' }
       ]
     },
+    joker: {
+      logo: '/images/joker-logo.png',
+      name: 'Joker Gaming',
+      categories: [
+        { key: 'all', label: 'ทั้งหมด' },
+        { key: 'slot', label: 'สล็อต' },
+        { key: 'fishing', label: 'ยิงปลา' },
+        { key: 'bingo', label: 'บิงโก' },
+        { key: 'ecasino', label: 'E-Games' }
+      ]
+    },
     pg: {
       logo: '/images/pgsoft-logo.png',
       name: 'PG Soft',
@@ -216,8 +227,11 @@
     card.className = 'game-card' + (hasRealImage ? '' : ' game-card--logo-placeholder');
 
     let imgSrc = hasRealImage ? game.image : providerLogoUrl;
-    if (hasRealImage && game.image.indexOf('http') === 0 && game.image.indexOf('pragmaticplay.com') !== -1) {
+    if (hasRealImage && game.image.indexOf('pragmaticplay.com') !== -1) {
       imgSrc = '/api/proxy-image?url=' + encodeURIComponent(game.image);
+    } else if (hasRealImage && game.image.indexOf('zhenwudadi.net') !== -1) {
+      var fullUrl = game.image.startsWith('//') ? 'https:' + game.image : game.image;
+      imgSrc = '/api/proxy-image?url=' + encodeURIComponent(fullUrl);
     }
 
     const safeName = game.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');

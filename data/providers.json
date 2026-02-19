@@ -21,9 +21,9 @@
     "id": "joker",
     "name": "Joker Gaming",
     "slug": "joker",
-    "enabled": false,
-    "description": "เร็วๆ นี้",
-    "gameCount": 0,
+    "enabled": true,
+    "description": "สล็อต ยิงปลา บิงโก",
+    "gameCount": 265,
     "logo": "/images/joker-logo.png"
   },
   {

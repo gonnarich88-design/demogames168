@@ -1,0 +1,2387 @@
+[
+  {
+    "code": "HeavenlyBeastsGW",
+    "name": "Heavenly Beasts",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/heavenlybeastsgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "WinningHorseGW",
+    "name": "Winning Horse Lunar Carnival",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/winninghorsegw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "BookOfThermopylaeGW",
+    "name": "Book Of Thermopylae",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bookofthermopylaegw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "GodsOfAsgardGW",
+    "name": "Gods Of Asgard",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/godsofasgardgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "ChristmasFortuneGW",
+    "name": "Christmas Fortune",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/christmasfortunegw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "JiangShiNightHG5",
+    "name": "Vampire Night",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/jiangshinighthg5.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SuperFortuneCrownGW",
+    "name": "Super Fortune Crown",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/superfortunecrowngw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MoonGoddessGW",
+    "name": "Moon Goddess",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/moongoddessgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MayaWaysGW",
+    "name": "Maya Ways",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mayawaysgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SuperSevenSeasGW",
+    "name": "Super Seven Seas",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/supersevenseasgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "FireMasterHoldAndWinGW",
+    "name": "Fire Master Hold And Win",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/firemasterholdandwingw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "DragonBallHG5",
+    "name": "Dragon Ball",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dragonballhg5.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "FortuneCrownGoldGiftGW",
+    "name": "Fortune Crown - Gold Gift",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fortunecrowngoldgiftgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MahjongKingGW",
+    "name": "Mahjong King",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mahjongkinggw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "ChilliHunterBandidosGW",
+    "name": "Chilli Hunter Bandidos",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chillihunterbandidosgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SteamboatRideGW",
+    "name": "SteamboatRide Hold and Win",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/steamboatridegw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SevenSeasGW",
+    "name": "Seven Seas",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sevenseasgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "FortuneCrown25GW",
+    "name": "Fortune Crown 25",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fortunecrown25gw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SavageFrontierGW",
+    "name": "Savage Frontier Hold And Win",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/savagefrontiergw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SuperWildWatermelonGW",
+    "name": "Super Wild Watermelon",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/superwildwatermelongw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "IncaGW",
+    "name": "Inca",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/incagw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "RamessesRelicsGW",
+    "name": "Ramesses Relic",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ramessesrelicsgw.png",
+    "isNew": true,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SoccerWorldGW",
+    "name": "Qatar 2022",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/soccerworldgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "RomaDeluxeGW",
+    "name": "Roma Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/romadeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FireTempleGW",
+    "name": "Fire Temple",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/firetemplegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FortuneCrownGW",
+    "name": "Fortune Crown",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fortunecrowngw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WindsOfWealthGW",
+    "name": "Winds Of Wealth",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/windsofwealthgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LegendOfPersiaGW",
+    "name": "Legend Of Persia",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/legendofpersiagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WorldOfEmojiGW",
+    "name": "World Of Emoji",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/worldofemojigw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CarnavalDoRioGW",
+    "name": "Carnaval Do Rio",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/carnavaldoriogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BlackKnightGW",
+    "name": "Black Knight",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/blackknightgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ChocolateShopGW",
+    "name": "Chocolate Shop",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chocolateshopgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SnakeOfFortuneGW",
+    "name": "Snake Of Fortune",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/snakeoffortunegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "HawaiiVacayGW",
+    "name": "Hawaii Vacay",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/hawaiivacaygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "ChristmasEveGW",
+    "name": "Christmas Eve",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/christmasevegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "WildWatermelonGW",
+    "name": "Wild Watermelon",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wildwatermelongw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "BullStreetGW",
+    "name": "Bull Street",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bullstreetgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "TrickOrTreatGW",
+    "name": "Trick Or Treat",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/trickortreatgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "HotWheelsGW",
+    "name": "Hot Wheels",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/hotwheelsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MahjongReactorGW",
+    "name": "Mahjong Reactor",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mahjongreactorgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "KoiBingoGW",
+    "name": "Koi Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/koibingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "GoldenSeaGW",
+    "name": "Golden Sea",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldenseagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "GatesOfWealthGW",
+    "name": "Gates Of Wealth",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/gatesofwealthgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MasqueradeGW",
+    "name": "Masquerade",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/masqueradegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "HuangFeiHongGW",
+    "name": "Huang Fei Hong",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/huangfeihonggw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "ZodiacBingoGW",
+    "name": "Zodiac Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/zodiacbingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SweetieCrushGW",
+    "name": "Sweetie Crush",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sweetiecrushgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SilverHandGW",
+    "name": "Silver Hand",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/silverhandgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "PubgGW",
+    "name": "Pubg",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/pubggw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SourCandyGW",
+    "name": "Sour Candy",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sourcandygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "LoveLetterGW",
+    "name": "Love Letter",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/lovelettergw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "PandaChefGW",
+    "name": "Panda Chef",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/pandachefgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "LionOfTheEastGW",
+    "name": "Lion Of The East",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/lionoftheeastgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "MermaidTreasureGW",
+    "name": "Mermaid Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mermaidtreasuregw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SafariLife2GW",
+    "name": "Safari Life 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/safarilife2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "SweetToothGW",
+    "name": "Sweet Tooth",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sweettoothgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WarriorGW",
+    "name": "Warrior",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/warriorgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LeprechaunGW",
+    "name": "Leprechaun",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/leprechaungw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "DateWithMiyoGW",
+    "name": "Date With Miyo",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/datewithmiyogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "KrakenHunterGW",
+    "name": "Kraken Hunter",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/krakenhuntergw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WizardDeluxeGW",
+    "name": "Wizard Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wizarddeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "YehHsienDeluxeGW",
+    "name": "Yeh Hsien Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/yehhsiendeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HeistDeluxeGW",
+    "name": "Heist Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/heistdeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DiaDeLosMuertosDeluxeGW",
+    "name": "Dia De Los Muertos Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/diadelosmuertosdeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ZodiacDeluxeGW",
+    "name": "Zodiac Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/zodiacdeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BuccaneerDeluxeGW",
+    "name": "Buccaneer Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/buccaneerdeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OngBakDeluxeGW",
+    "name": "Ong Bak Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ongbakdeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CrittermaniaDeluxeGW",
+    "name": "Critter Mania Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/crittermaniadeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CursedDeluxeGW",
+    "name": "Cursed Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/curseddeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "AncientRomeDeluxeGW",
+    "name": "Ancient Rome Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ancientromedeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ShengXiaoBingoGW",
+    "name": "Sheng Xiao Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/shengxiaobingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FruitParadiseGW",
+    "name": "Fruit Paradise",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fruitparadisegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MajapahitGW",
+    "name": "Majapahit",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/majapahitgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "RomaLegacyGW",
+    "name": "Roma Legacy",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/romalegacygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PanJinLian2GW",
+    "name": "Pan Jin Lian 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/panjinlian2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TheLegendOfWhiteSnakeGW",
+    "name": "The Legend Of White Snake",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/thelegendofwhitesnakegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WealthGodGW",
+    "name": "Wealth God",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wealthgodgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LeagueOfLegendsGW",
+    "name": "League Of Legends",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/leagueoflegendsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Genie2GW",
+    "name": "Genie 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/genie2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WukongGW",
+    "name": "Wukong",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wukonggw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "YakuzaGW",
+    "name": "Yakuza",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/yakuzagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Roma",
+    "name": "Roma",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/roma.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": true
+  },
+  {
+    "code": "BaliGW",
+    "name": "Bali",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/baligw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "StreetsOfChicagoGW",
+    "name": "Streets Of Chicago",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/streetsofchicagogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Queen2GW",
+    "name": "Queen 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/queen2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ThreeKingdoms2GW",
+    "name": "Three Kingdoms 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/threekingdoms2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "AliceInWoderlandGW",
+    "name": "Alice In Wonderland",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/aliceinwoderlandgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SantaWorkshopGW",
+    "name": "Santa Workshop",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/santaworkshopgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BeachLifeGW",
+    "name": "Beach Life",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/beachlifegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OasisGW",
+    "name": "Oasis",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/oasisgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "RanchersWealthGW",
+    "name": "Ranchers Wealth",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/rancherswealthgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ScheherazadeGW",
+    "name": "Scheherazade",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/scheherazadegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "EnchantedForestGW",
+    "name": "Enchanted Forest",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/enchantedforestgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ImmortalsGW",
+    "name": "Immortals",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/immortalsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PharaohsTombGW",
+    "name": "Pharaoh's Tomb",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/pharaohstombgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FengHuangGW",
+    "name": "Feng Huang",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fenghuanggw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OngBak2GW",
+    "name": "Ong Bak 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ongbak2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TropicalCrushGW",
+    "name": "Tropical Crush",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/tropicalcrushgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BigGameSafariGW",
+    "name": "Big Game Safari",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/biggamesafarigw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GoldTrailGW",
+    "name": "Gold Trail",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldtrailgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MythologicalGW",
+    "name": "Mythological",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mythologicalgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ForestTreasuresGW",
+    "name": "Forest Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/foresttreasuresgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HauntedHouseGW",
+    "name": "Haunted House",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/hauntedhousegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ShaolinGW",
+    "name": "Shaolin",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/shaolingw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CaishenRichesBingoGW",
+    "name": "Caishen Riches Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/caishenrichesbingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ChilliHunterBingoGW",
+    "name": "Chilli Hunter Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chillihunterbingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CyberRaceGW",
+    "name": "Cyber Race",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/cyberracegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BountyHunterGW",
+    "name": "Bounty Hunter",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bountyhuntergw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OceanSprayGW",
+    "name": "Ocean Spray",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/oceanspraygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyStreakGW",
+    "name": "Lucky Streak",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckystreakgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "AztecTemple",
+    "name": "Aztec Temple",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/aztectemple.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FabulousEights",
+    "name": "Fabulous Eights",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fabulouseights.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FortuneFestivalGW",
+    "name": "Fortune Festival",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fortunefestivalgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ThugLifeGW",
+    "name": "Thug Life",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/thuglifegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TsaiShengGift",
+    "name": "Tsai Shen's Gift",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/tsaishenggift.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WinterSweets",
+    "name": "Winter Sweets",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wintersweets.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SuperStars",
+    "name": "Super Stars",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/superstars.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DragonsRealm",
+    "name": "Dragon's Realm",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dragonsrealm.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TigersLair",
+    "name": "Tiger's Lair",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/tigerslair.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyJoker",
+    "name": "Lucky Joker",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckyjoker.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MayanGems",
+    "name": "Mayan Gems",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mayangems.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FlamesOfFortune",
+    "name": "Flames Of Fortune",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/flamesoffortune.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FireReign",
+    "name": "Fire Reign",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/firereign.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BlackBeardLegacyGW",
+    "name": "Black Beard Legacy",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/blackbeardlegacygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "JokerMadnessGW",
+    "name": "Joker Madness",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/jokermadnessgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TheFourInventionGW",
+    "name": "The Four Invention",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/thefourinventiongw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MythicalSandGW",
+    "name": "Mythical Sand",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mythicalsandgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ClusterManiaGW",
+    "name": "Cluster Mania",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/clustermaniagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BurningPearlBingoGW",
+    "name": "Burning Pearl Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/burningpearlbingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "NeptuneTreasureBingoGW",
+    "name": "Neptune Treasure Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/neptunetreasurebingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CryptoManiaBingoGW",
+    "name": "Crypto Mania Bingo",
+    "category": "Bingo",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/cryptomaniabingogw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DragonOfTheEasternSeaGW",
+    "name": "Dragon Of The Eastern Sea",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dragonoftheeasternseagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "JourneyToTheWestGW",
+    "name": "Journey To The West",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/journeytothewestgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OctagonGem2GW",
+    "name": "Octagon Gem 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/octagongem2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Bagua2GW",
+    "name": "Bagua 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bagua2gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WildFairyGW",
+    "name": "Wild Fairies",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wildfairygw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ChilliHunterGW",
+    "name": "Chilli Hunter",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chillihuntergw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BaguaGW",
+    "name": "Bagua",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/baguagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "TaiShangLaoJunGW",
+    "name": "Tai Shang Lao Jun",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/taishanglaojungw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "YggdrasilGW",
+    "name": "Yggdrasil",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/yggdrasilgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LadyHawkGW",
+    "name": "Lady Hawk",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ladyhawkgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PeachBanquetGW",
+    "name": "Peach Banquet",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/peachbanquetgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "NezhaGW",
+    "name": "Third Prince's Journey",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/nezhagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WitchsBrewGW",
+    "name": "Witch's Brew",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/witchsbrewgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MoneyVaultGW",
+    "name": "Money Vault",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/moneyvaultgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BurningPearlGW",
+    "name": "Burning Pearl",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/burningpearlgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HorusEyeGW",
+    "name": "Horus Eye",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/horuseyegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LightningGodGW",
+    "name": "Lightning God",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/lightninggodgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "NeptuneTreasureGW",
+    "name": "Neptune Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/neptunetreasuregw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FourDragonsGW",
+    "name": "Four Dragons",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fourdragonsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WildGiantPandaGW",
+    "name": "Wild Giant Panda",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wildgiantpandagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ChinaGW",
+    "name": "China",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chinagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "AncientArtifactGW",
+    "name": "Ancient Artifact",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ancientartifactgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyRooster",
+    "name": "Lucky Rooster",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckyrooster.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "NuggetHunterGW",
+    "name": "Nugget Hunter",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/nuggethuntergw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "OctagonGemGW",
+    "name": "Octagon Gem",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/octagongemgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HotFruitsGW",
+    "name": "Hot Fruits",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/hotfruitsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FourTigersGW",
+    "name": "Four Tigers",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fourtigersgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DragonPowerFlameGW",
+    "name": "Dragon Power Flame",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dragonpowerflamegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "EmpressRegnantGW",
+    "name": "Empress Regnant",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/empressregnantgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LionsDanceGW",
+    "name": "Lions Dance",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/lionsdancegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Phoenix888GW",
+    "name": "Phoenix 888",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/phoenix888gw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ChineseBossGW",
+    "name": "Chinese Boss",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/chinesebossgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CryptoManiaGW",
+    "name": "Crypto Mania",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/cryptomaniagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BushidoBladeGW",
+    "name": "Bushido Blade",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bushidobladegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DynamiteReelsGW",
+    "name": "Dynamite Reels",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dynamitereelsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CaishenRichesGW",
+    "name": "Caishen Riches",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/caishenrichesgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "EnterTheKTVGW",
+    "name": "Enter The KTV",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/enterthektvgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WaterReel",
+    "name": "Water Reel",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/waterreel.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FireReel",
+    "name": "Fire Reel",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/firereel.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "RespinMania",
+    "name": "Respin Mania",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/respinmania.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "JinFuXingYun",
+    "name": "Jin Fu Xing Yun",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/jinfuxingyun.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "XuanPuLianHuan",
+    "name": "Xuan Pu Lian Huan",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/xuanpulianhuan.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "NiShuShenMe",
+    "name": "Ni Shu Shen Me",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/nishushenme.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FatChoyChoySun",
+    "name": "Fat Choy Choy Sun",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fatchoychoysun.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FHBH5",
+    "name": "Fish Haiba",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fhbh5.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FH2R0",
+    "name": "Fish Hunter 2 EX - Newbie",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fh2r0.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FH2R1",
+    "name": "Fish Hunter 2 EX - Novice",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fh2r1.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FH2R2",
+    "name": "Fish Hunter 2 EX - Pro",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fh2r2.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FH2R3",
+    "name": "Fish Hunter 2 EX - My Club",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fh2r3.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FSGF",
+    "name": "Fish Hunting: Golden Toad",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fsgf.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FSGF1",
+    "name": "Fish Hunting: Da Sheng Nao Hai",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fsgf1.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FSGF2",
+    "name": "Fish Hunting: Li Kui Pi Yu",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fsgf2.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishMoneyTree",
+    "name": "Fish Hunting: Yao Qian Shu",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishmoneytree.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FHMA",
+    "name": "Fish Hunter Monster Awaken",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fhma.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishSpongebob",
+    "name": "Fish Hunter Spongebob",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishspongebob.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishHunterHappyFish5",
+    "name": "Fish Hunting: Happy Fish 5",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishhunterhappyfish5.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishHunterInsectParadise",
+    "name": "Insect Paradise",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishhunterinsectparadise.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishermansWharf",
+    "name": "Fishermans Wharf",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishermanswharf.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FishHunterBirdHunter",
+    "name": "Bird Paradise",
+    "category": "Fishing",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fishhunterbirdhunter.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Tangkas",
+    "name": "Tangkas",
+    "category": "ECasino",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/tangkas.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PowerStarsGW",
+    "name": "Power Stars",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/powerstarsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BookOfRaDeluxeGW",
+    "name": "Book Of Ra Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bookofradeluxegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DolphinPearlGW",
+    "name": "Dolphin's Pearl Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dolphinpearlgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DolphinTreasureGW",
+    "name": "Dolphin Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dolphintreasuregw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FiftyLionsGW",
+    "name": "Fifty Lions",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fiftylionsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SizzlingHotGW",
+    "name": "Sizzling Hot",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sizzlinghotgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "QueenOfTheNileGW",
+    "name": "Queen Of The Nile",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/queenofthenilegw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GeishaGW",
+    "name": "Geisha",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/geishagw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LordOfTheOceanGW",
+    "name": "Lord Of The Ocean",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/lordoftheoceangw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyLadyCharmGW",
+    "name": "Lucky Lady Charm",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckyladycharmgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BookOfRaGW",
+    "name": "Book Of Ra",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bookofragw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FiftyDragonsGW",
+    "name": "Fifty Dragons",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fiftydragonsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ColumbusGW",
+    "name": "Columbus",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/columbusgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "JustJewelsGW",
+    "name": "Just Jewels Deluxe",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/justjewelsgw.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "EgyptQueen",
+    "name": "Egypt Queen",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/egyptqueen.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DragonPhoenix",
+    "name": "Dragon Phoenix",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dragonphoenix.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "JungleIsland",
+    "name": "Jungle Island",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/jungleisland.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WaterMargin",
+    "name": "Water Margin",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/watermargin.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GodOfFortunePlus",
+    "name": "Lucky God Progressive",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/godoffortuneplus.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "AncientEgypt",
+    "name": "Ancient Egypt",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/ancientegypt.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "RobinHood",
+    "name": "Robin Hood",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/robinhood.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HighwayKingsPro",
+    "name": "HighwayKings JP",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/highwaykingspro.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Miami",
+    "name": "Miami",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/miami.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Caishen",
+    "name": "Supreme Caishen",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/caishen.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SilverBulletPlus",
+    "name": "SilverBullet Progressive",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/silverbulletplus.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CaptainsTreasurePlus",
+    "name": "Captains Treasure Progressive",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/captainstreasureplus.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GodOfFortunePlus2",
+    "name": "Lucky God Progressive 2",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/godoffortuneplus2.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WhiteSnake",
+    "name": "White Snake",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/whitesnake.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Alice",
+    "name": "Alice",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/alice.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Mammamia",
+    "name": "Mammamia",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mammamia.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Huga",
+    "name": "Huga",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/huga.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Beanstalk",
+    "name": "Beanstalk",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/beanstalk.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MoneyBangBang",
+    "name": "MoneyBangBang",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/moneybangbang.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PanJinLian",
+    "name": "Pan Jin Lian",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/panjinlian.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Sanguo",
+    "name": "Three Kingdoms Quest",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sanguo.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Leishen",
+    "name": "Thunder God",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/leishen.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "MonkeyKing",
+    "name": "Monkey King",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/monkeyking.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GenieHuga",
+    "name": "Aladdin",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/geniehuga.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GoldenIsland",
+    "name": "Golden Island",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldenisland.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Mulan",
+    "name": "Mulan",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/mulan.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HappyBuddha",
+    "name": "Happy Buddha",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/happybuddha.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GoldenRooster",
+    "name": "Golden Rooster",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldenrooster.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "WildSpirit",
+    "name": "Wild Spirit",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/wildspirit.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ArcticTreasure",
+    "name": "Arctic Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/arctictreasure.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ZhaoCaiJinBao",
+    "name": "Zhao Cai Jin Bao",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/zhaocaijinbao.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FeiLongZaiTian",
+    "name": "Fei Long Zai Tian",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/feilongzaitian.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SantaSurprise",
+    "name": "Santa Surprise",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/santasurprise.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "FiveTigerGenerals",
+    "name": "Five Tiger Generals",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/fivetigergenerals.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GoldenDragon",
+    "name": "Golden Dragon",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldendragon.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyDrum",
+    "name": "Lucky Drum",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckydrum.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "LuckyPanda",
+    "name": "Lucky Panda",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/luckypanda.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Queen",
+    "name": "Queen",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/queen.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Archer",
+    "name": "Archer",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/archer.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Hercules",
+    "name": "Hercules",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/hercules.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GodOfFortune",
+    "name": "Lucky God",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/godoffortune.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Dolphin",
+    "name": "Ocean Paradise",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dolphin.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HappyParty",
+    "name": "Happy Party",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/happyparty.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GoldenMonkeyKing",
+    "name": "Golden Monkey King",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/goldenmonkeyking.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SafariHeat",
+    "name": "Safari Heat",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/safariheat.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "PantherMoon",
+    "name": "Panther Moon",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/panthermoon.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ThaiParadise",
+    "name": "Thai Paradise",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/thaiparadise.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Aladdin",
+    "name": "Genie",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/aladdin.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "African",
+    "name": "Safari Life",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/african.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "ANightOut",
+    "name": "A Night Out",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/anightout.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "SilverBullet",
+    "name": "Silver Bullet",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/silverbullet.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CaptainsTreasure",
+    "name": "Captain's Treasure",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/captainstreasure.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "BonusBear",
+    "name": "Bonus Bear",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/bonusbear.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "CaptainsTreasurePro",
+    "name": "Captain's Treasure Pro",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/captainstreasurepro.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "DolphinReef",
+    "name": "Dolphin Reef",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/dolphinreef.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "HighwayKings",
+    "name": "Highway Kings",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/highwaykings.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Sparta",
+    "name": "Sparta",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/sparta.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Azteca",
+    "name": "Azteca",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/azteca.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "GreatBlue",
+    "name": "Great Blue",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/greatblue.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  },
+  {
+    "code": "Football",
+    "name": "Football Rules",
+    "category": "Slot",
+    "image": "//dl.zhenwudadi.net/images/desktop_70/landscape/football.png",
+    "isNew": false,
+    "isHot": false,
+    "isRecommend": false
+  }
+]
