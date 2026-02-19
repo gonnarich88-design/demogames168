@@ -774,7 +774,8 @@ async function resolvePPGameUrl(slug) {
   return { proxyPath, demoUrl };
 }
 
-// GET /play/pp/:slug — resolve PP game and redirect to proxied demo
+// GET /play/pp/:slug — resolve PP game and redirect to PP demo URL (direct, no proxy)
+// PP returns "Invalid Parameter" when game runs via proxy (origin check). Direct redirect fixes it.
 app.get('/play/pp/:slug', async (req, res) => {
   const slug = req.params.slug;
   console.log(`[PLAY] Resolving PP game "${slug}"`);
@@ -784,7 +785,8 @@ app.get('/play/pp/:slug', async (req, res) => {
       const q = new URLSearchParams({ id: slug, provider: 'pp', error: result.error });
       return res.redirect(302, '/game.html?' + q.toString());
     }
-    res.redirect(302, result.proxyPath);
+    // Redirect to PP demo URL directly so game runs on PP domain (avoids Invalid Parameter)
+    res.redirect(302, result.demoUrl);
   } catch (err) {
     console.error('[PLAY-PP] Error:', err.message);
     const q = new URLSearchParams({ id: slug, provider: 'pp', error: 'Failed to resolve: ' + err.message });
