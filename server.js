@@ -823,15 +823,26 @@ function httpsGetInsecure(targetUrl) {
 }
 
 async function resolvePPGameUrl(slug) {
-  const ppPageUrl = `https://www.pragmaticplay.com/en/games/${slug}/?gamelang=en&cur=THB`;
+  let ppPageUrl = `https://www.pragmaticplay.com/en/games/${slug}/?gamelang=en&cur=THB`;
   console.log(`[PP-RESOLVE] Fetching ${ppPageUrl}`);
-  const resp = await httpsGetInsecure(ppPageUrl);
+
+  const maxRedirects = 5;
+  let resp;
+  for (let i = 0; i < maxRedirects; i++) {
+    resp = await httpsGetInsecure(ppPageUrl);
+    if ((resp.statusCode === 301 || resp.statusCode === 302) && resp.headers.location) {
+      const loc = resp.headers.location;
+      ppPageUrl = loc.startsWith('http') ? loc : new URL(loc, ppPageUrl).href;
+      console.log(`[PP-RESOLVE] Following ${resp.statusCode} → ${ppPageUrl}`);
+      continue;
+    }
+    break;
+  }
 
   if (resp.statusCode >= 400) {
     return { error: `PP returned status ${resp.statusCode}` };
   }
 
-  // Extract data-game-src from the iframe
   const srcMatch = resp.body.match(/data-game-src="([^"]+)"/i);
   if (!srcMatch) {
     return { error: 'Could not find demo game URL on PP page' };
