@@ -216,7 +216,7 @@
     card.className = 'game-card' + (hasRealImage ? '' : ' game-card--logo-placeholder');
 
     let imgSrc = hasRealImage ? game.image : providerLogoUrl;
-    if (hasRealImage && game.image.indexOf('http') === 0) {
+    if (hasRealImage && game.image.indexOf('http') === 0 && game.image.indexOf('pragmaticplay.com') !== -1) {
       imgSrc = '/api/proxy-image?url=' + encodeURIComponent(game.image);
     }
 
