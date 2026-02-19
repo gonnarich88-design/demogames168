@@ -1,133 +1,469 @@
 [
   {
-    "slug": "gates-of-olympus",
-    "name": "Gates of Olympus",
+    "slug": "5-lions-dance",
+    "name": "5 Lions Dance",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "sweet-bonanza",
-    "name": "Sweet Bonanza",
+    "slug": "aztec-gems-deluxe-slot",
+    "name": "Aztec Gems Deluxe",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "starlight-princess",
-    "name": "Starlight Princess",
+    "slug": "jungle-gorilla-slot",
+    "name": "Jungle Gorilla",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "sugar-rush",
-    "name": "Sugar Rush",
+    "slug": "ultra-hold-and-spin-slot",
+    "name": "Ultra Hold And Spin",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "the-dog-house",
-    "name": "The Dog House",
+    "slug": "star-bounty-slot",
+    "name": "Star Bounty",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "big-bass-bonanza",
-    "name": "Big Bass Bonanza",
+    "slug": "wild-wild-riches-slot",
+    "name": "Wild Wild Riches",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "wolf-gold",
-    "name": "Wolf Gold",
+    "slug": "wild-walker-slot",
+    "name": "Wild Walker",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "great-rhino-megaways",
-    "name": "Great Rhino Megaways",
+    "slug": "starz-megaways-slot",
+    "name": "Starz Megaways",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "fruit-party",
-    "name": "Fruit Party",
+    "slug": "three-star-fortune-slot",
+    "name": "Three Star Fortune",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "john-hunter-and-the-tomb-of-the-scarab-queen",
-    "name": "John Hunter and the Tomb of the Scarab Queen",
+    "slug": "pyramid-king-slot",
+    "name": "Pyramid King",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "aztec-gems",
+    "slug": "street-racer-slot",
+    "name": "Street Racer",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mysterious-slot",
+    "name": "Mysterious",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-bonanza-slot",
+    "name": "Aztec Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-wild-machine-slot",
+    "name": "The Wild Machine",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dance-party-slot",
+    "name": "Dance Party",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fruit-rainbow-slot",
+    "name": "Fruit Rainbow",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "money-mouse-slot",
+    "name": "Money Mouse",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "master-joker-slot",
+    "name": "Master Joker",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "magic-journey-slot",
+    "name": "Magic Journey",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "greek-gods-slot",
+    "name": "Greek Gods",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hercules-and-pegasus-slot",
+    "name": "Hercules And Pegasus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-strike-slot",
+    "name": "Fire Strike",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "super-joker-slot",
+    "name": "Super Joker",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-tomb-of-the-scarab-queen-slot",
+    "name": "John Hunter And The Tomb Of The Scarab Queen",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tree-of-riches-slot",
+    "name": "Tree Of Riches",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-great-chicken-escape-slot",
+    "name": "The Great Chicken Escape",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-chilli-slot",
+    "name": "Hot Chilli",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "vampires-vs-wolves-slot",
+    "name": "Vampires Vs Wolves",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-aztec-treasure-slot",
+    "name": "John Hunter And The Aztec Treasure",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "triple-jokers-slot",
+    "name": "Triple Jokers",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "caishens-cash-slot",
+    "name": "Caishens Cash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pirate-gold-slot",
+    "name": "Pirate Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-pixies-slot",
+    "name": "Wild Pixies",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "egyptian-fortunes-slot",
+    "name": "Egyptian Fortunes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "extra-juicy-slot",
+    "name": "Extra Juicy",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "treasure-horse-slot",
+    "name": "Treasure Horse",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "leprechaun-carol-slot",
+    "name": "Leprechaun Carol",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "triple-dragons-slot",
+    "name": "Triple Dragons",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "vegas-magic-slot",
+    "name": "Vegas Magic",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ancient-egypt-classic-slot",
+    "name": "Ancient Egypt Classic",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "master-chens-fortune-slot",
+    "name": "Master Chens Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "leprechaun-song-slot",
+    "name": "Leprechaun Song",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "peking-luck-slot",
+    "name": "Peking Luck",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "madame-destiny-slot",
+    "name": "Madame Destiny",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jade-butterfly-slot",
+    "name": "Jade Butterfly",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-champions-slot",
+    "name": "The Champions",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "asgard-slot",
+    "name": "Asgard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "88-fire-slot",
+    "name": "88 Fire",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-gems-slot",
     "name": "Aztec Gems",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "wild-west-gold",
-    "name": "Wild West Gold",
+    "slug": "fairytale-fortune-slot",
+    "name": "Fairytale Fortune",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "gates-of-olympus-1000",
-    "name": "Gates of Olympus 1000",
+    "slug": "lucky-new-year-slot",
+    "name": "Lucky New Year",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "sweet-bonanza-1000",
-    "name": "Sweet Bonanza 1000",
+    "slug": "ancient-egypt-slot",
+    "name": "Ancient Egypt",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "starlight-princess-1000",
-    "name": "Starlight Princess 1000",
+    "slug": "gold-rush-slot",
+    "name": "Gold Rush",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "sugar-rush-1000",
-    "name": "Sugar Rush 1000",
+    "slug": "triple-tigers-slot",
+    "name": "Triple Tigers",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "the-dog-house-megaways",
-    "name": "The Dog House Megaways",
+    "slug": "monkey-madness-slot",
+    "name": "Monkey Madness",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "big-bass-splash",
-    "name": "Big Bass Splash",
+    "slug": "pandas-fortune-slot",
+    "name": "Pandas Fortune",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "gems-bonanza",
-    "name": "Gems Bonanza",
+    "slug": "santa-slot",
+    "name": "Santa",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "mustang-gold",
-    "name": "Mustang Gold",
+    "slug": "7-piggies-slot",
+    "name": "7 Piggies",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "madame-destiny-megaways",
-    "name": "Madame Destiny Megaways",
+    "slug": "vegas-nights-slot",
+    "name": "Vegas Nights",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "release-the-kraken-2",
-    "name": "Release the Kraken 2",
+    "slug": "caishens-gold-slot",
+    "name": "Caishens Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-spells-slot",
+    "name": "Wild Spells",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "888-dragons-slot",
+    "name": "888 Dragons",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gold-train-slot",
+    "name": "Gold Train",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "return-of-the-dead",
+    "name": "Return Of The Dead",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pirate-gold-deluxe",
+    "name": "Pirate Gold Deluxe",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cowboys-gold",
+    "name": "Cowboys Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spartan-king",
+    "name": "Spartan King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mysterious-egypt",
+    "name": "Mysterious Egypt",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "voodoo-magic",
+    "name": "Voodoo Magic",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "congo-cash",
+    "name": "Congo Cash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "eye-of-the-storm",
+    "name": "Eye Of The Storm",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-hand-of-midas",
+    "name": "The Hand Of Midas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "joker-king",
+    "name": "Joker King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fishin-reels",
+    "name": "Fishin Reels",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "temujin-treasures",
+    "name": "Temujin Treasures",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "super-7s-slot",
+    "name": "Super 7s",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "power-of-thor-megaways",
+    "name": "Power Of Thor Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-booster",
+    "name": "Wild Booster",
     "category": "Slot",
     "image": ""
   },
@@ -138,26 +474,338 @@
     "image": ""
   },
   {
-    "slug": "floating-dragon",
-    "name": "Floating Dragon",
+    "slug": "phoenix-forge",
+    "name": "Phoenix Forge",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "buffalo-king-megaways",
-    "name": "Buffalo King Megaways",
+    "slug": "cash-elevator",
+    "name": "Cash Elevator",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "power-of-thor-megaways",
-    "name": "Power of Thor Megaways",
+    "slug": "heart-of-rio",
+    "name": "Heart Of Rio",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "5-lions-megaways",
-    "name": "5 Lions Megaways",
+    "slug": "lucky-lightning",
+    "name": "Lucky Lightning",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "panda-fortune-2",
+    "name": "Panda Fortune 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "empty-the-bank",
+    "name": "Empty The Bank",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-grace-and-charm",
+    "name": "Lucky Grace And Charm",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tales-of-egypt-slot",
+    "name": "Tales Of Egypt",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "great-reef-slot",
+    "name": "Great Reef",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "glorious-rome-slot",
+    "name": "Glorious Rome",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dwarven-gold-slot-2",
+    "name": "Dwarven Gold Slot 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lady-of-the-moon-slot",
+    "name": "Lady Of The Moon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aladdins-treasure-slot",
+    "name": "Aladdins Treasure",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hockey-league-slot",
+    "name": "Hockey League",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "magic-crystals-slot",
+    "name": "Magic Crystals",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-catfather-slot",
+    "name": "The Catfather",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lady-godiva-slot",
+    "name": "Lady Godiva",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mighty-kong-slot",
+    "name": "Mighty Kong",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hockey-league-wild-match-slot",
+    "name": "Hockey League Wild Match",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "7-monkeys-slot",
+    "name": "7 Monkeys",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "romeo-and-juliet-slot",
+    "name": "Romeo And Juliet",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-catfather-part-slot",
+    "name": "The Catfather Part",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-dragons-slot",
+    "name": "Lucky Dragons",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "journey-to-the-west-slot",
+    "name": "Journey To The West",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "3-genie-wishes-slot",
+    "name": "3 Genie Wishes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-kingdom-slot",
+    "name": "Dragon Kingdom",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hercules-son-zeus-slot",
+    "name": "Hercules Son Zeus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "888-gold-slot",
+    "name": "888 Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "irish-charms-slot",
+    "name": "Irish Charms",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "queen-of-atlantis-slot",
+    "name": "Queen Of Atlantis",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "panther-queen-slot",
+    "name": "Panther Queen",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "3-kingdoms-battle-of-red-cliffs-slot",
+    "name": "3 Kingdoms Battle Of Red Cliffs",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mustang-gold-slot",
+    "name": "Mustang Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "safari-king-slot",
+    "name": "Safari King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-gladiators-slot",
+    "name": "Wild Gladiators",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "8-dragons-slot",
+    "name": "8 Dragons",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bigger-bass-bonanza",
+    "name": "Bigger Bass Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "treasure-wild",
+    "name": "Treasure Wild",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "christmas-carol-megaways",
+    "name": "Christmas Carol Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "curse-of-the-werewolf-megaways-slot",
+    "name": "Curse Of The Werewolf Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "diamonds-are-forever-3-lines-slot",
+    "name": "Diamonds Are Forever 3 Lines",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "drago-jewels-of-fortune-slot",
+    "name": "Drago Jewels Of Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-hot-hold-and-spin",
+    "name": "Dragon Hot Hold And Spin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-kingdom-eyes-of-fire",
+    "name": "Dragon Kingdom Eyes Of Fire",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-hold-and-spin",
+    "name": "Floating Dragon Hold And Spin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-book-of-tut-slot",
+    "name": "John Hunter And The Book Of Tut",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-mayan-gods",
+    "name": "John Hunter And The Mayan Gods",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-amazing-money-machine",
+    "name": "The Amazing Money Machine",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-magic-cauldron-enchanted-brew",
+    "name": "The Magic Cauldron Enchanted Brew",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "piggy-bank-bills",
+    "name": "Piggy Bank Bills",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mystic-chief",
+    "name": "Mystic Chief",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cash-bonanza",
+    "name": "Cash Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "day-of-dead",
+    "name": "Day Of Dead",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "star-pirates-code",
+    "name": "Star Pirates Code",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-juan",
+    "name": "Big Juan",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bounty-gold",
+    "name": "Bounty Gold",
     "category": "Slot",
     "image": ""
   },
@@ -168,14 +816,2576 @@
     "image": ""
   },
   {
-    "slug": "sweet-bonanza-xmas",
-    "name": "Sweet Bonanza Xmas",
+    "slug": "super-x",
+    "name": "Super X",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "book-of-fallen",
-    "name": "Book of Fallen",
+    "slug": "christmas-big-bass-bonanza",
+    "name": "Christmas Big Bass Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "crystal-caverns-megaways",
+    "name": "Crystal Caverns Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "magicians-secrets",
+    "name": "Magicians Secrets",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "santas-wonderland",
+    "name": "Santas Wonderland",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "smugglers-cove",
+    "name": "Smugglers Cove",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gold-party",
+    "name": "Gold Party",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-the-fallen",
+    "name": "Book Of The Fallen",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rock-vegas",
+    "name": "Rock Vegas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-depths",
+    "name": "Wild Depths",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gates-of-valhalla",
+    "name": "Gates Of Valhalla",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-ultimate-5",
+    "name": "The Ultimate 5",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "elemental-gems-megaways",
+    "name": "Elemental Gems Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "might-of-ra",
+    "name": "Might Of Ra",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "snakes-and-ladders-megadice",
+    "name": "Snakes And Ladders Megadice",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "extra-juicy-megaways",
+    "name": "Extra Juicy Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "queenie",
+    "name": "Queenie",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-beach-party",
+    "name": "Wild Beach Party",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "drill-that-gold",
+    "name": "Drill That Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rainbow-gold",
+    "name": "Rainbow Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tic-tac-take",
+    "name": "Tic Tac Take",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "barn-festival",
+    "name": "Barn Festival",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "eye-of-cleopatra",
+    "name": "Eye Of Cleopatra",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wolf-gold-scratchcard",
+    "name": "Wolf Gold Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gold-rush-scratchcard",
+    "name": "Gold Rush Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "queen-of-gold-scratchcard",
+    "name": "Queen Of Gold Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-safari-scratchcard",
+    "name": "Hot Safari Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "panda-gold-scratchcard",
+    "name": "Panda Gold Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "7-piggies-scratchcard",
+    "name": "7 Piggies Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "diamond-strike-scratchcard",
+    "name": "Diamond Strike Scratchcard",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "clover-gold",
+    "name": "Clover Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spirit-of-adventure",
+    "name": "Spirit Of Adventure",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "north-guardians",
+    "name": "North Guardians",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-strike-2",
+    "name": "Fire Strike 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chicken-chase",
+    "name": "Chicken Chase",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-great-stick-up",
+    "name": "The Great Stick Up",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "little-gem",
+    "name": "Little Gem",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "zombie-carnival",
+    "name": "Zombie Carnival",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fortune-of-giza",
+    "name": "Fortune Of Giza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "queen-of-gods",
+    "name": "Queen Of Gods",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cash-patrol",
+    "name": "Cash Patrol",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bomb-bonanza",
+    "name": "Bomb Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cosmic-cash",
+    "name": "Cosmic Cash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "shining-hot-5",
+    "name": "Shining Hot 5",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "shining-hot-20",
+    "name": "Shining Hot 20",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "shining-hot-40",
+    "name": "Shining Hot 40",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "shining-hot-100",
+    "name": "Shining Hot 100",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tropical-tiki",
+    "name": "Tropical Tiki",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "magic-money-maze",
+    "name": "Magic Money Maze",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gorilla-mayhem",
+    "name": "Gorilla Mayhem",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "greedy-wolf",
+    "name": "Greedy Wolf",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-hot-5",
+    "name": "Fire Hot 5",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-hot-20",
+    "name": "Fire Hot 20",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-hot-40",
+    "name": "Fire Hot 40",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-hot-100",
+    "name": "Fire Hot 100",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "down-the-rails",
+    "name": "Down The Rails",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "octobeer-fortunes",
+    "name": "Octobeer Fortunes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "happy-hooves",
+    "name": "Happy Hooves",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dwarven-gold-deluxe-slot",
+    "name": "Dwarven Gold Deluxe",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "striking-hot-5",
+    "name": "Striking Hot 5",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-golden-sands",
+    "name": "Book Of Golden Sands",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "crown-of-fire",
+    "name": "Crown Of Fire",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-hopdrop",
+    "name": "Wild Hopdrop",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-megaways",
+    "name": "Floating Dragon Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-blaze",
+    "name": "Aztec Blaze",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "black-bull",
+    "name": "Black Bull",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pirate-golden-age",
+    "name": "Pirate Golden Age",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "firebird-spirit",
+    "name": "Firebird Spirit",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "muertos-multiplier-megaways",
+    "name": "Muertos Multiplier Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "candy-stars",
+    "name": "Candy Stars",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-keeping-it-reel",
+    "name": "Big Bass Keeping It Reel",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-quest-for-bermuda-riches",
+    "name": "John Hunter And The Quest For Bermuda Riches",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sword-of-ares",
+    "name": "Sword Of Ares",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "towering-fortunes",
+    "name": "Towering Fortunes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spin-score-megaways",
+    "name": "Spin Score Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-safari-slot",
+    "name": "Hot Safari",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "release-the-kraken-2",
+    "name": "Release The Kraken 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-to-burn-extreme",
+    "name": "Hot To Burn Extreme",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-west-gold-megaways",
+    "name": "Wild West Gold Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cleocatra",
+    "name": "Cleocatra",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "goblin-heist-powernudge",
+    "name": "Goblin Heist Powernudge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "colossal-cash-zone",
+    "name": "Colossal Cash Zone",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "yum-yum-powerways",
+    "name": "Yum Yum Powerways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chilli-heat-megaways",
+    "name": "Chilli Heat Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rise-of-giza-powernudge",
+    "name": "Rise Of Giza Powernudge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chicken-drop",
+    "name": "Chicken Drop",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-vikings",
+    "name": "Book Of Vikings",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-to-burn-hold-and-spin",
+    "name": "Hot To Burn Hold And Spin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "emerald-king-rainbow-road",
+    "name": "Emerald King Rainbow Road",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-kingdoms",
+    "name": "Book Of Kingdoms",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gems-bonanza",
+    "name": "Gems Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "emerald-king-slot",
+    "name": "Emerald King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "great-rhino-deluxe-slot",
+    "name": "Great Rhino Deluxe",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ultra-burn-slot",
+    "name": "Ultra Burn",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-to-burn-slot",
+    "name": "Hot To Burn",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "great-rhino-megaways-slot",
+    "name": "Great Rhino Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "release-the-kraken-slot",
+    "name": "Release The Kraken",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "great-rhino-slot",
+    "name": "Great Rhino",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chilli-heat-slot",
+    "name": "Chilli Heat",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "diamond-strike-slot",
+    "name": "Diamond Strike",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pixie-wings-slot",
+    "name": "Pixie Wings",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jurassic-giants-slot",
+    "name": "Jurassic Giants",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wolf-gold-slot",
+    "name": "Wolf Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-the-book-of-tut-respin",
+    "name": "John Hunter And The Book Of Tut Respin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "shield-of-sparta",
+    "name": "Shield Of Sparta",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gems-of-serengeti",
+    "name": "Gems Of Serengeti",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "santas-great-gifts",
+    "name": "Santas Great Gifts",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "snakes-ladders-snake-eyes",
+    "name": "Snakes Ladders Snake Eyes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fury-of-odin-megaways",
+    "name": "Fury Of Odin Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "reel-banks",
+    "name": "Reel Banks",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-pepper",
+    "name": "Hot Pepper",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pizza-pizza-pizza",
+    "name": "Pizza Pizza Pizza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-powernudge",
+    "name": "Sweet Powernudge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "starlight-christmas",
+    "name": "Starlight Christmas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-hero",
+    "name": "Dragon Hero",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wild-bananas",
+    "name": "Wild Wild Bananas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pinup-girls",
+    "name": "Pinup Girls",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "secret-city-gold",
+    "name": "Secret City Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fish-eye",
+    "name": "Fish Eye",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mammoth-gold-megaways",
+    "name": "Mammoth Gold Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "monster-superlanche",
+    "name": "Monster Superlanche",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-archer",
+    "name": "Fire Archer",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "club-tropicana",
+    "name": "Club Tropicana",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "peak-power",
+    "name": "Peak Power",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-multihold",
+    "name": "The Dog House Multihold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cowboy-coins",
+    "name": "Cowboy Coins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mochimon",
+    "name": "Mochimon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jasmine-dreams",
+    "name": "Jasmine Dreams",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-knight-king",
+    "name": "The Knight King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rabbit-garden",
+    "name": "Rabbit Garden",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-hold-spinner",
+    "name": "Big Bass Hold Spinner",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bigger-bass-blizzard-christmas-catch",
+    "name": "Bigger Bass Blizzard Christmas Catch",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-red-queen",
+    "name": "The Red Queen",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gods-of-giza",
+    "name": "Gods Of Giza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "african-elephant",
+    "name": "African Elephant",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-celebrity-bus-megaways",
+    "name": "Wild Celebrity Bus Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "kingdom-of-the-dead",
+    "name": "Kingdom Of The Dead",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "excalibur-unleashed",
+    "name": "Excalibur Unleashed",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-bison-charge",
+    "name": "Wild Bison Charge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "knight-hot-spotz",
+    "name": "Knight Hot Spotz",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "diamonds-of-egypt",
+    "name": "Diamonds Of Egypt",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lamp-of-infinity",
+    "name": "Lamp Of Infinity",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jewel-rush",
+    "name": "Jewel Rush",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "zeus-vs-hades-gods-of-war",
+    "name": "Zeus Vs Hades Gods Of War",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sticky-bees",
+    "name": "Sticky Bees",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pirates-pub",
+    "name": "Pirates Pub",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "country-farming",
+    "name": "Country Farming",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fat-panda",
+    "name": "Fat Panda",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-amazon-xtreme",
+    "name": "Big Bass Amazon Xtreme",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "heist-for-the-golden-nuggets",
+    "name": "Heist For The Golden Nuggets",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spellbinding-mystery",
+    "name": "Spellbinding Mystery",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cash-box",
+    "name": "Cash Box",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "power-of-merlin-megaways",
+    "name": "Power Of Merlin Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wisdom-of-athena",
+    "name": "Wisdom Of Athena",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "3-buzzing-wilds",
+    "name": "3 Buzzing Wilds",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lobster-bobs-crazy-crab-shack",
+    "name": "Lobster Bobs Crazy Crab Shack",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hellvis-wild",
+    "name": "Hellvis Wild",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sky-bounty",
+    "name": "Sky Bounty",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "diamond-cascade",
+    "name": "Diamond Cascade",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "juicy-fruits",
+    "name": "Juicy Fruits",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rocket-blast-megaways",
+    "name": "Rocket Blast Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "piggy-bankers",
+    "name": "Piggy Bankers",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pub-kings",
+    "name": "Pub Kings",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "forge-of-olympus",
+    "name": "Forge Of Olympus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jane-hunter-and-the-mask-of-montezuma",
+    "name": "Jane Hunter And The Mask Of Montezuma",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-dragon-boat-festival",
+    "name": "Floating Dragon Dragon Boat Festival",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-hold-spinner-megaways",
+    "name": "Big Bass Hold Spinner Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mustang-trail",
+    "name": "Mustang Trail",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "candy-blitz",
+    "name": "Candy Blitz",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "frozen-tropics",
+    "name": "Frozen Tropics",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-tut-megaways",
+    "name": "Book Of Tut Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cyclops-smash",
+    "name": "Cyclops Smash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "8-golden-dragon-challenge",
+    "name": "8 Golden Dragon Challenge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fortunes-of-aztec",
+    "name": "Fortunes Of Aztec",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gold-oasis",
+    "name": "Gold Oasis",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rainbow-reels",
+    "name": "Rainbow Reels",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gravity-bonanza",
+    "name": "Gravity Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "twilight-princess",
+    "name": "Twilight Princess",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "demon-pots",
+    "name": "Demon Pots",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cash-chips",
+    "name": "Cash Chips",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-crash",
+    "name": "Big Bass Crash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tundras-fortune",
+    "name": "Tundras Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "infective-wild",
+    "name": "Infective Wild",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-halloween",
+    "name": "Big Bass Halloween",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-money-men-megaways",
+    "name": "The Money Men Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "starlight-princess-1000",
+    "name": "Starlight Princess 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "viking-forge",
+    "name": "Viking Forge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "timber-stacks",
+    "name": "Timber Stacks",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chase-for-glory",
+    "name": "Chase For Glory",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "nile-fortune",
+    "name": "Nile Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sugar-supreme-powernudge",
+    "name": "Sugar Supreme Powernudge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-wild-gang",
+    "name": "The Wild Gang",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-christmas-bash",
+    "name": "Big Bass Christmas Bash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-frozen-charms-megaways",
+    "name": "5 Frozen Charms Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sugar-rush-xmas",
+    "name": "Sugar Rush Xmas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ding-dong-christmas-bells",
+    "name": "Ding Dong Christmas Bells",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-new-year-festival-ultra-megaways-hold-spin",
+    "name": "Floating Dragon New Year Festival Ultra Megaways Hold Spin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-stampede",
+    "name": "Fire Stampede",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gates-of-olympus-1000",
+    "name": "Gates Of Olympus 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "juicy-fruits-multihold",
+    "name": "Juicy Fruits Multihold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-big-dawgs",
+    "name": "The Big Dawgs",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "castle-of-fire",
+    "name": "Castle Of Fire",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "candy-jar-clusters",
+    "name": "Candy Jar Clusters",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "year-of-the-dragon-king",
+    "name": "Year Of The Dragon King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "blade-fangs",
+    "name": "Blade Fangs",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "blazing-wilds-megaways",
+    "name": "Blazing Wilds Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lokis-riches",
+    "name": "Lokis Riches",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "red-hot-luck",
+    "name": "Red Hot Luck",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "good-luck-good-fortune",
+    "name": "Good Luck Good Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "trees-of-treasure",
+    "name": "Trees Of Treasure",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-alter-ego",
+    "name": "The Alter Ego",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pompeii-megareels-megaways",
+    "name": "Pompeii Megareels Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-floats-my-boat",
+    "name": "Big Bass Floats My Boat",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "strawberry-cocktail",
+    "name": "Strawberry Cocktail",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mighty-munching-melons",
+    "name": "Mighty Munching Melons",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wheel-ogold",
+    "name": "Wheel Ogold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gears-of-horus",
+    "name": "Gears Of Horus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-day-at-the-races",
+    "name": "Big Bass Day At The Races",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "beware-the-deep-megaways",
+    "name": "Beware The Deep Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pot-of-fortune",
+    "name": "Pot Of Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-portals",
+    "name": "Fire Portals",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-burger-load-it-up-with-xtra-cheese",
+    "name": "Big Burger Load It Up With Xtra Cheese",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-dog-or-alive",
+    "name": "The Dog House Dog Or Alive",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ripe-rewards",
+    "name": "Ripe Rewards",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-powernudge",
+    "name": "Aztec Powernudge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ice-lobster",
+    "name": "Ice Lobster",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-secrets-of-the-golden-lake",
+    "name": "Big Bass Secrets Of The Golden Lake",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "barnyard-megahays-megaways",
+    "name": "Barnyard Megahays Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lobster-bobs-sea-food-and-win-it",
+    "name": "Lobster Bobs Sea Food And Win It",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "release-the-bison",
+    "name": "Release The Bison",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "candy-blitz-bombs",
+    "name": "Candy Blitz Bombs",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fruity-treats",
+    "name": "Fruity Treats",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "heart-of-cleopatra",
+    "name": "Heart Of Cleopatra",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dwarf-dragon",
+    "name": "Dwarf Dragon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rise-of-pyramids",
+    "name": "Rise Of Pyramids",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "heroic-spins",
+    "name": "Heroic Spins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-bonanza-reel-action",
+    "name": "Big Bass Bonanza Reel Action",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "starlight-princess-pachi",
+    "name": "Starlight Princess Pachi",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "revenge-of-loki-megaways",
+    "name": "Revenge Of Loki Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wildies",
+    "name": "Wildies",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "devilicious",
+    "name": "Devilicious",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hand-of-midas-2",
+    "name": "Hand Of Midas 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "buffalo-king-untamed-megaways",
+    "name": "Buffalo King Untamed Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-mission-fishin",
+    "name": "Big Bass Mission Fishin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-kingdom",
+    "name": "Sweet Kingdom",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "crank-it-up",
+    "name": "Crank It Up",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "samurai-code",
+    "name": "Samurai Code",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "6-jokers",
+    "name": "6 Jokers",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-to-burn-multiplier",
+    "name": "Hot To Burn Multiplier",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-bonanza-1000",
+    "name": "Sweet Bonanza 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jokers-jewels-wild",
+    "name": "Jokers Jewels Wild",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dynamite-diggin-doug",
+    "name": "Dynamite Diggin Doug",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jackpot-hunter",
+    "name": "Jackpot Hunter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bow-of-artemis",
+    "name": "Bow Of Artemis",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-gold-88",
+    "name": "Dragon Gold 88",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "running-sushi",
+    "name": "Running Sushi",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "yeti-quest",
+    "name": "Yeti Quest",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-to-burn-7-deadly-free-spins",
+    "name": "Hot To Burn 7 Deadly Free Spins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gem-elevator",
+    "name": "Gem Elevator",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "money-stacks",
+    "name": "Money Stacks",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sumo-supreme-megaways",
+    "name": "Sumo Supreme Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-treasure-hunt",
+    "name": "Aztec Treasure Hunt",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "forging-wilds",
+    "name": "Forging Wilds",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "angel-vs-sinner",
+    "name": "Angel Vs Sinner",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mystery-mice",
+    "name": "Mystery Mice",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "congo-cash-xl",
+    "name": "Congo Cash Xl",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "oodles-of-noodles",
+    "name": "Oodles Of Noodles",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "badge-blitz",
+    "name": "Badge Blitz",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wisdom-of-athena-1000",
+    "name": "Wisdom Of Athena 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-muttley-crew",
+    "name": "The Dog House Muttley Crew",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fortune-hitn-roll",
+    "name": "Fortune Hitn Roll",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-double-down-deluxe",
+    "name": "Big Bass Double Down Deluxe",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chests-of-cai-shen",
+    "name": "Chests Of Cai Shen",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "release-the-kraken-megaways",
+    "name": "Release The Kraken Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "7-clovers-of-fortune",
+    "name": "7 Clovers Of Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fangtastic-freespins",
+    "name": "Fangtastic Freespins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mustang-gold-megaways",
+    "name": "Mustang Gold Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spaceman",
+    "name": "Spaceman",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wolf-gold-ultimate",
+    "name": "Wolf Gold Ultimate",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "moleionaire",
+    "name": "Moleionaire",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "eternal-empress-freeze-time",
+    "name": "Eternal Empress Freeze Time",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-xmas-extreme",
+    "name": "Big Bass Xmas Extreme",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "vampy-party",
+    "name": "Vampy Party",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-halloween-2",
+    "name": "Big Bass Halloween 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "high-flyer",
+    "name": "High Flyer",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "penguins-christmas-party-time",
+    "name": "Penguins Christmas Party Time",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gates-of-olympus-xmas-1000",
+    "name": "Gates Of Olympus Xmas 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-king-hot-pots",
+    "name": "Dragon King Hot Pots",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "tiny-toads",
+    "name": "Tiny Toads",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mining-rush",
+    "name": "Mining Rush",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "might-of-freya-megaways",
+    "name": "Might Of Freya Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "santas-xmas-rush",
+    "name": "Santas Xmas Rush",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-slot",
+    "name": "The Dog House",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "himalayan-wild",
+    "name": "Himalayan Wild",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jokers-jewels-hot",
+    "name": "Jokers Jewels Hot",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "candy-corner",
+    "name": "Candy Corner",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "medusas-stone",
+    "name": "Medusas Stone",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-bonanza-3-reeler",
+    "name": "Big Bass Bonanza 3 Reeler",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "money-stacks-megaways",
+    "name": "Money Stacks Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "irish-crown",
+    "name": "Irish Crown",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-smash",
+    "name": "Aztec Smash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-year-of-the-snake",
+    "name": "Floating Dragon Year Of The Snake",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fonzos-feline-fortunes",
+    "name": "Fonzos Feline Fortunes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aztec-gems-megaways",
+    "name": "Aztec Gems Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wild-pearls",
+    "name": "Wild Wild Pearls",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wildebeest-wins",
+    "name": "Wild Wildebeest Wins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "escape-the-pyramid-fire-ice",
+    "name": "Escape The Pyramid Fire Ice",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "savannah-legend",
+    "name": "Savannah Legend",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ancient-island-megaways",
+    "name": "Ancient Island Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "john-hunter-and-galileos-secrets",
+    "name": "John Hunter And Galileos Secrets",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-return-to-the-races",
+    "name": "Big Bass Return To The Races",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "greedy-fortune-pig",
+    "name": "Greedy Fortune Pig",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "peppes-pepperoni-pizza-plaza",
+    "name": "Peppes Pepperoni Pizza Plaza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-lions-megaways-2",
+    "name": "5 Lions Megaways 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "touro-sortudo",
+    "name": "Touro Sortudo",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ratinho-sortudo",
+    "name": "Ratinho Sortudo",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "raging-waterfall-megaways",
+    "name": "Raging Waterfall Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "luckys-wild-pub",
+    "name": "Luckys Wild Pub",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "triple-pot-gold",
+    "name": "Triple Pot Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "volcano-goddess",
+    "name": "Volcano Goddess",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wild-joker",
+    "name": "Wild Wild Joker",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "blitz-super-wheel",
+    "name": "Blitz Super Wheel",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-royal-hunt",
+    "name": "The Dog House Royal Hunt",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bandit-megaways",
+    "name": "Bandit Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-tiger",
+    "name": "Lucky Tiger",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-mouse",
+    "name": "Lucky Mouse",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "emotiwins",
+    "name": "Emotiwins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-ox",
+    "name": "Lucky Ox",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jelly-candy",
+    "name": "Jelly Candy",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-dog",
+    "name": "Lucky Dog",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jokers-jewels-cash",
+    "name": "Jokers Jewels Cash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ride-the-lightning",
+    "name": "Ride The Lightning",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-lions-reborn",
+    "name": "5 Lions Reborn",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "resurrecting-riches",
+    "name": "Resurrecting Riches",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cash-surge",
+    "name": "Cash Surge",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "witch-heart-megaways",
+    "name": "Witch Heart Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sleeping-dragon",
+    "name": "Sleeping Dragon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wealthy-frog",
+    "name": "Wealthy Frog",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-monkey",
+    "name": "Lucky Monkey",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "majestic-express-gold-run",
+    "name": "Majestic Express Gold Run",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mahjong-wins-super-scatter",
+    "name": "Mahjong Wins Super Scatter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jumbo-safari",
+    "name": "Jumbo Safari",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fiesta-fortune",
+    "name": "Fiesta Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-tiger-1000",
+    "name": "Lucky Tiger 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-west-gold-blazing-bounty",
+    "name": "Wild West Gold Blazing Bounty",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-boxing-bonus-round",
+    "name": "Big Bass Boxing Bonus Round",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-phoenix",
+    "name": "Lucky Phoenix",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "eye-of-spartacus",
+    "name": "Eye Of Spartacus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mummys-jewels",
+    "name": "Mummys Jewels",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pig-farm",
+    "name": "Pig Farm",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "finger-lickn-free-spins",
+    "name": "Finger Lickn Free Spins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fortune-of-aztec",
+    "name": "Fortune Of Aztec",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "temple-guardians",
+    "name": "Temple Guardians",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gem-fire-fortune",
+    "name": "Gem Fire Fortune",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gold-party-2-after-hours",
+    "name": "Gold Party 2 After Hours",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "waves-of-poseidon",
+    "name": "Waves Of Poseidon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "club-tropicana-happy-hour",
+    "name": "Club Tropicana Happy Hour",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "master-gems",
+    "name": "Master Gems",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wolf-gold-4-pack",
+    "name": "Wolf Gold 4 Pack",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dino-drop",
+    "name": "Dino Drop",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "alien-invaders",
+    "name": "Alien Invaders",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "monkey-warrior-slot",
+    "name": "Monkey Warrior",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chilli-heat-spicy-spins",
+    "name": "Chilli Heat Spicy Spins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-reel-repeat",
+    "name": "Big Bass Reel Repeat",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "ice-mints",
+    "name": "Ice Mints",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "honey-honey-honey-slot",
+    "name": "Honey Honey Honey",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "aladdin-and-the-sorcerer-slot",
+    "name": "Aladdin And The Sorcerer",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "da-vincis-treasure-slot",
+    "name": "Da Vincis Treasure",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gem-trio",
+    "name": "Gem Trio",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "starlight-wins",
+    "name": "Starlight Wins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "argonauts",
+    "name": "Argonauts",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "plushie-wins",
+    "name": "Plushie Wins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "spellmaster",
+    "name": "Spellmaster",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "zombie-school-megaways",
+    "name": "Zombie School Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fire-stampede-2",
+    "name": "Fire Stampede 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "captain-kraken-megaways",
+    "name": "Captain Kraken Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "olympus-wins",
+    "name": "Olympus Wins",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jackpot-blaze",
+    "name": "Jackpot Blaze",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "3-dancing-monkeys",
+    "name": "3 Dancing Monkeys",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-west-duels",
+    "name": "Wild West Duels",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mystery-of-the-orient",
+    "name": "Mystery Of The Orient",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wild-riches-megaways",
+    "name": "Wild Wild Riches Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lobster-house",
+    "name": "Lobster House",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "genies-gem-bonanza",
+    "name": "Genies Gem Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "code-of-cairo",
+    "name": "Code Of Cairo",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "777-rush",
+    "name": "777 Rush",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bee-keeper",
+    "name": "Bee Keeper",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bounty-hunter",
+    "name": "Bounty Hunter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bigger-barn-house-bonanza",
+    "name": "Bigger Barn House Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hundreds-and-thousands",
+    "name": "Hundreds And Thousands",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mermaids-treasure-trove",
+    "name": "Mermaids Treasure Trove",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "chests-of-cai-shen-2",
+    "name": "Chests Of Cai Shen 2",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-halloween-3",
+    "name": "Big Bass Halloween 3",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mystic-wishes",
+    "name": "Mystic Wishes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bingo-mania",
+    "name": "Bingo Mania",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lava-balls",
+    "name": "Lava Balls",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "frightening-frankie",
+    "name": "Frightening Frankie",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "pandemic-rising",
+    "name": "Pandemic Rising",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-panda",
+    "name": "Lucky Panda",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "oracle-of-gold",
+    "name": "Oracle Of Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-wild-riches-returns",
+    "name": "Wild Wild Riches Returns",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-dice",
+    "name": "Lucky Dice",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "duel-of-night-day",
+    "name": "Duel Of Night Day",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "super-gummy-strike",
+    "name": "Super Gummy Strike",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "happy-nets",
+    "name": "Happy Nets",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "santas-slay",
+    "name": "Santas Slay",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "zeus-vs-typhon",
+    "name": "Zeus Vs Typhon",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-splash-1000",
+    "name": "Big Bass Splash 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wisdom-of-athena-1000-xmas",
+    "name": "Wisdom Of Athena 1000 Xmas",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-craze",
+    "name": "Sweet Craze",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "bloody-dawn",
+    "name": "Bloody Dawn",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hammerstorm",
+    "name": "Hammerstorm",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "anaconda-gold",
+    "name": "Anaconda Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-christmas-frozen-lake",
+    "name": "Big Bass Christmas Frozen Lake",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "book-of-monsters",
+    "name": "Book Of Monsters",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "jokers-jewels-hold-spin",
+    "name": "Jokers Jewels Hold Spin",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wheel-of-happiness",
+    "name": "Wheel Of Happiness",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dj-neko",
+    "name": "Dj Neko",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "odds-on-winner",
+    "name": "Odds On Winner",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "brick-house-bonanza",
+    "name": "Brick House Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-fortune-tree",
+    "name": "Lucky Fortune Tree",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "hot-tuna",
+    "name": "Hot Tuna",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "floating-dragon-wild-horses",
+    "name": "Floating Dragon Wild Horses",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "dragon-tiger-fortunes",
+    "name": "Dragon Tiger Fortunes",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "super-tiki-strike",
+    "name": "Super Tiki Strike",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "cyberheist-city",
+    "name": "Cyberheist City",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-burst",
+    "name": "Sweet Burst",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "3-magic-eggs",
+    "name": "3 Magic Eggs",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "zeus-vs-hades-gods-of-war-250",
+    "name": "Zeus Vs Hades Gods Of War 250",
     "category": "Slot",
     "image": ""
   },
@@ -187,103 +3397,67 @@
   },
   {
     "slug": "knights-vs-barbarians",
-    "name": "Knights vs Barbarians",
+    "name": "Knights Vs Barbarians",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "zeus-vs-hades-gods-of-war-250",
-    "name": "Zeus vs Hades - Gods of War 250",
+    "slug": "bigger-bass-splash",
+    "name": "Bigger Bass Splash",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "treasures-of-osiris",
-    "name": "Treasures of Osiris",
+    "slug": "big-bass-bonanza",
+    "name": "Big Bass Bonanza",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "lucky-tiger-gold",
-    "name": "Lucky Tiger Gold",
+    "slug": "starlight-princess",
+    "name": "Starlight Princess",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "emerald-king-wheel-of-wealth",
-    "name": "Emerald King - Wheel of Wealth",
+    "slug": "sweet-bonanza-slot",
+    "name": "Sweet Bonanza",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "3-magic-eggs",
-    "name": "3 Magic Eggs",
+    "slug": "gates-of-olympus",
+    "name": "Gates Of Olympus",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "the-dog-house-multihold",
-    "name": "The Dog House Multihold",
+    "slug": "sugar-rush",
+    "name": "Sugar Rush",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "jokers-jewels",
-    "name": "Joker's Jewels",
+    "slug": "sweet-bonanza-xmas-slot",
+    "name": "Sweet Bonanza Xmas",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "wild-west-gold-megaways",
-    "name": "Wild West Gold Megaways",
+    "slug": "jokers-jewels-slot",
+    "name": "Jokers Jewels",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "cash-bonanza",
-    "name": "Cash Bonanza",
+    "slug": "madame-destiny-megaways",
+    "name": "Madame Destiny Megaways",
     "category": "Slot",
     "image": ""
   },
   {
-    "slug": "voodoo-magic",
-    "name": "Voodoo Magic",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "curse-of-the-werewolf-megaways",
-    "name": "Curse of the Werewolf Megaways",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "fire-strike",
-    "name": "Fire Strike",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "pyramid-bonanza",
-    "name": "Pyramid Bonanza",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "eye-of-cleopatra",
-    "name": "Eye of Cleopatra",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "aztec-king-megaways",
-    "name": "Aztec King Megaways",
-    "category": "Slot",
-    "image": ""
-  },
-  {
-    "slug": "lucky-lightning",
-    "name": "Lucky Lightning",
+    "slug": "fruit-party-slot",
+    "name": "Fruit Party",
     "category": "Slot",
     "image": ""
   },
@@ -294,8 +3468,140 @@
     "image": ""
   },
   {
-    "slug": "hand-of-midas",
-    "name": "Hand of Midas",
+    "slug": "buffalo-king-slot",
+    "name": "Buffalo King",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "buffalo-king-megaways",
+    "name": "Buffalo King Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "wild-west-gold-slot",
+    "name": "Wild West Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-lions-megaways",
+    "name": "5 Lions Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-lions-gold-slot",
+    "name": "5 Lions Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "5-lions-slot",
+    "name": "5 Lions",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "emerald-king-wheel-of-wealth",
+    "name": "Emerald King Wheel Of Wealth",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "mummys-jewels-100",
+    "name": "Mummys Jewels 100",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "rolling-in-treasures",
+    "name": "Rolling In Treasures",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "lucky-tiger-gold",
+    "name": "Lucky Tiger Gold",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gates-of-hades",
+    "name": "Gates Of Hades",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "treasures-of-osiris",
+    "name": "Treasures Of Osiris",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sugar-rush-super-scatter",
+    "name": "Sugar Rush Super Scatter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-splash",
+    "name": "Big Bass Splash",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "you-can-piggy-bank-on-it",
+    "name": "You Can Piggy Bank On It",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "big-bass-bonanza-1000",
+    "name": "Big Bass Bonanza 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "fortune-of-olympus",
+    "name": "Fortune Of Olympus",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "gates-of-olympus-super-scatter",
+    "name": "Gates Of Olympus Super Scatter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "starlight-princess-super-scatter",
+    "name": "Starlight Princess Super Scatter",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sugar-rush-1000",
+    "name": "Sugar Rush 1000",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-rush-bonanza",
+    "name": "Sweet Rush Bonanza",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "the-dog-house-megaways-slot",
+    "name": "The Dog House Megaways",
+    "category": "Slot",
+    "image": ""
+  },
+  {
+    "slug": "sweet-bonanza-super-scatter",
+    "name": "Sweet Bonanza Super Scatter",
     "category": "Slot",
     "image": ""
   }
