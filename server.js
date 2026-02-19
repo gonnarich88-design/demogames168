@@ -512,6 +512,49 @@ app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 
 // ──────────────────────────────────────────────
+// API: Proxy external images (fix PP thumbnails not loading in WebView/CORS)
+// ──────────────────────────────────────────────
+const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com'];
+
+app.get('/api/proxy-image', (req, res) => {
+  const rawUrl = req.query.url;
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return res.status(400).send('Missing url');
+  }
+  let parsed;
+  try {
+    parsed = new URL(rawUrl);
+  } catch {
+    return res.status(400).send('Invalid url');
+  }
+  if (!ALLOWED_IMAGE_HOSTS.includes(parsed.hostname)) {
+    return res.status(403).send('Host not allowed');
+  }
+  const opts = {
+    hostname: parsed.hostname,
+    path: parsed.pathname + parsed.search,
+    method: 'GET',
+    agent: new https.Agent({ rejectUnauthorized: false }),
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; Co168ImageProxy/1.0)',
+      'Accept': 'image/*,*/*'
+    }
+  };
+  https.request(opts, (proxyRes) => {
+    if (proxyRes.statusCode >= 400) {
+      res.status(proxyRes.statusCode).send('Upstream error');
+      return;
+    }
+    const ct = proxyRes.headers['content-type'] || 'image/jpeg';
+    res.setHeader('Content-Type', ct);
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    proxyRes.pipe(res);
+  }).on('error', () => {
+    if (!res.headersSent) res.status(502).send('Proxy error');
+  }).end();
+});
+
+// ──────────────────────────────────────────────
 // Express - Static files & API
 // ──────────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public'), {
