@@ -1,6 +1,6 @@
 {
   "name": "jili-miniapp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Co168 - Telegram Mini App for game providers (JILI, PP, PG)",
   "main": "server.js",
   "scripts": {

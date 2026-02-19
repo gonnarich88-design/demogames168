@@ -513,45 +513,77 @@ app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 
 // ──────────────────────────────────────────────
 // API: Proxy external images (fix PP thumbnails not loading in WebView/CORS)
+// Supports OUTBOUND_PROXY_URL for regions where pragmaticplay.com is blocked
+// Also caches downloaded images locally in public/images/pp/
 // ──────────────────────────────────────────────
 const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com'];
+const PP_IMG_CACHE_DIR = path.join(__dirname, 'public', 'images', 'pp');
+if (!fs.existsSync(PP_IMG_CACHE_DIR)) fs.mkdirSync(PP_IMG_CACHE_DIR, { recursive: true });
 
 app.get('/api/proxy-image', (req, res) => {
   const rawUrl = req.query.url;
-  if (!rawUrl || typeof rawUrl !== 'string') {
-    return res.status(400).send('Missing url');
-  }
+  if (!rawUrl || typeof rawUrl !== 'string') return res.status(400).send('Missing url');
+
   let parsed;
-  try {
-    parsed = new URL(rawUrl);
-  } catch {
-    return res.status(400).send('Invalid url');
+  try { parsed = new URL(rawUrl); } catch { return res.status(400).send('Invalid url'); }
+  if (!ALLOWED_IMAGE_HOSTS.includes(parsed.hostname)) return res.status(403).send('Host not allowed');
+
+  // Check local disk cache first (fast, no network needed)
+  const cacheKey = parsed.pathname.split('/').pop() || 'img';
+  const cachePath = path.join(PP_IMG_CACHE_DIR, cacheKey);
+  if (fs.existsSync(cachePath) && fs.statSync(cachePath).size > 500) {
+    const ext = path.extname(cacheKey).toLowerCase();
+    const ctMap = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' };
+    res.setHeader('Content-Type', ctMap[ext] || 'image/jpeg');
+    res.setHeader('Cache-Control', 'public, max-age=604800');
+    return fs.createReadStream(cachePath).pipe(res);
   }
-  if (!ALLOWED_IMAGE_HOSTS.includes(parsed.hostname)) {
-    return res.status(403).send('Host not allowed');
-  }
+
+  // Fetch from upstream (use OUTBOUND_PROXY_URL if configured)
+  const agent = OUTBOUND_PROXY_URL
+    ? new HttpsProxyAgent(OUTBOUND_PROXY_URL)
+    : new https.Agent({ rejectUnauthorized: false });
+
   const opts = {
     hostname: parsed.hostname,
     path: parsed.pathname + parsed.search,
     method: 'GET',
-    agent: new https.Agent({ rejectUnauthorized: false }),
+    agent,
     headers: {
       'User-Agent': 'Mozilla/5.0 (compatible; Co168ImageProxy/1.0)',
       'Accept': 'image/*,*/*'
     }
   };
-  https.request(opts, (proxyRes) => {
+  const proxyReq = https.request(opts, (proxyRes) => {
+    // Follow redirects
+    if (proxyRes.statusCode >= 300 && proxyRes.statusCode < 400 && proxyRes.headers.location) {
+      res.redirect(302, '/api/proxy-image?url=' + encodeURIComponent(proxyRes.headers.location));
+      proxyRes.resume();
+      return;
+    }
     if (proxyRes.statusCode >= 400) {
       res.status(proxyRes.statusCode).send('Upstream error');
       return;
     }
     const ct = proxyRes.headers['content-type'] || 'image/jpeg';
     res.setHeader('Content-Type', ct);
-    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Cache-Control', 'public, max-age=604800');
+
+    // Pipe to response AND save to disk cache simultaneously
+    const cacheStream = fs.createWriteStream(cachePath);
     proxyRes.pipe(res);
-  }).on('error', () => {
-    if (!res.headersSent) res.status(502).send('Proxy error');
-  }).end();
+    proxyRes.pipe(cacheStream);
+    cacheStream.on('error', () => {});
+  });
+  proxyReq.on('error', (err) => {
+    console.error('[PROXY-IMAGE] Error:', err.message);
+    if (!res.headersSent) res.status(502).send('Image proxy error');
+  });
+  proxyReq.setTimeout(10000, () => {
+    proxyReq.destroy();
+    if (!res.headersSent) res.status(504).send('Image proxy timeout');
+  });
+  proxyReq.end();
 });
 
 // ──────────────────────────────────────────────
