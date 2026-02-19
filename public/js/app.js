@@ -9,11 +9,16 @@
   const pathParts = window.location.pathname.split('/').filter(Boolean);
   const currentProvider = (pathParts[0] === 'catalog' && pathParts[1]) ? pathParts[1] : 'jili';
 
-  // Provider logo paths (match data/providers.json) — used when game has no image
+  // Provider logo paths (match data/providers.json) — used when game has no image + header
   const PROVIDER_LOGO = {
     jili: '/images/jili-logo.png',
     pp: '/images/pragmatic-logo.png',
     pg: '/images/pgsoft-logo.png'
+  };
+  const PROVIDER_HEADER_NAME = {
+    jili: 'JILI GAMES',
+    pp: 'Pragmatic Play',
+    pg: 'PG Soft'
   };
   const providerLogoUrl = PROVIDER_LOGO[currentProvider] || PROVIDER_LOGO.jili;
 
@@ -36,6 +41,24 @@
   // ──────── Init ────────
   function init() {
     TelegramApp.init();
+
+    // Header: show provider logo (or fallback text)
+    const headerLogo = document.getElementById('headerProviderLogo');
+    const headerTitle = document.getElementById('headerTitle');
+    if (headerLogo && headerTitle) {
+      const logoUrl = PROVIDER_LOGO[currentProvider];
+      const displayName = PROVIDER_HEADER_NAME[currentProvider] || currentProvider.toUpperCase();
+      if (logoUrl) {
+        headerLogo.src = logoUrl;
+        headerLogo.alt = displayName;
+        headerLogo.style.display = '';
+        headerTitle.style.display = 'none';
+      } else {
+        headerTitle.textContent = displayName;
+        headerTitle.style.display = '';
+        headerLogo.style.display = 'none';
+      }
+    }
 
     // Check URL params for category (from bot inline buttons)
     const params = new URLSearchParams(window.location.search);

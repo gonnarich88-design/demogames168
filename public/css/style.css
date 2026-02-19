@@ -60,7 +60,22 @@ body {
   -webkit-backdrop-filter: blur(10px);
 }
 
-.app-header h1 {
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.header-provider-logo {
+  height: 32px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.app-header h1.header-title {
   font-size: 20px;
   font-weight: 700;
   background: linear-gradient(135deg, #FFD700, #FF6B00);
