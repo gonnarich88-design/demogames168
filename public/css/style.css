@@ -150,6 +150,37 @@ body {
   color: var(--tg-theme-hint-color);
 }
 
+/* ──────── View Tabs (แนะนำ | ดูทั้งหมด) ──────── */
+.view-tabs {
+  display: flex;
+  gap: 10px;
+  padding: 10px 16px 6px;
+  background: var(--tg-theme-bg-color);
+  position: sticky;
+  top: 57px;
+  z-index: 100;
+}
+
+.view-tab {
+  flex: 1;
+  max-width: 160px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-hint-color);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-tab.active {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
 /* ──────── Category Tabs ──────── */
 .category-tabs {
   display: flex;
@@ -162,6 +193,10 @@ body {
   position: sticky;
   top: 57px;
   z-index: 99;
+}
+
+body.catalog-page .category-tabs {
+  top: 108px;
 }
 
 .category-tabs::-webkit-scrollbar {
@@ -931,6 +966,22 @@ body.catalog-page {
 
 .catalog-page .stat-item .stat-label {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.catalog-page .view-tabs {
+  background: transparent;
+}
+
+.catalog-page .view-tab {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.catalog-page .view-tab.active {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  border-color: rgba(255, 215, 0, 0.5);
 }
 
 .catalog-page .category-tabs {

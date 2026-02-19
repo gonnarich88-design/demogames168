@@ -60,12 +60,14 @@
   let currentCategory = 'all';
   let searchTerm = '';
   let isLoading = false;
+  let viewMode = 'featured'; // 'featured' | 'all'
 
   // DOM Elements
   const gameGrid = document.getElementById('gameGrid');
   const searchToggle = document.getElementById('searchToggle');
   const searchBar = document.getElementById('searchBar');
   const searchInput = document.getElementById('searchInput');
+  const viewTabs = document.getElementById('viewTabs');
   const categoryTabs = document.getElementById('categoryTabs');
   const totalGamesCount = document.getElementById('totalGamesCount');
   const totalCategoriesCount = document.getElementById('totalCategoriesCount');
@@ -149,6 +151,20 @@
       }, 300);
     });
 
+    if (viewTabs) {
+      viewTabs.addEventListener('click', (e) => {
+        const viewTab = e.target.closest('.view-tab');
+        if (!viewTab) return;
+        const nextView = viewTab.dataset.view;
+        if (nextView === viewMode) return;
+        viewMode = nextView;
+        document.querySelectorAll('.view-tab').forEach(t => t.classList.toggle('active', t.dataset.view === viewMode));
+        TelegramApp.hapticFeedback('light');
+        loadGames();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
     categoryTabs.addEventListener('click', (e) => {
       const tab = e.target.closest('.tab');
       if (!tab) return;
@@ -177,7 +193,8 @@
     showSkeletons();
 
     try {
-      const res = await fetch('/api/providers/' + currentProvider + '/games?limit=500');
+      const featuredParam = viewMode === 'featured' ? '&featured=1' : '';
+      const res = await fetch('/api/providers/' + currentProvider + '/games?limit=500' + featuredParam);
       const data = await res.json();
       allGames = data.games || [];
       totalGamesCount.textContent = allGames.length;

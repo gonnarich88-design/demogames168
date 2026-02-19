@@ -100,6 +100,23 @@ function loadJokerGames() {
 }
 
 // ──────────────────────────────────────────────
+// Load featured game IDs/slugs/codes per provider (for hybrid: แนะนำ vs ดูทั้งหมด)
+// ──────────────────────────────────────────────
+function loadFeaturedIds(provider) {
+  const fileMap = { jili: 'jili-featured.json', pp: 'pp-featured.json', joker: 'joker-featured.json' };
+  const file = path.join(__dirname, 'data', fileMap[provider]);
+  try {
+    if (fs.existsSync(file)) {
+      const arr = JSON.parse(fs.readFileSync(file, 'utf-8'));
+      return new Set(Array.isArray(arr) ? arr : []);
+    }
+  } catch (err) {
+    console.warn('Failed to load featured list for', provider, ':', err.message);
+  }
+  return new Set();
+}
+
+// ──────────────────────────────────────────────
 // Load provider data
 // ──────────────────────────────────────────────
 function loadProviders() {
@@ -710,6 +727,16 @@ app.get('/api/providers/:provider/games', (req, res) => {
   }
 
   let games = rawGames;
+
+  // Hybrid: when featured=1, return only games in the featured list
+  if (req.query.featured === '1') {
+    const featuredSet = loadFeaturedIds(provider);
+    if (featuredSet.size > 0) {
+      const key = provider === 'jili' ? 'id' : provider === 'pp' ? 'slug' : 'code';
+      games = games.filter(g => featuredSet.has(g[key]));
+    }
+  }
+
   if (category && category.toLowerCase() !== 'all') {
     games = games.filter(g =>
       g.category.toLowerCase().replace(/\s+/g, '') === category.toLowerCase().replace(/\s+/g, '')
