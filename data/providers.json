@@ -18,6 +18,15 @@
     "logo": "/images/pragmatic-logo.png"
   },
   {
+    "id": "joker",
+    "name": "Joker Gaming",
+    "slug": "joker",
+    "enabled": false,
+    "description": "เร็วๆ นี้",
+    "gameCount": 0,
+    "logo": "/images/joker-logo.png"
+  },
+  {
     "id": "pg",
     "name": "PG Soft",
     "slug": "pg",
