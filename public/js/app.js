@@ -230,7 +230,7 @@
 
     card.addEventListener('click', () => {
       TelegramApp.hapticFeedback('medium');
-      window.location.href = '/play/' + currentProvider + '/' + game.id;
+      window.location.href = game.playUrl || ('/play/' + currentProvider + '/' + (game.slug || game.id));
     });
 
     return card;

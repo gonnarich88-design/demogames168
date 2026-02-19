@@ -54,6 +54,29 @@ function loadGames() {
 }
 
 // ──────────────────────────────────────────────
+// Load Pragmatic Play game data
+// ──────────────────────────────────────────────
+function loadPPGames() {
+  const gamesPath = path.join(__dirname, 'data', 'pp-games.json');
+  const seedPath = path.join(__dirname, 'data', 'pp-seed-games.json');
+
+  try {
+    if (fs.existsSync(gamesPath)) {
+      return JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+    }
+  } catch (err) {
+    console.warn('Failed to load pp-games.json, falling back to seed data:', err.message);
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+  } catch (err) {
+    console.error('Failed to load pp-seed-games.json:', err.message);
+    return [];
+  }
+}
+
+// ──────────────────────────────────────────────
 // Load provider data
 // ──────────────────────────────────────────────
 function loadProviders() {
@@ -268,6 +291,181 @@ app.use('/proxy', (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// Reverse Proxy for Pragmatic Play Demo Games
+// Proxies: demogamesfree.pragmaticplay.net and related CDN domains
+// ──────────────────────────────────────────────
+
+const PP_DOMAINS = [
+  'demogamesfree.pragmaticplay.net',
+  'commonassets.pragmaticplay.net',
+  'cdn-gcp.pragmaticplay.net',
+  'static.pragmaticplay.net',
+  'hermes.pragmaticplay.net',
+  'gserver.pragmaticplay.net',
+];
+
+function toPPProxyPath(fullUrl) {
+  try {
+    const u = new URL(fullUrl);
+    if (u.hostname.endsWith('pragmaticplay.net') || u.hostname.endsWith('pragmaticplay.com')) {
+      return '/pp-proxy/' + u.hostname + u.pathname + u.search;
+    }
+  } catch {}
+  return null;
+}
+
+function rewritePPHtml(body, targetHost, targetPathDir = '/') {
+  let html = body.replace(/https?:\/\/([a-zA-Z0-9.-]*pragmaticplay\.(?:net|com))(\/[^"'<>\s]*)/g, (match, host, path) => {
+    return '/pp-proxy/' + host + path;
+  });
+
+  if (targetHost) {
+    let basePath = '/pp-proxy/' + targetHost + targetPathDir;
+    if (!basePath.endsWith('/')) basePath += '/';
+    const baseTag = `<base href="${basePath}">`;
+
+    const proxyBase = '/pp-proxy/' + targetHost;
+    const overrideScript = `<script>(function(){` +
+      `var B='${proxyBase}';` +
+      `var F=window.fetch;` +
+      `window.fetch=function(u,o){` +
+        `if(typeof u==='string'&&u.charAt(0)==='/'&&u.indexOf('/pp-proxy/')!==0)u=B+u;` +
+        `return F.call(this,u,o);` +
+      `};` +
+      `var X=XMLHttpRequest.prototype.open;` +
+      `XMLHttpRequest.prototype.open=function(m,u){` +
+        `if(typeof u==='string'&&u.charAt(0)==='/'&&u.indexOf('/pp-proxy/')!==0)` +
+          `arguments[1]=B+u;` +
+        `return X.apply(this,arguments);` +
+      `};` +
+      `var P=function(C,p){` +
+        `var d=Object.getOwnPropertyDescriptor(C.prototype,p);` +
+        `if(d&&d.set){Object.defineProperty(C.prototype,p,{` +
+          `set:function(v){` +
+            `if(typeof v==='string'&&v.charAt(0)==='/'&&v.indexOf('/pp-proxy/')!==0)v=B+v;` +
+            `d.set.call(this,v);` +
+          `},get:d.get,configurable:true});}` +
+      `};` +
+      `try{P(HTMLImageElement,'src');}catch(e){}` +
+      `try{P(HTMLScriptElement,'src');}catch(e){}` +
+      `try{P(HTMLAudioElement,'src');}catch(e){}` +
+      `try{P(HTMLSourceElement,'src');}catch(e){}` +
+    `})();</script>`;
+
+    const injection = baseTag + overrideScript;
+    if (html.includes('<head>')) {
+      html = html.replace('<head>', '<head>' + injection);
+    } else if (html.includes('<HEAD>')) {
+      html = html.replace('<HEAD>', '<HEAD>' + injection);
+    } else {
+      html = injection + html;
+    }
+  }
+  return html;
+}
+
+app.use('/pp-proxy', (req, res) => {
+  const fullPath = req.url;
+  const match = fullPath.match(/^\/([a-zA-Z0-9.-]*pragmaticplay\.(?:net|com))(\/[^?]*)?(\?.*)?$/);
+  if (!match) {
+    console.error('  [PP-PROXY] Invalid path:', fullPath);
+    return res.status(400).send('Invalid proxy path');
+  }
+
+  const targetHost = match[1];
+  const targetPathWithoutQuery = match[2] || '/';
+  const targetPath = targetPathWithoutQuery + (match[3] || '');
+
+  const targetPathDir = targetPathWithoutQuery.endsWith('/')
+    ? targetPathWithoutQuery
+    : targetPathWithoutQuery.substring(0, targetPathWithoutQuery.lastIndexOf('/') + 1) || '/';
+
+  console.log(`  [PP-PROXY] ${targetHost}${targetPath.substring(0, 80)}...`);
+
+  const options = {
+    hostname: targetHost,
+    path: targetPath,
+    method: req.method,
+    rejectAuthorized: false,
+    headers: {
+      'User-Agent': req.headers['user-agent'] || 'Mozilla/5.0',
+      'Accept': req.headers['accept'] || '*/*',
+      'Accept-Language': req.headers['accept-language'] || 'en-US,en;q=0.9',
+      'Accept-Encoding': 'identity',
+      'Referer': `https://${targetHost}/`,
+      'Origin': `https://${targetHost}`,
+    }
+  };
+
+  if (req.headers.cookie) {
+    options.headers['Cookie'] = req.headers.cookie;
+  }
+
+  const agent = new https.Agent({ rejectUnauthorized: false });
+  options.agent = agent;
+
+  const proxyReq = https.request(options, (proxyRes) => {
+    res.statusCode = proxyRes.statusCode;
+
+    for (const [key, value] of Object.entries(proxyRes.headers)) {
+      const k = key.toLowerCase();
+      if (k === 'x-frame-options' || k === 'x-content-type-options' ||
+          k.startsWith('content-security-policy')) continue;
+      if (k === 'location') {
+        let loc = value;
+        const proxied = toPPProxyPath(loc);
+        if (proxied) {
+          res.setHeader('Location', proxied);
+        } else if (loc.startsWith('/')) {
+          res.setHeader('Location', '/pp-proxy/' + targetHost + loc);
+        } else {
+          res.setHeader('Location', loc);
+        }
+        continue;
+      }
+      if (k === 'set-cookie') {
+        const cookies = Array.isArray(value) ? value : [value];
+        const rewritten = cookies.map(c => c.replace(/domain=[^;]+;?/gi, ''));
+        res.setHeader('Set-Cookie', rewritten);
+        continue;
+      }
+      res.setHeader(key, value);
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    const ct = (proxyRes.headers['content-type'] || '').toLowerCase();
+    if (ct.includes('text/html')) {
+      const chunks = [];
+      proxyRes.on('data', chunk => chunks.push(chunk));
+      proxyRes.on('end', () => {
+        let html = Buffer.concat(chunks).toString('utf-8');
+        html = rewritePPHtml(html, targetHost, targetPathDir);
+        res.removeHeader('content-length');
+        res.end(html);
+      });
+    } else {
+      proxyRes.pipe(res);
+    }
+  });
+
+  proxyReq.on('error', (err) => {
+    if (!res.headersSent) res.status(502).send('Game server unavailable');
+    console.error('PP Proxy error:', err.message);
+  });
+
+  const onClientClose = () => proxyReq.destroy();
+  req.on('close', onClientClose);
+  req.on('aborted', onClientClose);
+
+  if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+    req.pipe(proxyReq);
+  } else {
+    proxyReq.end();
+  }
+});
+
+// ──────────────────────────────────────────────
 // Dynamic HTML pages — serve with inline JS to bypass Telegram WebView cache
 // ──────────────────────────────────────────────
 const APP_VERSION = require('./package.json').version;
@@ -311,6 +509,7 @@ app.get('/', serveInlineHtml('home.html', ['js/home.js']));
 
 // Catalog pages per provider
 app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
+app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 
 // ──────────────────────────────────────────────
 // Express - Static files & API
@@ -388,36 +587,47 @@ app.get('/api/providers', (req, res) => {
 // API: Get games for a specific provider
 app.get('/api/providers/:provider/games', (req, res) => {
   const provider = req.params.provider.toLowerCase();
+  const { category, search, page = 1, limit = 50 } = req.query;
+
+  let rawGames;
+  let playUrlFn;
+
   if (provider === 'jili') {
-    let games = loadGames();
-    const { category, search, page = 1, limit = 50 } = req.query;
-    if (category && category.toLowerCase() !== 'all') {
-      games = games.filter(g =>
-        g.category.toLowerCase().replace(/\s+/g, '') === category.toLowerCase().replace(/\s+/g, '')
-      );
-    }
-    if (search) {
-      const term = search.toLowerCase();
-      games = games.filter(g => g.name.toLowerCase().includes(term));
-    }
-    const total = games.length;
-    const p = parseInt(page) || 1;
-    const l = parseInt(limit) || 50;
-    const start = (p - 1) * l;
-    const paged = games.slice(start, start + l);
-    return res.json({
-      games: paged.map(g => ({
-        ...g,
-        playUrl: `/play/jili/${g.id}`
-      })),
-      total, page: p, limit: l,
-      totalPages: Math.ceil(total / l)
-    });
+    rawGames = loadGames();
+    playUrlFn = g => `/play/jili/${g.id}`;
+  } else if (provider === 'pp') {
+    rawGames = loadPPGames();
+    playUrlFn = g => `/play/pp/${g.slug}`;
+  } else {
+    const providers = loadProviders();
+    const found = providers.find(p => p.slug === provider);
+    if (!found) return res.status(404).json({ error: 'Provider not found' });
+    return res.json({ games: [], total: 0, page: 1, limit: 50, totalPages: 0 });
   }
-  const providers = loadProviders();
-  const found = providers.find(p => p.slug === provider);
-  if (!found) return res.status(404).json({ error: 'Provider not found' });
-  res.json({ games: [], total: 0, page: 1, limit: 50, totalPages: 0 });
+
+  let games = rawGames;
+  if (category && category.toLowerCase() !== 'all') {
+    games = games.filter(g =>
+      g.category.toLowerCase().replace(/\s+/g, '') === category.toLowerCase().replace(/\s+/g, '')
+    );
+  }
+  if (search) {
+    const term = search.toLowerCase();
+    games = games.filter(g => g.name.toLowerCase().includes(term));
+  }
+  const total = games.length;
+  const p = parseInt(page) || 1;
+  const l = parseInt(limit) || 50;
+  const start = (p - 1) * l;
+  const paged = games.slice(start, start + l);
+  return res.json({
+    games: paged.map(g => ({
+      ...g,
+      playUrl: playUrlFn(g)
+    })),
+    total, page: p, limit: l,
+    totalPages: Math.ceil(total / l)
+  });
 });
 
 // ──────────────────────────────────────────────
@@ -498,6 +708,86 @@ app.get('/play/jili/:id', async (req, res) => {
       : '';
     const q = new URLSearchParams({ id: gameId, error: msg });
     if (hint) q.set('hint', hint);
+    res.redirect(302, '/game.html?' + q.toString());
+  }
+});
+
+// ──────────────────────────────────────────────
+// Pragmatic Play: Resolve demo game URL
+// Fetches the PP game page and extracts the demo iframe URL (data-game-src)
+// ──────────────────────────────────────────────
+function httpsGetInsecure(targetUrl) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(targetUrl);
+    const opts = {
+      hostname: u.hostname,
+      path: u.pathname + u.search,
+      method: 'GET',
+      agent: new https.Agent({ rejectUnauthorized: false }),
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36',
+        'Accept': 'text/html,*/*',
+        'Accept-Language': 'en-US,en;q=0.9',
+      }
+    };
+    const req = https.request(opts, (res) => {
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => {
+        resolve({
+          statusCode: res.statusCode,
+          headers: res.headers,
+          body: Buffer.concat(chunks).toString('utf-8')
+        });
+      });
+    });
+    req.on('error', reject);
+    req.setTimeout(15000, () => { req.destroy(); reject(new Error('Timeout')); });
+    req.end();
+  });
+}
+
+async function resolvePPGameUrl(slug) {
+  const ppPageUrl = `https://www.pragmaticplay.com/en/games/${slug}/?gamelang=en&cur=THB`;
+  console.log(`[PP-RESOLVE] Fetching ${ppPageUrl}`);
+  const resp = await httpsGetInsecure(ppPageUrl);
+
+  if (resp.statusCode >= 400) {
+    return { error: `PP returned status ${resp.statusCode}` };
+  }
+
+  // Extract data-game-src from the iframe
+  const srcMatch = resp.body.match(/data-game-src="([^"]+)"/i);
+  if (!srcMatch) {
+    return { error: 'Could not find demo game URL on PP page' };
+  }
+
+  let demoUrl = srcMatch[1].replace(/&amp;/g, '&');
+  console.log(`[PP-RESOLVE] Demo URL: ${demoUrl.substring(0, 100)}...`);
+
+  // Convert to proxy path
+  const proxyPath = toPPProxyPath(demoUrl);
+  if (!proxyPath) {
+    return { error: 'Could not convert PP demo URL to proxy path' };
+  }
+
+  return { proxyPath, demoUrl };
+}
+
+// GET /play/pp/:slug — resolve PP game and redirect to proxied demo
+app.get('/play/pp/:slug', async (req, res) => {
+  const slug = req.params.slug;
+  console.log(`[PLAY] Resolving PP game "${slug}"`);
+  try {
+    const result = await resolvePPGameUrl(slug);
+    if (result.error) {
+      const q = new URLSearchParams({ id: slug, provider: 'pp', error: result.error });
+      return res.redirect(302, '/game.html?' + q.toString());
+    }
+    res.redirect(302, result.proxyPath);
+  } catch (err) {
+    console.error('[PLAY-PP] Error:', err.message);
+    const q = new URLSearchParams({ id: slug, provider: 'pp', error: 'Failed to resolve: ' + err.message });
     res.redirect(302, '/game.html?' + q.toString());
   }
 });
@@ -713,22 +1003,29 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
 //  which need to be routed through our reverse proxy to jiligames.com)
 // ──────────────────────────────────────────────
 app.use((req, res, next) => {
-  // Only intercept paths that are NOT our own app resources
   if (req.path === '/' || req.path === '/game.html' ||
       req.path.startsWith('/api/') || req.path.startsWith('/proxy/') ||
       req.path.startsWith('/play/') || req.path.startsWith('/jili/') ||
+      req.path.startsWith('/pp-proxy/') ||
       req.path.startsWith('/catalog/') ||
       req.path.startsWith('/css/') || req.path.startsWith('/js/') ||
       req.path.startsWith('/images/')) {
     return next();
   }
-  // Detect origin domain from Referer header (e.g. /jili/casino-wbgame.jiligames.com/...)
-  // so absolute paths like /astarte/... go to the correct game domain, not jiligames.com
   const ref = req.headers.referer || '';
+
+  // Check if request originates from a PP proxied page
+  const ppRefMatch = ref.match(/\/pp-proxy\/([a-zA-Z0-9.-]*pragmaticplay\.(?:net|com))/);
+  if (ppRefMatch) {
+    const ppDomain = ppRefMatch[1];
+    console.log(`  [CATCH-ALL] ${req.url} → PP:${ppDomain}`);
+    return res.redirect(307, '/pp-proxy/' + ppDomain + req.url);
+  }
+
+  // Default: JILI proxy
   const refMatch = ref.match(/\/jili\/([a-zA-Z0-9.-]*jiligames\.com)/);
   const targetDomain = refMatch ? refMatch[1] : 'jiligames.com';
   console.log(`  [CATCH-ALL] ${req.url} → ${targetDomain} (ref: ${ref.substring(ref.indexOf('/jili/'), ref.indexOf('/jili/') + 50) || 'none'})`);
-  // Redirect to proxy (307 preserves HTTP method)
   res.redirect(307, '/jili/' + targetDomain + req.url);
 });
 
@@ -740,5 +1037,6 @@ app.listen(PORT, () => {
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);
-  console.log(`   Games:   ${loadGames().length} games loaded\n`);
+  console.log(`   JILI:    ${loadGames().length} games loaded`);
+  console.log(`   PP:      ${loadPPGames().length} games loaded\n`);
 });
