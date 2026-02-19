@@ -860,3 +860,180 @@ body.home-page {
 .home-page .empty-state h3 {
   color: #e8e8e8;
 }
+
+/* ═══════════════════════════════════════════════
+   Catalog Page Dark Theme (same as home)
+   โทนเข้ม + ทอง ให้เข้ากับหน้า home
+   ═══════════════════════════════════════════════ */
+
+body.catalog-page {
+  background: #0d0d0d;
+  color: #f0f0f0;
+  background-image:
+    linear-gradient(180deg,
+      rgba(13, 13, 13, 0.88) 0%,
+      rgba(13, 13, 13, 0.82) 25%,
+      rgba(13, 13, 13, 0.85) 50%,
+      rgba(13, 13, 13, 0.92) 100%),
+    url(/images/wallpaper_co168.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.catalog-page .app-header {
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.12);
+}
+
+.catalog-page .icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e8e8e8;
+}
+
+.catalog-page .icon-btn:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.catalog-page .search-bar {
+  background: transparent;
+}
+
+.catalog-page .search-bar input {
+  background: rgba(26, 26, 26, 0.9);
+  color: #f0f0f0;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.catalog-page .search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.catalog-page .search-bar input:focus {
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.35);
+}
+
+.catalog-page .stats-banner {
+  background: rgba(26, 26, 26, 0.92);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-page .stat-item .stat-value {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.catalog-page .stat-item .stat-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.catalog-page .category-tabs {
+  background: transparent;
+}
+
+.catalog-page .tab {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.catalog-page .tab.active {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 2px 12px rgba(255, 140, 0, 0.35);
+}
+
+.catalog-page .game-grid {
+  padding-top: 8px;
+}
+
+.catalog-page .game-card {
+  background: rgba(26, 26, 26, 0.92);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.catalog-page .game-card:active {
+  transform: scale(0.96);
+  box-shadow: 0 1px 6px rgba(255, 215, 0, 0.15);
+}
+
+.catalog-page .game-card .card-img {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.catalog-page .game-card--logo-placeholder .card-img {
+  background: linear-gradient(160deg, #1a1a2e 0%, #252542 50%, #1e1e35 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 0, 0.15);
+}
+
+.catalog-page .game-card .card-body {
+  background: rgba(18, 18, 18, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.catalog-page .game-card .game-name {
+  color: #e8e8e8;
+}
+
+.catalog-page .game-card .game-category {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.catalog-page .game-card .play-badge {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.catalog-page .skeleton {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.catalog-page .skeleton .skeleton-img,
+.catalog-page .skeleton .skeleton-text {
+  background: linear-gradient(90deg,
+    rgba(40, 40, 40, 0.9) 25%,
+    rgba(255, 215, 0, 0.06) 50%,
+    rgba(40, 40, 40, 0.9) 75%);
+  background-size: 200% 100%;
+}
+
+.catalog-page .empty-state {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.catalog-page .empty-state .empty-icon {
+  opacity: 0.9;
+}
+
+.catalog-page .empty-state h3 {
+  color: #e8e8e8;
+}
+
+.catalog-page .empty-state p {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.catalog-page .scroll-top-btn {
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #000;
+  box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
+}
+
+.catalog-page .scroll-top-btn:active {
+  opacity: 0.9;
+}
+
+.catalog-page .loading-spinner .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #FFD700;
+}
