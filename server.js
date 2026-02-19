@@ -849,8 +849,9 @@ async function resolvePPGameUrl(slug) {
   return { proxyPath, demoUrl };
 }
 
-// GET /play/pp/:slug — resolve PP game and redirect to PP demo URL (direct, no proxy)
-// PP returns "Invalid Parameter" when game runs via proxy (origin check). Direct redirect fixes it.
+// GET /play/pp/:slug — resolve PP game and serve full-screen iframe page
+// PP validates websiteUrl vs referrer, so we embed the demo in an iframe on our page.
+// The iframe loads from PP domain directly → origin checks pass.
 app.get('/play/pp/:slug', async (req, res) => {
   const slug = req.params.slug;
   console.log(`[PLAY] Resolving PP game "${slug}"`);
@@ -860,8 +861,48 @@ app.get('/play/pp/:slug', async (req, res) => {
       const q = new URLSearchParams({ id: slug, provider: 'pp', error: result.error });
       return res.redirect(302, '/game.html?' + q.toString());
     }
-    // Redirect to PP demo URL directly so game runs on PP domain (avoids Invalid Parameter)
-    res.redirect(302, result.demoUrl);
+
+    const gameName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const html = `<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>${gameName} - Pragmatic Play Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d0d0d;font-family:system-ui,sans-serif}
+.pp-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:10px;padding:8px 12px;
+  background:rgba(13,13,13,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,215,0,0.15)}
+.pp-bar a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;
+  justify-content:center;text-decoration:none;flex-shrink:0}
+.pp-bar a svg{width:18px;height:18px;fill:#e8e8e8}
+.pp-bar .pp-name{color:#e8e8e8;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-bar .pp-badge{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000;font-size:9px;font-weight:700;
+  padding:2px 8px;border-radius:10px;flex-shrink:0}
+iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:none;background:#0d0d0d}
+.pp-loading{position:fixed;top:52px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:#0d0d0d;color:rgba(255,255,255,0.6);font-size:14px;z-index:50}
+.pp-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FFD700;
+  border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head><body>
+<div class="pp-bar">
+  <a href="/catalog/pp"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+  <span class="pp-name">${gameName}</span>
+  <span class="pp-badge">DEMO</span>
+</div>
+<div class="pp-loading" id="loader"><div class="pp-spinner"></div>กำลังโหลดเกม...</div>
+<iframe src="${result.demoUrl}" allow="autoplay; fullscreen" allowfullscreen
+  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+  referrerpolicy="no-referrer"
+  onload="document.getElementById('loader').style.display='none'"></iframe>
+</body></html>`;
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store');
+    res.send(html);
   } catch (err) {
     console.error('[PLAY-PP] Error:', err.message);
     const q = new URLSearchParams({ id: slug, provider: 'pp', error: 'Failed to resolve: ' + err.message });
