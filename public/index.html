@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>JILI Games</title>
+  <title>Co168 Games</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
@@ -36,27 +36,20 @@
   <div class="stats-banner" id="statsBanner">
     <div class="stat-item">
       <div class="stat-value" id="totalGamesCount">--</div>
-      <div class="stat-label">Games</div>
+      <div class="stat-label">เกม</div>
     </div>
     <div class="stat-item">
-      <div class="stat-value">5</div>
-      <div class="stat-label">Categories</div>
+      <div class="stat-value" id="totalCategoriesCount">--</div>
+      <div class="stat-label">หมวดหมู่</div>
     </div>
     <div class="stat-item">
-      <div class="stat-value">FREE</div>
-      <div class="stat-label">Demo Play</div>
+      <div class="stat-value">ฟรี</div>
+      <div class="stat-label">ทดลองเล่น</div>
     </div>
   </div>
 
-  <!-- Category Tabs -->
-  <nav class="category-tabs" id="categoryTabs">
-    <button class="tab active" data-category="all">All</button>
-    <button class="tab" data-category="slot">Slots</button>
-    <button class="tab" data-category="fishing">Fishing</button>
-    <button class="tab" data-category="tableandcard">Table & Card</button>
-    <button class="tab" data-category="bingo">Bingo</button>
-    <button class="tab" data-category="casino">Casino</button>
-  </nav>
+  <!-- Category Tabs (dynamically built by JS per provider) -->
+  <nav class="category-tabs" id="categoryTabs"></nav>
 
   <!-- Game Grid -->
   <main class="game-grid" id="gameGrid">
