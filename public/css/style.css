@@ -150,7 +150,7 @@ body {
   color: var(--tg-theme-hint-color);
 }
 
-/* ──────── View Tabs (แนะนำ | ดูทั้งหมด) ──────── */
+/* ──────── View Tabs (เกมฮิต | ดูทั้งหมด) ──────── */
 .view-tabs {
   display: flex;
   gap: 10px;
