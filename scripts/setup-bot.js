@@ -31,7 +31,7 @@ async function setup() {
     console.log('📋 Setting bot commands...');
     await bot.telegram.setMyCommands([
       { command: 'start', description: 'Start the bot and open game catalog' },
-      { command: 'games', description: 'Browse JILI games by category' },
+      { command: 'games', description: 'Choose game provider (JILI, PP, Joker)' },
       { command: 'help', description: 'How to use this bot' }
     ]);
     console.log('   ✅ Commands set\n');

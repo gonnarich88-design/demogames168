@@ -1260,22 +1260,20 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
     }
   });
 
-  // /games command
+  // /games command — แสดงปุ่มเลือกค่ายเกม (เปิดไปที่ catalog ของแต่ละค่าย)
   bot.command('games', async (ctx) => {
+    const providers = loadProviders();
+    const rows = providers.map(p => [
+      Markup.button.webApp(
+        p.enabled ? `🎮 ${p.name}` : `🔒 ${p.name} (เร็วๆ นี้)`,
+        p.enabled
+          ? `${WEBAPP_URL}/catalog/${p.slug}?v=${APP_VERSION}`
+          : WEBAPP_URL_VERSIONED
+      )
+    ]);
     await ctx.reply(
-      '🎰 Choose a category or browse all games:',
-      Markup.inlineKeyboard([
-        [Markup.button.webApp('🎮 All Games', WEBAPP_URL_VERSIONED)],
-        [
-          Markup.button.webApp('🎰 Slots', `${WEBAPP_URL}?v=${APP_VERSION}&cat=slot`),
-          Markup.button.webApp('🐟 Fishing', `${WEBAPP_URL}?v=${APP_VERSION}&cat=fishing`)
-        ],
-        [
-          Markup.button.webApp('🃏 Table', `${WEBAPP_URL}?v=${APP_VERSION}&cat=tableandcard`),
-          Markup.button.webApp('🔢 Bingo', `${WEBAPP_URL}?v=${APP_VERSION}&cat=bingo`)
-        ],
-        [Markup.button.webApp('🎲 Casino', `${WEBAPP_URL}?v=${APP_VERSION}&cat=casino`)]
-      ])
+      '🎰 เลือกค่ายเกม',
+      Markup.inlineKeyboard(rows)
     );
   });
 
@@ -1289,7 +1287,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
       + '4️⃣ กด *"ทดลองเล่นฟรี"* เพื่อทดลองเล่นเกมส์ฟรี!\n\n'
       + '*คำสั่ง:*\n'
       + '/start - เปิดหน้าเกมส์\n'
-      + '/games - ดูเกมส์ตามหมวดหมู่\n'
+      + '/games - เลือกค่ายเกม (JILI, PP, Joker ฯลฯ)\n'
       + '/help - ดูวิธีใช้งาน',
       { parse_mode: 'Markdown' }
     );
