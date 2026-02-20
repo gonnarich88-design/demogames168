@@ -1254,7 +1254,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
       console.error('Error in /start:', err.message);
       await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
         Markup.inlineKeyboard([
-          [Markup.button.webApp('🎮 Open Game Catalog', WEBAPP_URL_VERSIONED)]
+          [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)]
         ])
       );
     }

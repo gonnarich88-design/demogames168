@@ -30,9 +30,9 @@ async function setup() {
     // 1. Set bot commands
     console.log('📋 Setting bot commands...');
     await bot.telegram.setMyCommands([
-      { command: 'start', description: 'Start the bot and open game catalog' },
-      { command: 'games', description: 'Choose game provider (JILI, PP, Joker)' },
-      { command: 'help', description: 'How to use this bot' }
+      { command: 'start', description: 'เริ่มต้น / เปิดหน้าเลือกค่ายเกม' },
+      { command: 'games', description: 'เลือกค่ายเกม (JILI, PP, Joker)' },
+      { command: 'help', description: 'ดูวิธีใช้งาน' }
     ]);
     console.log('   ✅ Commands set\n');
 
@@ -41,7 +41,7 @@ async function setup() {
     await bot.telegram.setChatMenuButton({
       menuButton: {
         type: 'web_app',
-        text: 'Play Games',
+        text: 'เล่นเกม',
         web_app: { url: WEBAPP_URL }
       }
     });
