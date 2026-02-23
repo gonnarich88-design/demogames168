@@ -1239,6 +1239,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
           ...Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
             [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')],
             [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register')]
           ])
         }
@@ -1254,7 +1255,8 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
       console.error('Error in /start:', err.message);
       await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
         Markup.inlineKeyboard([
-          [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)]
+          [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
+          [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')]
         ])
       );
     }
