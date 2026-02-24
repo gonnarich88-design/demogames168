@@ -654,56 +654,71 @@ app.use(express.static(path.join(__dirname, 'public'), {
 app.use(express.json());
 
 // ──────────────────────────────────────────────
-// Bot usage tracking (SQLite)
+// Bot usage tracking (JSON file — ไม่ใช้ native module เพื่อให้ deploy ผ่านทุกโฮสต์)
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+const BOT_EVENTS_FILE = path.join(DATA_DIR, 'bot-events.json');
 
-const Database = require('better-sqlite3');
-const botDb = new Database(path.join(DATA_DIR, 'bot-usage.db'));
-botDb.exec(`
-  CREATE TABLE IF NOT EXISTS bot_events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    telegram_user_id INTEGER NOT NULL,
-    username TEXT,
-    first_name TEXT,
-    action TEXT NOT NULL,
-    created_at TEXT NOT NULL
-  )
-`);
+function readBotEvents() {
+  try {
+    if (!fs.existsSync(BOT_EVENTS_FILE)) return [];
+    const raw = fs.readFileSync(BOT_EVENTS_FILE, 'utf-8');
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function writeBotEvents(events) {
+  try {
+    fs.writeFileSync(BOT_EVENTS_FILE, JSON.stringify(events, null, 0), 'utf-8');
+  } catch (err) {
+    console.error('[bot-usage] writeBotEvents error:', err.message);
+  }
+}
 
 function insertBotEvent(payload) {
   try {
     const { telegram_user_id, username, first_name, action } = payload;
-    const stmt = botDb.prepare(
-      'INSERT INTO bot_events (telegram_user_id, username, first_name, action, created_at) VALUES (?, ?, ?, ?, ?)'
-    );
-    stmt.run(
+    const events = readBotEvents();
+    const id = events.length ? Math.max(...events.map(e => e.id || 0), 0) + 1 : 1;
+    events.push({
+      id,
       telegram_user_id,
-      username ?? null,
-      first_name ?? null,
+      username: username ?? null,
+      first_name: first_name ?? null,
       action,
-      new Date().toISOString()
-    );
+      created_at: new Date().toISOString()
+    });
+    writeBotEvents(events);
   } catch (err) {
     console.error('[bot-usage] insertBotEvent error:', err.message);
   }
 }
 
 function getBotStats() {
-  const total = botDb.prepare('SELECT COUNT(*) as c FROM bot_events').get().c;
-  const uniqueUsers = botDb.prepare('SELECT COUNT(DISTINCT telegram_user_id) as c FROM bot_events').get().c;
-  const byAction = botDb.prepare('SELECT action, COUNT(*) as count FROM bot_events GROUP BY action').all();
-  const latest = botDb.prepare('SELECT * FROM bot_events ORDER BY id DESC LIMIT 50').all();
+  const events = readBotEvents();
+  const total = events.length;
+  const uniqueUsers = new Set(events.map(e => e.telegram_user_id)).size;
+  const byAction = [];
+  const actionCount = {};
+  events.forEach(e => {
+    actionCount[e.action] = (actionCount[e.action] || 0) + 1;
+  });
+  Object.keys(actionCount).forEach(action => byAction.push({ action, count: actionCount[action] }));
+  const latest = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 50);
   return { total, uniqueUsers, byAction, latest };
 }
 
 function getBotEvents(limit = 100, offset = 0) {
   const limitNum = Math.min(Math.max(parseInt(limit, 10) || 100, 1), 500);
   const offsetNum = Math.max(parseInt(offset, 10) || 0, 0);
-  const rows = botDb.prepare('SELECT * FROM bot_events ORDER BY id DESC LIMIT ? OFFSET ?').all(limitNum, offsetNum);
-  const total = botDb.prepare('SELECT COUNT(*) as c FROM bot_events').get().c;
-  return { events: rows, total, limit: limitNum, offset: offsetNum };
+  const events = readBotEvents();
+  const sorted = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0));
+  const rows = sorted.slice(offsetNum, offsetNum + limitNum);
+  return { events: rows, total: events.length, limit: limitNum, offset: offsetNum };
 }
 
 // API: Get all games (with optional category, search, pagination)
