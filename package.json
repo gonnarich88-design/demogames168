@@ -10,6 +10,7 @@
     "setup-bot": "node scripts/setup-bot.js"
   },
   "dependencies": {
+    "better-sqlite3": "^11.6.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "https-proxy-agent": "^7.0.6",

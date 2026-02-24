@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — สถิติบอท Co168</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 1rem; background: #1a1a2e; color: #eee; }
+    h1 { font-size: 1.5rem; margin: 0 0 1rem; }
+    .card { background: #16213e; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+    .stat { background: #0f3460; padding: 0.75rem; border-radius: 6px; text-align: center; }
+    .stat-value { font-size: 1.5rem; font-weight: 700; color: #e94560; }
+    .stat-label { font-size: 0.85rem; color: #aaa; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #2a2a4a; }
+    th { color: #aaa; font-weight: 600; }
+    .loading { color: #888; }
+    .error { color: #e94560; }
+    button { background: #e94560; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+    button:hover { opacity: 0.9; }
+    .actions { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>📊 สถิติการใช้งานบอท Co168</h1>
+  <div class="actions">
+    <button type="button" id="btnRefresh">โหลดใหม่</button>
+  </div>
+  <div class="card">
+    <h2 style="margin:0 0 0.5rem;">สรุป</h2>
+    <div id="statsSummary" class="stats loading">กำลังโหลด...</div>
+    <div id="byAction" class="card" style="margin-top:0.5rem; padding:0.5rem;"></div>
+  </div>
+  <div class="card">
+    <h2 style="margin:0 0 0.5rem;">รายการล่าสุด (50)</h2>
+    <div id="latestList" class="loading">กำลังโหลด...</div>
+  </div>
+  <div class="card">
+    <h2 style="margin:0 0 0.5rem;">รายการทั้งหมด (แบ่งหน้า)</h2>
+    <div id="pagination" style="margin-bottom:0.5rem;"></div>
+    <div id="eventsTableWrap"></div>
+  </div>
+
+  <script>
+    const LIMIT = 50;
+    let currentOffset = 0;
+
+    async function loadStats() {
+      const el = document.getElementById('statsSummary');
+      try {
+        const res = await fetch('/api/bot-stats');
+        const data = await res.json();
+        el.innerHTML = ''
+          + '<div class="stat"><div class="stat-value">' + data.total + '</div><div class="stat-label">เหตุการณ์ทั้งหมด</div></div>'
+          + '<div class="stat"><div class="stat-value">' + data.uniqueUsers + '</div><div class="stat-label">ผู้ใช้ไม่ซ้ำ</div></div>';
+        const byEl = document.getElementById('byAction');
+        if (data.byAction && data.byAction.length) {
+          byEl.innerHTML = '<strong>แยกตาม action:</strong> '
+            + data.byAction.map(a => a.action + ': ' + a.count).join(' | ');
+        } else {
+          byEl.innerHTML = 'ยังไม่มีข้อมูล';
+        }
+        const latestEl = document.getElementById('latestList');
+        if (data.latest && data.latest.length) {
+          latestEl.innerHTML = '<table><thead><tr><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
+            + data.latest.map(e => '<tr><td>' + e.created_at + '</td><td>' + e.telegram_user_id + '</td><td>@' + (e.username || '-') + '</td><td>' + (e.first_name || '-') + '</td><td>' + e.action + '</td></tr>').join('')
+            + '</tbody></table>';
+        } else {
+          latestEl.innerHTML = 'ยังไม่มีข้อมูล';
+        }
+      } catch (err) {
+        el.innerHTML = '<span class="error">โหลดไม่สำเร็จ: ' + err.message + '</span>';
+      }
+    }
+
+    async function loadEvents(offset) {
+      const wrap = document.getElementById('eventsTableWrap');
+      const pagEl = document.getElementById('pagination');
+      try {
+        const res = await fetch('/api/bot-events?limit=' + LIMIT + '&offset=' + (offset || 0));
+        const data = await res.json();
+        currentOffset = data.offset;
+        if (!data.events || !data.events.length) {
+          wrap.innerHTML = 'ยังไม่มีข้อมูล';
+          pagEl.innerHTML = '';
+          return;
+        }
+        wrap.innerHTML = '<table><thead><tr><th>id</th><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
+          + data.events.map(e => '<tr><td>' + e.id + '</td><td>' + e.created_at + '</td><td>' + e.telegram_user_id + '</td><td>@' + (e.username || '-') + '</td><td>' + (e.first_name || '-') + '</td><td>' + e.action + '</td></tr>').join('')
+          + '</tbody></table>';
+        const prev = currentOffset - LIMIT;
+        const next = currentOffset + LIMIT;
+        let pag = '';
+        if (prev >= 0) pag += '<button type="button" data-offset="' + prev + '">ก่อนหน้า</button> ';
+        pag += ' แสดง ' + (currentOffset + 1) + '–' + Math.min(currentOffset + data.events.length, data.total) + ' จาก ' + data.total + ' ';
+        if (next < data.total) pag += '<button type="button" data-offset="' + next + '">ถัดไป</button>';
+        pagEl.innerHTML = pag;
+        pagEl.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', () => loadEvents(parseInt(btn.dataset.offset, 10)));
+        });
+      } catch (err) {
+        wrap.innerHTML = '<span class="error">โหลดไม่สำเร็จ: ' + err.message + '</span>';
+      }
+    }
+
+    document.getElementById('btnRefresh').addEventListener('click', () => {
+      loadStats();
+      loadEvents(currentOffset);
+    });
+
+    loadStats();
+    loadEvents(0);
+  </script>
+</body>
+</html>

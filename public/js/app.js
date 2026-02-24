@@ -74,9 +74,25 @@
   const loadingSpinner = document.getElementById('loadingSpinner');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
 
+  function sendBotEventIfTelegram(action) {
+    var user = typeof Telegram !== 'undefined' && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user;
+    if (!user) return;
+    fetch('/api/bot-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        telegram_user_id: user.id,
+        username: user.username || null,
+        first_name: user.first_name || null,
+        action: action
+      })
+    }).catch(function () {});
+  }
+
   // ──────── Init ────────
   function init() {
     TelegramApp.init();
+    sendBotEventIfTelegram('open_webapp');
 
     // Header: show provider logo
     const headerLogo = document.getElementById('headerProviderLogo');

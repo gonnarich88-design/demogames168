@@ -552,6 +552,14 @@ app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/joker', serveInlineHtml('index.html', ['js/app.js']));
 
+// Admin: bot usage stats (same origin only; consider adding auth in production)
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+app.get('/admin/bot-stats', (req, res) => {
+  res.redirect(302, '/admin');
+});
+
 // ──────────────────────────────────────────────
 // API: Proxy external images (fix PP thumbnails not loading in WebView/CORS)
 // Supports OUTBOUND_PROXY_URL for regions where pragmaticplay.com is blocked
@@ -644,6 +652,59 @@ app.use(express.static(path.join(__dirname, 'public'), {
   }
 }));
 app.use(express.json());
+
+// ──────────────────────────────────────────────
+// Bot usage tracking (SQLite)
+// ──────────────────────────────────────────────
+const DATA_DIR = path.join(__dirname, 'data');
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+
+const Database = require('better-sqlite3');
+const botDb = new Database(path.join(DATA_DIR, 'bot-usage.db'));
+botDb.exec(`
+  CREATE TABLE IF NOT EXISTS bot_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    telegram_user_id INTEGER NOT NULL,
+    username TEXT,
+    first_name TEXT,
+    action TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )
+`);
+
+function insertBotEvent(payload) {
+  try {
+    const { telegram_user_id, username, first_name, action } = payload;
+    const stmt = botDb.prepare(
+      'INSERT INTO bot_events (telegram_user_id, username, first_name, action, created_at) VALUES (?, ?, ?, ?, ?)'
+    );
+    stmt.run(
+      telegram_user_id,
+      username ?? null,
+      first_name ?? null,
+      action,
+      new Date().toISOString()
+    );
+  } catch (err) {
+    console.error('[bot-usage] insertBotEvent error:', err.message);
+  }
+}
+
+function getBotStats() {
+  const total = botDb.prepare('SELECT COUNT(*) as c FROM bot_events').get().c;
+  const uniqueUsers = botDb.prepare('SELECT COUNT(DISTINCT telegram_user_id) as c FROM bot_events').get().c;
+  const byAction = botDb.prepare('SELECT action, COUNT(*) as count FROM bot_events GROUP BY action').all();
+  const latest = botDb.prepare('SELECT * FROM bot_events ORDER BY id DESC LIMIT 50').all();
+  return { total, uniqueUsers, byAction, latest };
+}
+
+function getBotEvents(limit = 100, offset = 0) {
+  const limitNum = Math.min(Math.max(parseInt(limit, 10) || 100, 1), 500);
+  const offsetNum = Math.max(parseInt(offset, 10) || 0, 0);
+  const rows = botDb.prepare('SELECT * FROM bot_events ORDER BY id DESC LIMIT ? OFFSET ?').all(limitNum, offsetNum);
+  const total = botDb.prepare('SELECT COUNT(*) as c FROM bot_events').get().c;
+  return { events: rows, total, limit: limitNum, offset: offsetNum };
+}
 
 // API: Get all games (with optional category, search, pagination)
 app.get('/api/games', (req, res) => {
@@ -1158,6 +1219,44 @@ app.get('/api/bot-check', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// API: Bot usage stats & events (for admin)
+// ──────────────────────────────────────────────
+app.get('/api/bot-stats', (req, res) => {
+  try {
+    res.json(getBotStats());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/bot-events', (req, res) => {
+  try {
+    const { limit, offset } = req.query;
+    res.json(getBotEvents(limit, offset));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/bot-event', (req, res) => {
+  try {
+    const { telegram_user_id, username, first_name, action } = req.body || {};
+    if (!telegram_user_id || !action) {
+      return res.status(400).json({ error: 'telegram_user_id and action required' });
+    }
+    insertBotEvent({
+      telegram_user_id: Number(telegram_user_id),
+      username: username || null,
+      first_name: first_name || null,
+      action: String(action)
+    });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ──────────────────────────────────────────────
 // API: Server info / debug (check hosting location & jiligames reachability)
 // ──────────────────────────────────────────────
 app.get('/api/server-info', async (req, res) => {
@@ -1260,6 +1359,14 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
   // /start command
   bot.start(async (ctx) => {
     console.log('[BOT] /start received from', ctx.from?.id, ctx.from?.username || '');
+    if (ctx.from) {
+      insertBotEvent({
+        telegram_user_id: ctx.from.id,
+        username: ctx.from.username || null,
+        first_name: ctx.from.first_name || null,
+        action: 'start'
+      });
+    }
     try {
       await ctx.replyWithPhoto(
         'https://co168.bz/assets/images/all_slot_games_in_co168.png',
@@ -1301,6 +1408,14 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
 
   // /games command — แสดงปุ่มเลือกค่ายเกม (เปิดไปที่ catalog ของแต่ละค่าย)
   bot.command('games', async (ctx) => {
+    if (ctx.from) {
+      insertBotEvent({
+        telegram_user_id: ctx.from.id,
+        username: ctx.from.username || null,
+        first_name: ctx.from.first_name || null,
+        action: 'games'
+      });
+    }
     const providers = loadProviders();
     const rows = providers.map(p => [
       Markup.button.webApp(
@@ -1318,6 +1433,14 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
 
   // /help command
   bot.command('help', async (ctx) => {
+    if (ctx.from) {
+      insertBotEvent({
+        telegram_user_id: ctx.from.id,
+        username: ctx.from.username || null,
+        first_name: ctx.from.first_name || null,
+        action: 'help'
+      });
+    }
     await ctx.reply(
       '📖 *วิธีใช้งาน Co168 Bot*\n\n'
       + '1️⃣ กดปุ่ม *"เล่นเกมส์"* ที่ปุ่มซ้ายล่าง\n'
