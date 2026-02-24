@@ -1134,6 +1134,18 @@ app.get('/api/game-url/:id', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// API: Bot check — ใช้ตรวจว่าเซิร์ฟเวอร์นี้รันบอท miniapp (รูป+ปุ่ม) หรือไม่
+// ──────────────────────────────────────────────
+app.get('/api/bot-check', (req, res) => {
+  res.json({
+    ok: true,
+    bot: 'miniapp',
+    message: 'บอทรันจาก server.js นี้ — /start = รูปต้อนรับ+4 ปุ่ม, /games = ปุ่มเลือกค่าย',
+    active: !!bot
+  });
+});
+
+// ──────────────────────────────────────────────
 // API: Server info / debug (check hosting location & jiligames reachability)
 // ──────────────────────────────────────────────
 app.get('/api/server-info', async (req, res) => {
