@@ -1136,13 +1136,25 @@ app.get('/api/game-url/:id', async (req, res) => {
 // ──────────────────────────────────────────────
 // API: Bot check — ใช้ตรวจว่าเซิร์ฟเวอร์นี้รันบอท miniapp (รูป+ปุ่ม) หรือไม่
 // ──────────────────────────────────────────────
-app.get('/api/bot-check', (req, res) => {
-  res.json({
+app.get('/api/bot-check', async (req, res) => {
+  const result = {
     ok: true,
     bot: 'miniapp',
     message: 'บอทรันจาก server.js นี้ — /start = รูปต้อนรับ+4 ปุ่ม, /games = ปุ่มเลือกค่าย',
-    active: !!bot
-  });
+    active: !!bot,
+    lastUpdateAt: botLastUpdateAt || null,
+    lastUpdateAgo: botLastUpdateAt ? Math.round((Date.now() - botLastUpdateAt) / 1000) + 's ago' : null,
+    telegram: null
+  };
+  if (bot) {
+    try {
+      const me = await bot.telegram.getMe();
+      result.telegram = { connected: true, username: me.username, id: me.id };
+    } catch (e) {
+      result.telegram = { connected: false, error: e.message };
+    }
+  }
+  res.json(result);
 });
 
 // ──────────────────────────────────────────────
@@ -1232,14 +1244,22 @@ app.get('/api/debug/test-game/:id', async (req, res) => {
 // Telegram Bot
 // ──────────────────────────────────────────────
 let bot = null;
+let botLastUpdateAt = null; // ใช้เช็คว่าเซิร์ฟเวอร์นี้ได้รับอัปเดตจาก Telegram หรือไม่
 
 if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
   // Use custom HTTPS agent to bypass SSL cert verification (e.g. corporate proxy / missing CA)
   const telegramAgent = new https.Agent({ rejectUnauthorized: false });
   bot = new Telegraf(BOT_TOKEN, { telegram: { agent: telegramAgent } });
 
+  // บันทึกเวลารับอัปเดตล่าสุด (ใช้เช็คใน /api/bot-check)
+  bot.use((ctx, next) => {
+    botLastUpdateAt = Date.now();
+    return next();
+  });
+
   // /start command
   bot.start(async (ctx) => {
+    console.log('[BOT] /start received from', ctx.from?.id, ctx.from?.username || '');
     try {
       await ctx.replyWithPhoto(
         'https://co168.bz/assets/images/all_slot_games_in_co168.png',
@@ -1264,13 +1284,18 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
         web_app: { url: WEBAPP_URL_VERSIONED }
       });
     } catch (err) {
-      console.error('Error in /start:', err.message);
-      await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
-        Markup.inlineKeyboard([
-          [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
-          [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')]
-        ])
-      );
+      console.error('[BOT] Error in /start:', err.message);
+      try {
+        await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
+          Markup.inlineKeyboard([
+            [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')]
+          ])
+        );
+      } catch (fallbackErr) {
+        console.error('[BOT] Fallback reply also failed:', fallbackErr.message);
+        await ctx.reply('ยินดีต้อนรับ! กดเมนูซ้ายล่าง "เล่นเกมส์" เพื่อเข้าเกม').catch(() => {});
+      }
     }
   });
 
