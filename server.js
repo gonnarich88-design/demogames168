@@ -1392,9 +1392,9 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
-            [Markup.button.callback('🌐 หน้าเว็บหลัก', 'btn_main_web')],
-            [Markup.button.callback('👥 กลุ่มหลัก', 'btn_group')],
-            [Markup.button.callback('✍️ สมัครสมาชิก', 'btn_register')]
+            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')],
+            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register')]
           ])
         }
       );
@@ -1411,7 +1411,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
         await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
           Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
-            [Markup.button.callback('👥 กลุ่มหลัก', 'btn_group')]
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')]
           ])
         );
       } catch (fallbackErr) {
@@ -1470,26 +1470,8 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
     );
   });
 
-  // ติดตามการกดปุ่ม inline (หน้าเว็บหลัก, กลุ่มหลัก, สมัครสมาชิก) — บันทึกแล้วเปิด URL
-  const CALLBACK_BUTTONS = {
-    btn_main_web: { url: 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma', action: 'click_main_web' },
-    btn_group: { url: 'https://t.me/co168_official', action: 'click_group' },
-    btn_register: { url: 'https://co168.bz/register', action: 'click_register' }
-  };
-  bot.action(Object.keys(CALLBACK_BUTTONS), async (ctx) => {
-    const data = ctx.callbackQuery.data;
-    const cfg = CALLBACK_BUTTONS[data];
-    if (!cfg) return ctx.answerCbQuery();
-    if (ctx.from) {
-      insertBotEvent({
-        telegram_user_id: ctx.from.id,
-        username: ctx.from.username || null,
-        first_name: ctx.from.first_name || null,
-        action: cfg.action
-      });
-    }
-    await ctx.answerCbQuery({ url: cfg.url });
-  });
+  // หมายเหตุ: ปุ่ม URL (หน้าเว็บหลัก, กลุ่มหลัก, สมัครสมาชิก) ใช้ Markup.button.url — กดแล้วเปิดลิงก์ได้ทันที
+  // Telegram ไม่ส่ง callback มาให้บอทเมื่อกดปุ่ม URL จึงติดตามการกดปุ่ม 3 นี้ไม่ได้ (ติดตามได้เฉพาะ /start, /games, /help และ open_webapp)
 
   // Launch bot with onLaunch callback (launch() Promise never resolves because polling loop is infinite)
   console.log('[BOT] Connecting to Telegram API...');
