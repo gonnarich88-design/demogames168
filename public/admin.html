@@ -204,6 +204,15 @@
     .error { color: var(--danger); }
     .empty { color: var(--text-muted); font-style: italic; }
     .muted { color: var(--text-muted); }
+    .last-updated { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
+    .export-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .export-btns button { font-family: inherit; font-size: 0.8125rem; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text); cursor: pointer; }
+    .export-btns button:hover { background: var(--accent-soft); color: var(--accent); }
+    .chart-bar-wrap { display: flex; align-items: flex-end; gap: 4px; height: 120px; margin-top: 0.5rem; }
+    .chart-bar { flex: 1; min-width: 0; background: var(--accent-soft); border-radius: 4px 4px 0 0; min-height: 4px; transition: height 0.2s; }
+    .chart-bar:hover { background: var(--accent); }
+    .chart-labels { display: flex; gap: 4px; margin-top: 0.25rem; font-size: 0.7rem; color: var(--text-muted); }
+    .chart-labels span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: center; }
   </style>
 </head>
 <body>
@@ -220,6 +229,7 @@
         <button type="button" class="btn-refresh" id="btnRefresh">โหลดใหม่</button>
       </div>
     </header>
+    <p class="last-updated" id="lastUpdated">อัปเดตเมื่อ: –</p>
 
     <section class="dashboard-grid">
       <div class="stat-card">
@@ -230,6 +240,24 @@
         <div class="stat-value" id="statUsers">–</div>
         <div class="stat-label">ผู้ใช้ไม่ซ้ำ</div>
       </div>
+    </section>
+
+    <section class="card">
+      <h2>ส่งออกข้อมูล <span class="muted" style="font-weight:400;text-transform:none;">(ตามช่วงที่เลือก)</span></h2>
+      <div class="export-btns">
+        <button type="button" id="btnExportCsv">ดาวน์โหลด CSV</button>
+        <button type="button" id="btnExportJson">ดาวน์โหลด JSON</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>เหตุการณ์ต่อวัน</h2>
+      <div id="chartByDay" class="loading">กำลังโหลด...</div>
+    </section>
+
+    <section class="card">
+      <h2>ผู้ใช้ที่ active ที่สุด (Top 20)</h2>
+      <div id="topUsersWrap" class="loading">กำลังโหลด...</div>
     </section>
 
     <section class="card">
@@ -265,16 +293,24 @@
       loadEvents(0);
     }
 
+    function setLastUpdated() {
+      var el = document.getElementById('lastUpdated');
+      if (el) el.textContent = 'อัปเดตเมื่อ: ' + new Date().toLocaleTimeString('th-TH');
+    }
+
     async function loadStats() {
       const totalEl = document.getElementById('statTotal');
       const usersEl = document.getElementById('statUsers');
       const byEl = document.getElementById('byAction');
       const latestEl = document.getElementById('latestList');
+      const chartEl = document.getElementById('chartByDay');
+      const topEl = document.getElementById('topUsersWrap');
       try {
         const res = await fetch('/api/bot-stats?period=' + currentPeriod);
         const data = await res.json();
         totalEl.textContent = data.total.toLocaleString();
         usersEl.textContent = data.uniqueUsers.toLocaleString();
+        setLastUpdated();
         if (data.byAction && data.byAction.length) {
           byEl.innerHTML = data.byAction.map(a =>
             '<div class="action-chip"><span>' + a.action + '</span><span>' + a.count + '</span></div>'
@@ -283,6 +319,25 @@
         } else {
           byEl.innerHTML = '<span class="empty">ยังไม่มีข้อมูล</span>';
           byEl.classList.remove('loading');
+        }
+        if (data.byDay && data.byDay.length) {
+          var maxCount = Math.max.apply(null, data.byDay.map(function(d) { return d.count; })) || 1;
+          chartEl.innerHTML = '<div class="chart-bar-wrap">' + data.byDay.map(function(d) {
+            return '<div class="chart-bar" style="height:' + (maxCount ? (d.count / maxCount * 100) : 0) + '%" title="' + d.date + ': ' + d.count + '"></div>';
+          }).join('') + '</div><div class="chart-labels">' + data.byDay.map(function(d) { return '<span>' + d.date.slice(5) + '</span>'; }).join('') + '</div>';
+          chartEl.classList.remove('loading');
+        } else {
+          chartEl.innerHTML = '<span class="empty">ยังไม่มีข้อมูล</span>';
+          chartEl.classList.remove('loading');
+        }
+        if (data.topUsers && data.topUsers.length) {
+          topEl.innerHTML = '<table><thead><tr><th>#</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>จำนวน</th></tr></thead><tbody>'
+            + data.topUsers.map(function(u, i) { return '<tr><td>' + (i + 1) + '</td><td>' + u.telegram_user_id + '</td><td class="muted">' + (u.username ? '@' + u.username : '–') + '</td><td>' + (u.first_name || '–') + '</td><td>' + u.count + '</td></tr>'; }).join('')
+            + '</tbody></table>';
+          topEl.classList.remove('loading');
+        } else {
+          topEl.innerHTML = '<span class="empty">ยังไม่มีข้อมูล</span>';
+          topEl.classList.remove('loading');
         }
         if (data.latest && data.latest.length) {
           latestEl.innerHTML = '<table><thead><tr><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
@@ -297,7 +352,7 @@
         totalEl.textContent = '–';
         usersEl.textContent = '–';
         byEl.innerHTML = '<span class="error">โหลดไม่สำเร็จ: ' + err.message + '</span>';
-        latestEl.innerHTML = '<span class="error">โหลดไม่สำเร็จ</span>';
+        latestEl.innerHTML = chartEl.innerHTML = topEl.innerHTML = '<span class="error">โหลดไม่สำเร็จ</span>';
       }
     }
 
@@ -342,6 +397,37 @@
     document.getElementById('btnRefresh').addEventListener('click', () => {
       loadStats();
       loadEvents(currentOffset);
+    });
+
+    function downloadFile(filename, content, mime) {
+      var a = document.createElement('a');
+      a.href = 'data:' + mime + ';charset=utf-8,' + encodeURIComponent(content);
+      a.download = filename;
+      a.click();
+    }
+
+    document.getElementById('btnExportCsv').addEventListener('click', async function() {
+      try {
+        var res = await fetch('/api/bot-events-export?period=' + currentPeriod);
+        var data = await res.json();
+        if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
+        var headers = ['id','telegram_user_id','username','first_name','action','created_at'];
+        var csv = headers.join(',') + '\n' + data.events.map(function(e) {
+          return [e.id, e.telegram_user_id, '"' + (e.username || '').replace(/"/g,'""') + '"', '"' + (e.first_name || '').replace(/"/g,'""') + '"', e.action, e.created_at || ''].join(',');
+        }).join('\n');
+        var name = 'bot-events-' + currentPeriod + '-' + new Date().toISOString().slice(0,10) + '.csv';
+        downloadFile(name, '\uFEFF' + csv, 'text/csv');
+      } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
+    });
+
+    document.getElementById('btnExportJson').addEventListener('click', async function() {
+      try {
+        var res = await fetch('/api/bot-events-export?period=' + currentPeriod);
+        var data = await res.json();
+        if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
+        var name = 'bot-events-' + currentPeriod + '-' + new Date().toISOString().slice(0,10) + '.json';
+        downloadFile(name, JSON.stringify(data.events, null, 2), 'application/json');
+      } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
     });
 
     loadStats();

@@ -760,7 +760,22 @@ function getBotStats(period) {
   });
   Object.keys(actionCount).forEach(action => byAction.push({ action, count: actionCount[action] }));
   const latest = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 50);
-  return { total, uniqueUsers, byAction, latest, period: period || 'all' };
+  // เหตุการณ์ต่อวัน (สำหรับกราฟ)
+  const byDayMap = {};
+  events.forEach(e => {
+    const dateStr = e.created_at ? e.created_at.slice(0, 10) : '';
+    if (dateStr) byDayMap[dateStr] = (byDayMap[dateStr] || 0) + 1;
+  });
+  const byDay = Object.keys(byDayMap).sort().map(date => ({ date, count: byDayMap[date] }));
+  // Top 20 users ตามจำนวนเหตุการณ์
+  const userCount = {};
+  events.forEach(e => {
+    const uid = e.telegram_user_id;
+    if (!userCount[uid]) userCount[uid] = { telegram_user_id: uid, username: e.username, first_name: e.first_name, count: 0 };
+    userCount[uid].count++;
+  });
+  const topUsers = Object.values(userCount).sort((a, b) => b.count - a.count).slice(0, 20);
+  return { total, uniqueUsers, byAction, latest, byDay, topUsers, period: period || 'all' };
 }
 
 function getBotEvents(limit = 100, offset = 0, period) {
@@ -1301,6 +1316,18 @@ app.get('/api/bot-events', (req, res) => {
   try {
     const { limit, offset, period } = req.query;
     res.json(getBotEvents(limit, offset, period));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/bot-events-export', (req, res) => {
+  try {
+    const period = req.query.period || 'all';
+    const allEvents = readBotEvents();
+    const events = filterEventsByPeriod(allEvents, period);
+    const sorted = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 10000);
+    res.json({ events: sorted, total: sorted.length, period });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
