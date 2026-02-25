@@ -1394,7 +1394,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
             [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
             [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')],
-            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register')]
+            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register?ref=TGC')]
           ])
         }
       );
