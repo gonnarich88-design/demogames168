@@ -655,10 +655,16 @@ app.use(express.json());
 
 // ──────────────────────────────────────────────
 // Bot usage tracking (JSON file — ไม่ใช้ native module เพื่อให้ deploy ผ่านทุกโฮสต์)
+// ถ้า deploy แล้วข้อมูลหาย: ใช้ BOT_EVENTS_PATH ชี้ไปที่ volume ที่ persist (เช่น /data/bot-events.json)
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-const BOT_EVENTS_FILE = path.join(DATA_DIR, 'bot-events.json');
+const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || path.join(DATA_DIR, 'bot-events.json');
+// สร้างโฟลเดอร์ของ BOT_EVENTS_PATH ถ้าเป็น path ข้างนอกโปรเจกต์
+const botEventsDir = path.dirname(BOT_EVENTS_FILE);
+if (botEventsDir !== DATA_DIR && !fs.existsSync(botEventsDir)) {
+  try { fs.mkdirSync(botEventsDir, { recursive: true }); } catch (e) { /* ignore */ }
+}
 
 function readBotEvents() {
   try {
@@ -1527,6 +1533,7 @@ app.listen(PORT, () => {
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);
+  console.log(`   Bot stats file: ${BOT_EVENTS_FILE} (set BOT_EVENTS_PATH for persistent volume)`);
   console.log(`   JILI:    ${loadGames().length} games loaded`);
   console.log(`   PP:      ${loadPPGames().length} games loaded`);
   console.log(`   Joker:   ${loadJokerGames().length} games loaded\n`);
