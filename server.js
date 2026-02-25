@@ -1445,9 +1445,9 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
-            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://links.co1688.top/website')],
-            [Markup.button.url('👥 กลุ่มหลัก', 'https://links.co1688.top/grouptcg')],
-            [Markup.button.url('✍️ สมัครสมาชิก', 'https://links.co1688.top/register')]
+            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://co168.bz/?ref=tgc')],
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official?ref=tgc')],
+            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register?ref=tgc')]
           ])
         }
       );
@@ -1464,7 +1464,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
         await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
           Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
-            [Markup.button.url('👥 กลุ่มหลัก', 'https://links.co1688.top/grouptcg')]
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official?ref=tgc')]
           ])
         );
       } catch (fallbackErr) {
