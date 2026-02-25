@@ -655,15 +655,37 @@ app.use(express.json());
 
 // ──────────────────────────────────────────────
 // Bot usage tracking (JSON file — ไม่ใช้ native module เพื่อให้ deploy ผ่านทุกโฮสต์)
-// ถ้า deploy แล้วข้อมูลหาย: ใช้ BOT_EVENTS_PATH ชี้ไปที่ volume ที่ persist (เช่น /data/bot-events.json)
+// ป้องกันข้อมูลหาย: ตั้ง BOT_EVENTS_PATH เป็น volume ที่ persist และ/หรือ BOT_EVENTS_BACKUP_PATH สำหรับสำรอง
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || path.join(DATA_DIR, 'bot-events.json');
-// สร้างโฟลเดอร์ของ BOT_EVENTS_PATH ถ้าเป็น path ข้างนอกโปรเจกต์
-const botEventsDir = path.dirname(BOT_EVENTS_FILE);
-if (botEventsDir !== DATA_DIR && !fs.existsSync(botEventsDir)) {
-  try { fs.mkdirSync(botEventsDir, { recursive: true }); } catch (e) { /* ignore */ }
+const BOT_EVENTS_BACKUP_FILE = process.env.BOT_EVENTS_BACKUP_PATH || null;
+// สร้างโฟลเดอร์ของ path ถ้าข้างนอกโปรเจกต์
+function ensureDirForFile(filePath) {
+  const dir = path.dirname(filePath);
+  if (dir !== DATA_DIR && !fs.existsSync(dir)) {
+    try { fs.mkdirSync(dir, { recursive: true }); } catch (e) { /* ignore */ }
+  }
+}
+ensureDirForFile(BOT_EVENTS_FILE);
+if (BOT_EVENTS_BACKUP_FILE) ensureDirForFile(BOT_EVENTS_BACKUP_FILE);
+
+// กู้ข้อมูลจาก backup ถ้าไฟล์หลักหายหรือว่าง (หลัง deploy ที่ล้าง disk)
+if (BOT_EVENTS_BACKUP_FILE && fs.existsSync(BOT_EVENTS_BACKUP_FILE)) {
+  try {
+    const primaryEmpty = !fs.existsSync(BOT_EVENTS_FILE) || fs.readFileSync(BOT_EVENTS_FILE, 'utf-8').trim() === '';
+    if (primaryEmpty) {
+      const backupRaw = fs.readFileSync(BOT_EVENTS_BACKUP_FILE, 'utf-8');
+      const arr = JSON.parse(backupRaw);
+      if (Array.isArray(arr) && arr.length > 0) {
+        fs.writeFileSync(BOT_EVENTS_FILE, backupRaw, 'utf-8');
+        console.log('[bot-usage] Restored ' + arr.length + ' events from backup: ' + BOT_EVENTS_BACKUP_FILE);
+      }
+    }
+  } catch (e) {
+    console.warn('[bot-usage] Restore from backup failed:', e.message);
+  }
 }
 
 function readBotEvents() {
@@ -678,10 +700,18 @@ function readBotEvents() {
 }
 
 function writeBotEvents(events) {
+  const json = JSON.stringify(events, null, 0);
   try {
-    fs.writeFileSync(BOT_EVENTS_FILE, JSON.stringify(events, null, 0), 'utf-8');
+    fs.writeFileSync(BOT_EVENTS_FILE, json, 'utf-8');
   } catch (err) {
     console.error('[bot-usage] writeBotEvents error:', err.message);
+  }
+  if (BOT_EVENTS_BACKUP_FILE) {
+    try {
+      fs.writeFileSync(BOT_EVENTS_BACKUP_FILE, json, 'utf-8');
+    } catch (err) {
+      console.error('[bot-usage] backup write error:', err.message);
+    }
   }
 }
 
@@ -704,8 +734,23 @@ function insertBotEvent(payload) {
   }
 }
 
-function getBotStats() {
-  const events = readBotEvents();
+// period: 'all' | 'day' | 'week' | 'month' — กรองตาม created_at
+function filterEventsByPeriod(events, period) {
+  if (!period || period === 'all') return events;
+  const now = Date.now();
+  let cutoff = 0;
+  if (period === 'day') cutoff = now - 24 * 60 * 60 * 1000;
+  else if (period === 'week') cutoff = now - 7 * 24 * 60 * 60 * 1000;
+  else if (period === 'month') cutoff = now - 30 * 24 * 60 * 60 * 1000;
+  return events.filter(e => {
+    const t = e.created_at ? new Date(e.created_at).getTime() : 0;
+    return t >= cutoff;
+  });
+}
+
+function getBotStats(period) {
+  const allEvents = readBotEvents();
+  const events = filterEventsByPeriod(allEvents, period);
   const total = events.length;
   const uniqueUsers = new Set(events.map(e => e.telegram_user_id)).size;
   const byAction = [];
@@ -715,16 +760,17 @@ function getBotStats() {
   });
   Object.keys(actionCount).forEach(action => byAction.push({ action, count: actionCount[action] }));
   const latest = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 50);
-  return { total, uniqueUsers, byAction, latest };
+  return { total, uniqueUsers, byAction, latest, period: period || 'all' };
 }
 
-function getBotEvents(limit = 100, offset = 0) {
+function getBotEvents(limit = 100, offset = 0, period) {
   const limitNum = Math.min(Math.max(parseInt(limit, 10) || 100, 1), 500);
   const offsetNum = Math.max(parseInt(offset, 10) || 0, 0);
-  const events = readBotEvents();
+  const allEvents = readBotEvents();
+  const events = filterEventsByPeriod(allEvents, period);
   const sorted = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0));
   const rows = sorted.slice(offsetNum, offsetNum + limitNum);
-  return { events: rows, total: events.length, limit: limitNum, offset: offsetNum };
+  return { events: rows, total: events.length, limit: limitNum, offset: offsetNum, period: period || 'all' };
 }
 
 // API: Get all games (with optional category, search, pagination)
@@ -1244,7 +1290,8 @@ app.get('/api/bot-check', async (req, res) => {
 // ──────────────────────────────────────────────
 app.get('/api/bot-stats', (req, res) => {
   try {
-    res.json(getBotStats());
+    const period = req.query.period || 'all'; // all | day | week | month
+    res.json(getBotStats(period));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1252,8 +1299,8 @@ app.get('/api/bot-stats', (req, res) => {
 
 app.get('/api/bot-events', (req, res) => {
   try {
-    const { limit, offset } = req.query;
-    res.json(getBotEvents(limit, offset));
+    const { limit, offset, period } = req.query;
+    res.json(getBotEvents(limit, offset, period));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1398,9 +1445,9 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
           parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 ทดลองเล่นฟรี', WEBAPP_URL_VERSIONED)],
-            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://ai-code-kutt.xiwm1k.easypanel.host/hfN3ma')],
-            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')],
-            [Markup.button.url('✍️ สมัครสมาชิก', 'https://co168.bz/register?ref=TGC')]
+            [Markup.button.url('🌐 หน้าเว็บหลัก', 'https://links.co1688.top/website')],
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://links.co1688.top/grouptcg')],
+            [Markup.button.url('✍️ สมัครสมาชิก', 'https://links.co1688.top/register')]
           ])
         }
       );
@@ -1417,7 +1464,7 @@ if (BOT_TOKEN && BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
         await ctx.reply('ยินดีตอนรับ! กดปุ่มด้านล่างเพื่อเล่นเกมส์.',
           Markup.inlineKeyboard([
             [Markup.button.webApp('🎮 เปิดเกม', WEBAPP_URL_VERSIONED)],
-            [Markup.button.url('👥 กลุ่มหลัก', 'https://t.me/co168_official')]
+            [Markup.button.url('👥 กลุ่มหลัก', 'https://links.co1688.top/grouptcg')]
           ])
         );
       } catch (fallbackErr) {
@@ -1533,7 +1580,7 @@ app.listen(PORT, () => {
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);
-  console.log(`   Bot stats file: ${BOT_EVENTS_FILE} (set BOT_EVENTS_PATH for persistent volume)`);
+  console.log(`   Bot stats: ${BOT_EVENTS_FILE}` + (BOT_EVENTS_BACKUP_FILE ? ` + backup ${BOT_EVENTS_BACKUP_FILE}` : ' (set BOT_EVENTS_PATH + BOT_EVENTS_BACKUP_PATH to prevent data loss)'));
   console.log(`   JILI:    ${loadGames().length} games loaded`);
   console.log(`   PP:      ${loadPPGames().length} games loaded`);
   console.log(`   Joker:   ${loadJokerGames().length} games loaded\n`);

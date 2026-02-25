@@ -3,100 +3,331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin — สถิติบอท Co168</title>
+  <title>แดชบอร์ด — สถิติบอท Co168</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface-hover: #243044;
+      --border: #2d3a4d;
+      --text: #e6edf3;
+      --text-muted: #8b9cb6;
+      --accent: #f59e0b;
+      --accent-soft: rgba(245, 158, 11, 0.15);
+      --success: #10b981;
+      --danger: #ef4444;
+    }
     * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 1rem; background: #1a1a2e; color: #eee; }
-    h1 { font-size: 1.5rem; margin: 0 0 1rem; }
-    .card { background: #16213e; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
-    .stat { background: #0f3460; padding: 0.75rem; border-radius: 6px; text-align: center; }
-    .stat-value { font-size: 1.5rem; font-weight: 700; color: #e94560; }
-    .stat-label { font-size: 0.85rem; color: #aaa; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #2a2a4a; }
-    th { color: #aaa; font-weight: 600; }
-    .loading { color: #888; }
-    .error { color: #e94560; }
-    button { background: #e94560; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
-    button:hover { opacity: 0.9; }
-    .actions { margin-bottom: 1rem; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .period-tabs {
+      display: flex;
+      gap: 0.25rem;
+      background: var(--surface);
+      padding: 0.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .period-tabs button {
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .period-tabs button:hover {
+      color: var(--text);
+      background: var(--surface-hover);
+    }
+    .period-tabs button.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .btn-refresh {
+      font-family: inherit;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-refresh:hover {
+      background: var(--surface-hover);
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--accent);
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h2 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .by-action {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .action-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface-hover);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+    }
+    .action-chip span:last-child {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface-hover);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface-hover); }
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .pagination button {
+      font-family: inherit;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .pagination button:hover:not(:disabled) {
+      background: var(--surface-hover);
+    }
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .loading { color: var(--text-muted); }
+    .error { color: var(--danger); }
+    .empty { color: var(--text-muted); font-style: italic; }
+    .muted { color: var(--text-muted); }
   </style>
 </head>
 <body>
-  <h1>📊 สถิติการใช้งานบอท Co168</h1>
-  <div class="actions">
-    <button type="button" id="btnRefresh">โหลดใหม่</button>
-  </div>
-  <div class="card">
-    <h2 style="margin:0 0 0.5rem;">สรุป</h2>
-    <div id="statsSummary" class="stats loading">กำลังโหลด...</div>
-    <div id="byAction" class="card" style="margin-top:0.5rem; padding:0.5rem;"></div>
-  </div>
-  <div class="card">
-    <h2 style="margin:0 0 0.5rem;">รายการล่าสุด (50)</h2>
-    <div id="latestList" class="loading">กำลังโหลด...</div>
-  </div>
-  <div class="card">
-    <h2 style="margin:0 0 0.5rem;">รายการทั้งหมด (แบ่งหน้า)</h2>
-    <div id="pagination" style="margin-bottom:0.5rem;"></div>
-    <div id="eventsTableWrap"></div>
+  <div class="layout">
+    <header>
+      <h1>📊 แดชบอร์ด สถิติบอท Co168</h1>
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <div class="period-tabs" role="tablist">
+          <button type="button" data-period="all" class="active">ทั้งหมด</button>
+          <button type="button" data-period="day">24 ชม.</button>
+          <button type="button" data-period="week">7 วัน</button>
+          <button type="button" data-period="month">30 วัน</button>
+        </div>
+        <button type="button" class="btn-refresh" id="btnRefresh">โหลดใหม่</button>
+      </div>
+    </header>
+
+    <section class="dashboard-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">–</div>
+        <div class="stat-label">เหตุการณ์ทั้งหมด</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statUsers">–</div>
+        <div class="stat-label">ผู้ใช้ไม่ซ้ำ</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>แยกตาม Action</h2>
+      <div id="byAction" class="by-action loading">กำลังโหลด...</div>
+    </section>
+
+    <section class="card">
+      <h2>รายการล่าสุด</h2>
+      <div id="latestList" class="loading">กำลังโหลด...</div>
+    </section>
+
+    <section class="card">
+      <h2>รายการทั้งหมด (แบ่งหน้า)</h2>
+      <div id="pagination" class="pagination"></div>
+      <div class="table-wrap">
+        <div id="eventsTableWrap"></div>
+      </div>
+    </section>
   </div>
 
   <script>
     const LIMIT = 50;
+    let currentPeriod = 'all';
     let currentOffset = 0;
 
+    function setPeriod(p) {
+      currentPeriod = p;
+      document.querySelectorAll('.period-tabs button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.period === p);
+      });
+      loadStats();
+      loadEvents(0);
+    }
+
     async function loadStats() {
-      const el = document.getElementById('statsSummary');
+      const totalEl = document.getElementById('statTotal');
+      const usersEl = document.getElementById('statUsers');
+      const byEl = document.getElementById('byAction');
+      const latestEl = document.getElementById('latestList');
       try {
-        const res = await fetch('/api/bot-stats');
+        const res = await fetch('/api/bot-stats?period=' + currentPeriod);
         const data = await res.json();
-        el.innerHTML = ''
-          + '<div class="stat"><div class="stat-value">' + data.total + '</div><div class="stat-label">เหตุการณ์ทั้งหมด</div></div>'
-          + '<div class="stat"><div class="stat-value">' + data.uniqueUsers + '</div><div class="stat-label">ผู้ใช้ไม่ซ้ำ</div></div>';
-        const byEl = document.getElementById('byAction');
+        totalEl.textContent = data.total.toLocaleString();
+        usersEl.textContent = data.uniqueUsers.toLocaleString();
         if (data.byAction && data.byAction.length) {
-          byEl.innerHTML = '<strong>แยกตาม action:</strong> '
-            + data.byAction.map(a => a.action + ': ' + a.count).join(' | ');
+          byEl.innerHTML = data.byAction.map(a =>
+            '<div class="action-chip"><span>' + a.action + '</span><span>' + a.count + '</span></div>'
+          ).join('');
+          byEl.classList.remove('loading');
         } else {
-          byEl.innerHTML = 'ยังไม่มีข้อมูล';
+          byEl.innerHTML = '<span class="empty">ยังไม่มีข้อมูล</span>';
+          byEl.classList.remove('loading');
         }
-        const latestEl = document.getElementById('latestList');
         if (data.latest && data.latest.length) {
           latestEl.innerHTML = '<table><thead><tr><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
-            + data.latest.map(e => '<tr><td>' + e.created_at + '</td><td>' + e.telegram_user_id + '</td><td>@' + (e.username || '-') + '</td><td>' + (e.first_name || '-') + '</td><td>' + e.action + '</td></tr>').join('')
+            + data.latest.map(e => '<tr><td>' + formatDate(e.created_at) + '</td><td>' + e.telegram_user_id + '</td><td class="muted">' + (e.username ? '@' + e.username : '–') + '</td><td>' + (e.first_name || '–') + '</td><td>' + e.action + '</td></tr>').join('')
             + '</tbody></table>';
+          latestEl.classList.remove('loading');
         } else {
-          latestEl.innerHTML = 'ยังไม่มีข้อมูล';
+          latestEl.innerHTML = '<span class="empty">ยังไม่มีข้อมูล</span>';
+          latestEl.classList.remove('loading');
         }
       } catch (err) {
-        el.innerHTML = '<span class="error">โหลดไม่สำเร็จ: ' + err.message + '</span>';
+        totalEl.textContent = '–';
+        usersEl.textContent = '–';
+        byEl.innerHTML = '<span class="error">โหลดไม่สำเร็จ: ' + err.message + '</span>';
+        latestEl.innerHTML = '<span class="error">โหลดไม่สำเร็จ</span>';
       }
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '–';
+      const d = new Date(iso);
+      return d.toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' });
     }
 
     async function loadEvents(offset) {
       const wrap = document.getElementById('eventsTableWrap');
       const pagEl = document.getElementById('pagination');
       try {
-        const res = await fetch('/api/bot-events?limit=' + LIMIT + '&offset=' + (offset || 0));
+        const res = await fetch('/api/bot-events?limit=' + LIMIT + '&offset=' + (offset || 0) + '&period=' + currentPeriod);
         const data = await res.json();
         currentOffset = data.offset;
         if (!data.events || !data.events.length) {
-          wrap.innerHTML = 'ยังไม่มีข้อมูล';
+          wrap.innerHTML = '<table><tbody><tr><td class="empty" style="padding:2rem;">ยังไม่มีข้อมูล</td></tr></tbody></table>';
           pagEl.innerHTML = '';
           return;
         }
-        wrap.innerHTML = '<table><thead><tr><th>id</th><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
-          + data.events.map(e => '<tr><td>' + e.id + '</td><td>' + e.created_at + '</td><td>' + e.telegram_user_id + '</td><td>@' + (e.username || '-') + '</td><td>' + (e.first_name || '-') + '</td><td>' + e.action + '</td></tr>').join('')
+        wrap.innerHTML = '<table><thead><tr><th>#</th><th>เวลา</th><th>User ID</th><th>Username</th><th>ชื่อ</th><th>Action</th></tr></thead><tbody>'
+          + data.events.map(e => '<tr><td>' + e.id + '</td><td>' + formatDate(e.created_at) + '</td><td>' + e.telegram_user_id + '</td><td class="muted">' + (e.username ? '@' + e.username : '–') + '</td><td>' + (e.first_name || '–') + '</td><td>' + e.action + '</td></tr>').join('')
           + '</tbody></table>';
         const prev = currentOffset - LIMIT;
         const next = currentOffset + LIMIT;
-        let pag = '';
-        if (prev >= 0) pag += '<button type="button" data-offset="' + prev + '">ก่อนหน้า</button> ';
-        pag += ' แสดง ' + (currentOffset + 1) + '–' + Math.min(currentOffset + data.events.length, data.total) + ' จาก ' + data.total + ' ';
-        if (next < data.total) pag += '<button type="button" data-offset="' + next + '">ถัดไป</button>';
-        pagEl.innerHTML = pag;
+        pagEl.innerHTML = ''
+          + (prev >= 0 ? '<button type="button" data-offset="' + prev + '">← ก่อนหน้า</button>' : '')
+          + '<span class="muted" style="font-size:0.875rem;">แสดง ' + (currentOffset + 1) + '–' + Math.min(currentOffset + data.events.length, data.total) + ' จาก ' + data.total + '</span>'
+          + (next < data.total ? '<button type="button" data-offset="' + next + '">ถัดไป →</button>' : '');
         pagEl.querySelectorAll('button').forEach(btn => {
           btn.addEventListener('click', () => loadEvents(parseInt(btn.dataset.offset, 10)));
         });
@@ -105,6 +336,9 @@
       }
     }
 
+    document.querySelectorAll('.period-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => setPeriod(btn.dataset.period));
+    });
     document.getElementById('btnRefresh').addEventListener('click', () => {
       loadStats();
       loadEvents(currentOffset);
