@@ -655,11 +655,14 @@ app.use(express.json());
 
 // ──────────────────────────────────────────────
 // Bot usage tracking (JSON file — ไม่ใช้ native module เพื่อให้ deploy ผ่านทุกโฮสต์)
-// ป้องกันข้อมูลหาย: ตั้ง BOT_EVENTS_PATH เป็น volume ที่ persist และ/หรือ BOT_EVENTS_BACKUP_PATH สำหรับสำรอง
+// Production: default เก็บที่ /app/data/bot-events.json — ใช้กับ docker-compose ที่ mount volume ที่ /app/data แล้ว deploy ครั้งหน้าข้อมูลไม่หาย
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || path.join(DATA_DIR, 'bot-events.json');
+const defaultEventsPath = process.env.NODE_ENV === 'production'
+  ? '/app/data/bot-events.json'
+  : path.join(DATA_DIR, 'bot-events.json');
+const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || defaultEventsPath;
 const BOT_EVENTS_BACKUP_FILE = process.env.BOT_EVENTS_BACKUP_PATH || null;
 // สร้างโฟลเดอร์ของ path ถ้าข้างนอกโปรเจกต์
 function ensureDirForFile(filePath) {

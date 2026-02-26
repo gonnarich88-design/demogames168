@@ -48,20 +48,17 @@
 
 ## ป้องกันข้อมูลสถิติบอทหาย (หลัง deploy)
 
-สถิติการใช้งานเก็บในไฟล์ JSON ถ้า deploy ใหม่แล้วไฟล์ถูกลบ ข้อมูลจะหาย
+เมื่อ **NODE_ENV=production** โปรเจกต์จะเก็บสถิติที่ **`/app/data/bot-events.json`** โดยอัตโนมัติ
 
-**วิธีกันข้อมูลหาย:**
+**ถ้า deploy ด้วย docker-compose (ใน repo นี้):**  
+ไฟล์ `docker-compose.yml` มี volume **app-data** mount ที่ **/app/data** อยู่แล้ว — แค่รัน `docker-compose up -d` หรือ deploy ด้วย compose นี้ ข้อมูลจะอยู่บน volume และ **ไม่หายตอน deploy ใหม่**
 
-1. **ตั้ง volume ที่ persist** แล้วชี้ path ไปที่ volume นั้น (ใน .env บนเซิร์ฟเวอร์):
-   ```env
-   BOT_EVENTS_PATH=/data/bot-events.json
-   ```
-   (แล้ว mount โฟลเดอร์ `/data` เป็น volume ที่ไม่ถูกลบตอน deploy)
+**ถ้า deploy แบบอื่น (Easypanel / Docker โดยไม่มี compose):**
+- ตั้ง **NODE_ENV=production**
+- สร้าง volume ที่ persist แล้ว **mount ที่ `/app/data`** ให้กับ container
 
-2. **เพิ่ม backup อีก path** (ถ้าโฮสต์รองรับหลาย volume):
-   ```env
-   BOT_EVENTS_PATH=/data/bot-events.json
-   BOT_EVENTS_BACKUP_PATH=/backup/bot-events.json
-   ```
-   - ระบบจะเขียนข้อมูลไปทั้งสองไฟล์
-   - ตอนสตาร์ท ถ้าไฟล์หลักหายหรือว่าง แต่ไฟล์ backup มีข้อมูล จะกู้จาก backup มาใส่ไฟล์หลักให้อัตโนมัติ
+**(ถ้าต้องการ path อื่น)** ใส่ใน environment:
+```env
+BOT_EVENTS_PATH=/path/to/volume/bot-events.json
+BOT_EVENTS_BACKUP_PATH=/backup/bot-events.json
+```
