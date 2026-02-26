@@ -213,6 +213,23 @@
     .chart-bar:hover { background: var(--accent); }
     .chart-labels { display: flex; gap: 4px; margin-top: 0.25rem; font-size: 0.7rem; color: var(--text-muted); }
     .chart-labels span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+    .calendar-wrap { max-width: 360px; }
+    .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .calendar-header button { font-family: inherit; padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text); cursor: pointer; font-size: 0.875rem; }
+    .calendar-header button:hover { background: var(--accent-soft); color: var(--accent); }
+    .calendar-month { font-weight: 600; font-size: 0.9375rem; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 0.75rem; }
+    .calendar-cell { padding: 0.35rem; text-align: center; border-radius: 6px; min-height: 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 1px solid transparent; }
+    .calendar-cell.head { color: var(--text-muted); font-weight: 600; cursor: default; }
+    .calendar-cell.empty { visibility: hidden; cursor: default; }
+    .calendar-cell.day:hover { background: var(--surface-hover); border-color: var(--border); }
+    .calendar-cell.day.selected { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+    .calendar-cell .count { font-size: 0.65rem; color: var(--text-muted); margin-top: 1px; }
+    .calendar-cell.day.selected .count { color: var(--accent); }
+    .selected-date-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+    .selected-date-bar span { font-weight: 500; }
+    .selected-date-bar button { font-family: inherit; font-size: 0.8125rem; padding: 0.35rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text-muted); cursor: pointer; }
+    .selected-date-bar button:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -230,6 +247,23 @@
       </div>
     </header>
     <p class="last-updated" id="lastUpdated">อัปเดตเมื่อ: –</p>
+
+    <div id="selectedDateBar" class="selected-date-bar" style="display:none;">
+      <span>📅 กำลังดูรายละเอียดวันที่ <strong id="selectedDateLabel"></strong></span>
+      <button type="button" id="btnClearDate">ล้างการเลือกวัน</button>
+    </div>
+
+    <section class="card">
+      <h2>ปฏิทิน — เลือกดูตามวัน</h2>
+      <div class="calendar-wrap">
+        <div class="calendar-header">
+          <button type="button" id="calendarPrev">← เดือนก่อน</button>
+          <span class="calendar-month" id="calendarMonthTitle"></span>
+          <button type="button" id="calendarNext">เดือนถัดไป →</button>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </div>
+    </section>
 
     <section class="dashboard-grid">
       <div class="stat-card">
@@ -283,14 +317,69 @@
     const LIMIT = 50;
     let currentPeriod = 'all';
     let currentOffset = 0;
+    let selectedDate = null;
+    let currentCalendarMonth = '';
+
+    function getCalendarMonth() {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    }
 
     function setPeriod(p) {
       currentPeriod = p;
+      selectedDate = null;
+      document.getElementById('selectedDateBar').style.display = 'none';
       document.querySelectorAll('.period-tabs button').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.period === p);
       });
       loadStats();
       loadEvents(0);
+    }
+
+    function setSelectedDate(dateStr) {
+      selectedDate = dateStr;
+      if (dateStr) {
+        var d = new Date(dateStr + 'T12:00:00');
+        document.getElementById('selectedDateLabel').textContent = d.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('selectedDateBar').style.display = 'flex';
+        loadStats();
+        loadEvents(0);
+      } else {
+        document.getElementById('selectedDateBar').style.display = 'none';
+      }
+    }
+
+    function renderCalendar(month) {
+      currentCalendarMonth = month;
+      var title = new Date(month + '-01T12:00:00').toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
+      document.getElementById('calendarMonthTitle').textContent = title;
+      fetch('/api/bot-stats-month?month=' + month).then(function(r) { return r.json(); }).then(function(data) {
+        var byDayMap = {};
+        if (data.byDay) data.byDay.forEach(function(d) { byDayMap[d.date] = d.count; });
+        var y = parseInt(month.slice(0,4), 10);
+        var m = parseInt(month.slice(5,7), 10) - 1;
+        var first = new Date(y, m, 1);
+        var daysInMonth = new Date(y, m + 1, 0).getDate();
+        var startWeekday = first.getDay();
+        var cells = [];
+        var weekDays = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+        weekDays.forEach(function(w) { cells.push({ head: true, label: w }); });
+        for (var i = 0; i < startWeekday; i++) cells.push({ empty: true });
+        for (var d = 1; d <= daysInMonth; d++) {
+          var dateStr = month + '-' + String(d).padStart(2, '0');
+          cells.push({ date: dateStr, day: d, count: byDayMap[dateStr] || 0 });
+        }
+        var html = cells.map(function(c) {
+          if (c.head) return '<div class="calendar-cell head">' + c.label + '</div>';
+          if (c.empty) return '<div class="calendar-cell empty"></div>';
+          var sel = c.date === selectedDate ? ' selected' : '';
+          return '<div class="calendar-cell day' + sel + '" data-date="' + c.date + '" title="' + c.date + ': ' + c.count + ' ครั้ง"><span>' + c.day + '</span><span class="count">' + c.count + '</span></div>';
+        }).join('');
+        document.getElementById('calendarGrid').innerHTML = html;
+        document.getElementById('calendarGrid').querySelectorAll('.calendar-cell.day').forEach(function(el) {
+          el.addEventListener('click', function() { setSelectedDate(el.dataset.date); renderCalendar(currentCalendarMonth); });
+        });
+      });
     }
 
     function setLastUpdated() {
@@ -306,7 +395,9 @@
       const chartEl = document.getElementById('chartByDay');
       const topEl = document.getElementById('topUsersWrap');
       try {
-        const res = await fetch('/api/bot-stats?period=' + currentPeriod);
+        var q = 'period=' + currentPeriod;
+        if (selectedDate) q = 'period=all&date=' + selectedDate;
+        const res = await fetch('/api/bot-stats?' + q);
         const data = await res.json();
         totalEl.textContent = data.total.toLocaleString();
         usersEl.textContent = data.uniqueUsers.toLocaleString();
@@ -366,7 +457,9 @@
       const wrap = document.getElementById('eventsTableWrap');
       const pagEl = document.getElementById('pagination');
       try {
-        const res = await fetch('/api/bot-events?limit=' + LIMIT + '&offset=' + (offset || 0) + '&period=' + currentPeriod);
+        var q = 'limit=' + LIMIT + '&offset=' + (offset || 0) + '&period=' + currentPeriod;
+        if (selectedDate) q += '&date=' + selectedDate;
+        const res = await fetch('/api/bot-events?' + q);
         const data = await res.json();
         currentOffset = data.offset;
         if (!data.events || !data.events.length) {
@@ -398,6 +491,25 @@
       loadStats();
       loadEvents(currentOffset);
     });
+    document.getElementById('btnClearDate').addEventListener('click', function() {
+      selectedDate = null;
+      document.getElementById('selectedDateBar').style.display = 'none';
+      loadStats();
+      loadEvents(0);
+      renderCalendar(currentCalendarMonth);
+    });
+    document.getElementById('calendarPrev').addEventListener('click', function() {
+      var [y, m] = currentCalendarMonth.split('-').map(Number);
+      m--;
+      if (m < 1) { m = 12; y--; }
+      renderCalendar(y + '-' + String(m).padStart(2, '0'));
+    });
+    document.getElementById('calendarNext').addEventListener('click', function() {
+      var [y, m] = currentCalendarMonth.split('-').map(Number);
+      m++;
+      if (m > 12) { m = 1; y++; }
+      renderCalendar(y + '-' + String(m).padStart(2, '0'));
+    });
 
     function downloadFile(filename, content, mime) {
       var a = document.createElement('a');
@@ -408,28 +520,34 @@
 
     document.getElementById('btnExportCsv').addEventListener('click', async function() {
       try {
-        var res = await fetch('/api/bot-events-export?period=' + currentPeriod);
+        var q = 'period=' + currentPeriod;
+        if (selectedDate) q += '&date=' + selectedDate;
+        var res = await fetch('/api/bot-events-export?' + q);
         var data = await res.json();
         if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
         var headers = ['id','telegram_user_id','username','first_name','action','created_at'];
         var csv = headers.join(',') + '\n' + data.events.map(function(e) {
           return [e.id, e.telegram_user_id, '"' + (e.username || '').replace(/"/g,'""') + '"', '"' + (e.first_name || '').replace(/"/g,'""') + '"', e.action, e.created_at || ''].join(',');
         }).join('\n');
-        var name = 'bot-events-' + currentPeriod + '-' + new Date().toISOString().slice(0,10) + '.csv';
+        var name = 'bot-events-' + (selectedDate || currentPeriod) + '.csv';
         downloadFile(name, '\uFEFF' + csv, 'text/csv');
       } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
     });
 
     document.getElementById('btnExportJson').addEventListener('click', async function() {
       try {
-        var res = await fetch('/api/bot-events-export?period=' + currentPeriod);
+        var q = 'period=' + currentPeriod;
+        if (selectedDate) q += '&date=' + selectedDate;
+        var res = await fetch('/api/bot-events-export?' + q);
         var data = await res.json();
         if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
-        var name = 'bot-events-' + currentPeriod + '-' + new Date().toISOString().slice(0,10) + '.json';
+        var name = 'bot-events-' + (selectedDate || currentPeriod) + '.json';
         downloadFile(name, JSON.stringify(data.events, null, 2), 'application/json');
       } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
     });
 
+    currentCalendarMonth = getCalendarMonth();
+    renderCalendar(currentCalendarMonth);
     loadStats();
     loadEvents(0);
   </script>
