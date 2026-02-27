@@ -52,13 +52,13 @@
 
 | สิ่งที่ใช้ | Path (production) | หมายเหตุ |
 |-----------|--------------------|----------|
-| ไฟล์หลัก | `/app/data/bot-events.json` | อ่าน/เขียนจากแอป |
-| Volume (Docker) | `app-data` → `/app/data` | ต้องเป็น volume เพื่อให้ข้อมูลไม่หายตอน deploy |
+| ไฟล์หลัก | `/app/data/stats/bot-events.json` | อ่าน/เขียนจากแอป |
+| Volume (Docker) | `app-data` → `/app/data/stats` | ต้องเป็น volume เพื่อให้ข้อมูลไม่หายตอน deploy (ไม่ mount ทับ `/app/data` ทั้งหมด เพราะ `data/providers.json` ต้องอยู่ในการ์ดค่ายเกม) |
 
 ### กฎเวลา Deploy (ห้ามทำ)
 
 - **ห้าม** ลบ volume `app-data` หรือสั่ง `docker compose down -v` (ตัว -v จะลบ volume)
-- **ห้าม** mount path อื่นทับ `/app/data` ใน container
+- **ห้าม** mount volume ทับ `/app/data` ทั้งหมด (ให้ mount เฉพาะ `/app/data/stats` เพื่อเก็บสถิติ — ดู docker-compose.yml)
 - **ห้าม** copy ไฟล์จาก build/repo ไปทับ path เก็บสถิติ — โฟลเดอร์ `data/` ถูกใส่ใน `.dockerignore` แล้ว ดังนั้น image จะไม่มีไฟล์สถิติอยู่ข้างใน เวลา build/deploy จะไม่ไปทับของใน volume
 
 ### ทำอย่างไรให้ข้อมูลไม่หาย

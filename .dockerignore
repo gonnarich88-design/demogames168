@@ -9,5 +9,6 @@ npm-debug.log
 start.sh
 scraper.js
 
-# โฟลเดอร์เก็บสถิติบอท — ห้าม copy เข้า image เพื่อไม่ให้ deploy ทับข้อมูลบน volume
-data
+# เก็บสถิติบอท — ห้าม copy เข้า image เพื่อไม่ให้ deploy ทับข้อมูลบน volume (โฟลเดอร์ data/ ยังมี providers.json ใน image ได้)
+data/bot-events.json
+data/bot-events-backup.json

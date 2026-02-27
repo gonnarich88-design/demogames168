@@ -13,7 +13,8 @@ services:
       - NODE_ENV=production
       - PORT=3000
     volumes:
-      - app-data:/app/data
+      # mount เฉพาะโฟลเดอร์เก็บสถิติ — ห้าม mount ทับ /app/data ทั้งหมด (จะทำให้ไม่มี providers.json แล้ว miniapp ไม่โชว์ปุ่มค่ายเกม)
+      - app-data:/app/data/stats
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/games?limit=1"]
       interval: 30s

@@ -655,13 +655,13 @@ app.use(express.json());
 
 // ──────────────────────────────────────────────
 // Bot usage tracking (JSON file)
-// - Production: ใช้ /app/data/bot-events.json (ต้อง mount volume ที่ /app/data — ดู BOT-DEPLOY.md)
+// - Production: ใช้ /app/data/stats/bot-events.json (volume mount ที่ /app/data/stats — ดู BOT-DEPLOY.md)
 // - โฟลเดอร์ data/ อยู่ใน .dockerignore → build/deploy จะไม่ทับไฟล์ใน volume
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 const defaultEventsPath = process.env.NODE_ENV === 'production'
-  ? '/app/data/bot-events.json'
+  ? '/app/data/stats/bot-events.json'
   : path.join(DATA_DIR, 'bot-events.json');
 const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || defaultEventsPath;
 const BOT_EVENTS_BACKUP_FILE = process.env.BOT_EVENTS_BACKUP_PATH || null;
