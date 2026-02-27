@@ -46,8 +46,28 @@
 
 ---
 
-## ป้องกันข้อมูลสถิติบอทหาย (หลัง deploy)
+## การเก็บสถิติบอท — เวลา deploy ห้ามมายุ่งกับไฟล์/volume นี้
 
-เก็บสถิติในไฟล์ JSON — ถ้า deploy ด้วย **docker-compose.yml** ใน repo นี้ มี volume **app-data** mount ที่ **/app/data** อยู่แล้ว ข้อมูลจะอยู่บน volume และไม่หายตอน deploy ใหม่
+สถิติการใช้งานบอท (ใครกด /start, /games ฯลฯ) เก็บในไฟล์ JSON ที่ path ต่อไปนี้:
 
-ถ้า deploy แบบอื่น: ตั้ง **BOT_EVENTS_PATH** ชี้ไปที่ path ที่เป็น volume ที่ persist หรือใช้ **BOT_EVENTS_BACKUP_PATH** เป็น path สำรอง (ระบบจะกู้จาก backup ตอนสตาร์ทถ้าไฟล์หลักหาย)
+| สิ่งที่ใช้ | Path (production) | หมายเหตุ |
+|-----------|--------------------|----------|
+| ไฟล์หลัก | `/app/data/bot-events.json` | อ่าน/เขียนจากแอป |
+| Volume (Docker) | `app-data` → `/app/data` | ต้องเป็น volume เพื่อให้ข้อมูลไม่หายตอน deploy |
+
+### กฎเวลา Deploy (ห้ามทำ)
+
+- **ห้าม** ลบ volume `app-data` หรือสั่ง `docker compose down -v` (ตัว -v จะลบ volume)
+- **ห้าม** mount path อื่นทับ `/app/data` ใน container
+- **ห้าม** copy ไฟล์จาก build/repo ไปทับ path เก็บสถิติ — โฟลเดอร์ `data/` ถูกใส่ใน `.dockerignore` แล้ว ดังนั้น image จะไม่มีไฟล์สถิติอยู่ข้างใน เวลา build/deploy จะไม่ไปทับของใน volume
+
+### ทำอย่างไรให้ข้อมูลไม่หาย
+
+1. **Deploy ด้วย docker-compose.yml ใน repo นี้**  
+   มี volume `app-data` mount ที่ `/app/data` อยู่แล้ว → ข้อมูลสถิติอยู่บน volume นี้ และจะไม่หายเมื่อสั่ง `docker compose build --pull && docker compose up -d` (ไม่ใช้ -v)
+
+2. **Deploy แบบอื่น (ไม่ใช้ Docker)**  
+   ตั้ง `BOT_EVENTS_PATH` ใน .env ชี้ไปที่ path ที่ **อยู่นอกโฟลเดอร์โปรเจกต์** และไม่ถูกลบหรือ overwrite ตอน deploy (เช่น `/var/lib/miniapp/bot-events.json`)
+
+3. **สำรองเพิ่ม (ถ้าต้องการ)**  
+   ตั้ง `BOT_EVENTS_BACKUP_PATH` ใน .env เป็น path อีกที่หนึ่ง (เช่น volume อื่น หรือ host path) แอปจะเขียน backup ทุกครั้งที่เขียนไฟล์หลัก และจะกู้จาก backup ตอนสตาร์ทถ้าไฟล์หลักหายหรือว่าง

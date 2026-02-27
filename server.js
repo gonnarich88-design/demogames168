@@ -655,7 +655,8 @@ app.use(express.json());
 
 // ──────────────────────────────────────────────
 // Bot usage tracking (JSON file)
-// Production default: /app/data/bot-events.json — ใช้กับ docker-compose ที่ mount volume ที่ /app/data
+// - Production: ใช้ /app/data/bot-events.json (ต้อง mount volume ที่ /app/data — ดู BOT-DEPLOY.md)
+// - โฟลเดอร์ data/ อยู่ใน .dockerignore → build/deploy จะไม่ทับไฟล์ใน volume
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });

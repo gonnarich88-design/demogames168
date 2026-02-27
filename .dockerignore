@@ -8,3 +8,6 @@ npm-debug.log
 *.log
 start.sh
 scraper.js
+
+# โฟลเดอร์เก็บสถิติบอท — ห้าม copy เข้า image เพื่อไม่ให้ deploy ทับข้อมูลบน volume
+data
