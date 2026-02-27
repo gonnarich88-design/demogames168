@@ -213,23 +213,112 @@
     .chart-bar:hover { background: var(--accent); }
     .chart-labels { display: flex; gap: 4px; margin-top: 0.25rem; font-size: 0.7rem; color: var(--text-muted); }
     .chart-labels span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: center; }
-    .calendar-wrap { max-width: 360px; }
+    .calendar-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .calendar-main {
+      flex: 0 0 320px;
+    }
+    .calendar-side {
+      flex: 1;
+      min-width: 220px;
+      background: var(--surface-hover);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      border: 1px dashed var(--border);
+    }
     .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
     .calendar-header button { font-family: inherit; padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text); cursor: pointer; font-size: 0.875rem; }
     .calendar-header button:hover { background: var(--accent-soft); color: var(--accent); }
     .calendar-month { font-weight: 600; font-size: 0.9375rem; }
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 0.75rem; }
-    .calendar-cell { padding: 0.35rem; text-align: center; border-radius: 6px; min-height: 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 1px solid transparent; }
+    .calendar-cell { padding: 0.4rem 0.25rem; text-align: center; border-radius: 7px; min-height: 46px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 1px solid transparent; position: relative; }
     .calendar-cell.head { color: var(--text-muted); font-weight: 600; cursor: default; }
     .calendar-cell.empty { visibility: hidden; cursor: default; }
     .calendar-cell.day:hover { background: var(--surface-hover); border-color: var(--border); }
-    .calendar-cell.day.selected { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
-    .calendar-cell .count { font-size: 0.65rem; color: var(--text-muted); margin-top: 1px; }
-    .calendar-cell.day.selected .count { color: var(--accent); }
+    .calendar-cell.day.selected { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 1px rgba(245,158,11,0.5); }
+    .calendar-cell .day-number { font-size: 0.8rem; font-weight: 500; }
+    .calendar-cell .count-pill {
+      margin-top: 3px;
+      padding: 0 0.45rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      background: var(--surface);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .calendar-cell.day.zero .count-pill { opacity: 0.3; }
+    .calendar-cell.day.low:not(.selected) .count-pill { background: rgba(245, 158, 11, 0.18); color: var(--accent); }
+    .calendar-cell.day.mid:not(.selected) .count-pill { background: rgba(245, 158, 11, 0.32); color: var(--accent); }
+    .calendar-cell.day.high:not(.selected) .count-pill { background: rgba(245, 158, 11, 0.55); color: #0b1120; font-weight: 600; }
+    .calendar-cell.day.selected .count-pill { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
     .selected-date-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
     .selected-date-bar span { font-weight: 500; }
     .selected-date-bar button { font-family: inherit; font-size: 0.8125rem; padding: 0.35rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text-muted); cursor: pointer; }
     .selected-date-bar button:hover { color: var(--accent); }
+    .calendar-side-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .calendar-side-text {
+      font-size: 0.8125rem;
+      margin: 0.1rem 0 0.5rem;
+    }
+    .calendar-side-highlight {
+      margin-top: 0.35rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid var(--border);
+    }
+    .calendar-side-highlight .label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.1rem;
+    }
+    .calendar-side-highlight .value {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .calendar-side-highlight .value span {
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-left: 0.25rem;
+    }
+    .calendar-side-hint {
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .calendar-legend {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.9rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .calendar-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    .legend-none { border: 1px solid var(--border); background: transparent; }
+    .legend-low { background: rgba(245, 158, 11, 0.18); }
+    .legend-mid { background: rgba(245, 158, 11, 0.32); }
+    .legend-high { background: rgba(245, 158, 11, 0.55); }
   </style>
 </head>
 <body>
@@ -256,12 +345,24 @@
     <section class="card">
       <h2>ปฏิทิน — เลือกดูตามวัน</h2>
       <div class="calendar-wrap">
-        <div class="calendar-header">
-          <button type="button" id="calendarPrev">← เดือนก่อน</button>
-          <span class="calendar-month" id="calendarMonthTitle"></span>
-          <button type="button" id="calendarNext">เดือนถัดไป →</button>
+        <div class="calendar-main">
+          <div class="calendar-header">
+            <button type="button" id="calendarPrev">← เดือนก่อน</button>
+            <span class="calendar-month" id="calendarMonthTitle"></span>
+            <button type="button" id="calendarNext">เดือนถัดไป →</button>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+          <div class="calendar-legend">
+            <span class="calendar-legend-item"><span class="legend-dot legend-none"></span>ไม่มีการกด</span>
+            <span class="calendar-legend-item"><span class="legend-dot legend-low"></span>กดน้อย</span>
+            <span class="calendar-legend-item"><span class="legend-dot legend-mid"></span>กดปานกลาง</span>
+            <span class="calendar-legend-item"><span class="legend-dot legend-high"></span>กดเยอะ</span>
+          </div>
         </div>
-        <div id="calendarGrid" class="calendar-grid"></div>
+        <div class="calendar-side" id="calendarSide">
+          <div class="calendar-side-title">สรุปเดือนนี้</div>
+          <p class="calendar-side-text muted">เลือกวันที่ในปฏิทินทางซ้าย เพื่อดูรายละเอียดในแดชบอร์ดด้านล่าง</p>
+        </div>
       </div>
     </section>
 
@@ -369,13 +470,51 @@
           var dateStr = month + '-' + String(d).padStart(2, '0');
           cells.push({ date: dateStr, day: d, count: byDayMap[dateStr] || 0 });
         }
+
         var html = cells.map(function(c) {
           if (c.head) return '<div class="calendar-cell head">' + c.label + '</div>';
           if (c.empty) return '<div class="calendar-cell empty"></div>';
           var sel = c.date === selectedDate ? ' selected' : '';
-          return '<div class="calendar-cell day' + sel + '" data-date="' + c.date + '" title="' + c.date + ': ' + c.count + ' ครั้ง"><span>' + c.day + '</span><span class="count">' + c.count + '</span></div>';
+          var levelClass = ' zero';
+          if (c.count > 0 && c.count <= 5) levelClass = ' low';
+          else if (c.count > 5 && c.count <= 20) levelClass = ' mid';
+          else if (c.count > 20) levelClass = ' high';
+          var titleCell = c.date + ': ' + c.count + ' ครั้ง';
+          var countLabel = c.count === 0 ? '0' : c.count;
+          return '<div class="calendar-cell day' + sel + levelClass + '" data-date="' + c.date + '" title="' + titleCell + '">'
+            + '<div class="day-number">' + c.day + '</div>'
+            + '<div class="count-pill">' + countLabel + '</div>'
+            + '</div>';
         }).join('');
         document.getElementById('calendarGrid').innerHTML = html;
+
+        // อัปเดตสรุปด้านขวา
+        var totalMonth = 0;
+        var maxDate = null;
+        Object.keys(byDayMap).forEach(function(key) {
+          var c = byDayMap[key] || 0;
+          totalMonth += c;
+          if (!maxDate || c > maxDate.count) {
+            maxDate = { date: key, count: c };
+          }
+        });
+        var sideEl = document.getElementById('calendarSide');
+        if (sideEl) {
+          if (!totalMonth) {
+            sideEl.innerHTML = '<div class="calendar-side-title">สรุปเดือนนี้</div>'
+              + '<p class="calendar-side-text muted">ยังไม่มีการกดใช้งานในเดือนนี้</p>';
+          } else {
+            var avg = (totalMonth / daysInMonth).toFixed(1);
+            var highlight = maxDate
+              ? '<div class="calendar-side-highlight"><div class="label">วันที่คนใช้เยอะสุด</div><div class="value">' + maxDate.date + ' <span>(' + maxDate.count + ' ครั้ง)</span></div></div>'
+              : '';
+            sideEl.innerHTML = '<div class="calendar-side-title">สรุปเดือนนี้</div>'
+              + '<p class="calendar-side-text">รวมทั้งหมด <strong>' + totalMonth + '</strong> ครั้ง (เฉลี่ย ~' + avg + ' ครั้ง/วัน)</p>'
+              + highlight
+              + '<p class="calendar-side-hint muted">คลิกวันที่ในปฏิทินเพื่อกรองข้อมูลทั้งหมดด้านล่างตามวันนั้น</p>';
+          }
+        }
+
         document.getElementById('calendarGrid').querySelectorAll('.calendar-cell.day').forEach(function(el) {
           el.addEventListener('click', function() { setSelectedDate(el.dataset.date); renderCalendar(currentCalendarMonth); });
         });
