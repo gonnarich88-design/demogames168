@@ -255,10 +255,23 @@
     .calendar-cell.day.mid:not(.selected) .count-pill { background: rgba(245, 158, 11, 0.32); color: var(--accent); }
     .calendar-cell.day.high:not(.selected) .count-pill { background: rgba(245, 158, 11, 0.55); color: #0b1120; font-weight: 600; }
     .calendar-cell.day.selected .count-pill { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
-    .selected-date-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+    .selected-date-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; flex-wrap: wrap; }
     .selected-date-bar span { font-weight: 500; }
     .selected-date-bar button { font-family: inherit; font-size: 0.8125rem; padding: 0.35rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-hover); color: var(--text-muted); cursor: pointer; }
     .selected-date-bar button:hover { color: var(--accent); }
+    .range-tabs { display: flex; gap: 0.25rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .range-tabs button {
+      font-family: inherit; font-size: 0.8125rem; padding: 0.4rem 0.85rem; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-muted); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .range-tabs button:hover { background: var(--surface-hover); color: var(--text); }
+    .range-tabs button.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+    .range-picker-wrap { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .range-picker-wrap label { font-size: 0.8125rem; color: var(--text-muted); }
+    .range-picker-wrap select {
+      font-family: inherit; font-size: 0.875rem; padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); min-width: 160px;
+    }
     .calendar-side-title {
       font-size: 0.875rem;
       font-weight: 600;
@@ -338,9 +351,29 @@
     <p class="last-updated" id="lastUpdated">อัปเดตเมื่อ: –</p>
 
     <div id="selectedDateBar" class="selected-date-bar" style="display:none;">
-      <span>📅 กำลังดูรายละเอียดวันที่ <strong id="selectedDateLabel"></strong></span>
-      <button type="button" id="btnClearDate">ล้างการเลือกวัน</button>
+      <span id="selectedRangeLabel"></span>
+      <button type="button" id="btnClearRange">ล้างการเลือก</button>
     </div>
+
+    <section class="card">
+      <h2>เลือกช่วงดูผลลัพธ์</h2>
+      <div class="range-tabs" role="tablist">
+        <button type="button" data-range="day" id="rangeDayBtn" class="active">รายวัน</button>
+        <button type="button" data-range="week" id="rangeWeekBtn">รายสัปดาห์</button>
+        <button type="button" data-range="month" id="rangeMonthBtn">รายเดือน</button>
+      </div>
+      <div id="rangeDayWrap" class="range-picker-wrap">
+        <label>ปฏิทิน — คลิกวันที่เพื่อดูผลของวันนั้น</label>
+      </div>
+      <div id="rangeWeekWrap" class="range-picker-wrap" style="display:none;">
+        <label for="weekSelect">เลือกสัปดาห์</label>
+        <select id="weekSelect"><option value="">— เลือกสัปดาห์ —</option></select>
+      </div>
+      <div id="rangeMonthWrap" class="range-picker-wrap" style="display:none;">
+        <label for="monthSelect">เลือกเดือน</label>
+        <select id="monthSelect"><option value="">— เลือกเดือน —</option></select>
+      </div>
+    </section>
 
     <section class="card">
       <h2>ปฏิทิน — เลือกดูตามวัน</h2>
@@ -419,6 +452,9 @@
     let currentPeriod = 'all';
     let currentOffset = 0;
     let selectedDate = null;
+    let selectedWeek = null;
+    let selectedMonth = null;
+    let currentRange = 'day';
     let currentCalendarMonth = '';
 
     function getCalendarMonth() {
@@ -429,6 +465,8 @@
     function setPeriod(p) {
       currentPeriod = p;
       selectedDate = null;
+      selectedWeek = null;
+      selectedMonth = null;
       document.getElementById('selectedDateBar').style.display = 'none';
       document.querySelectorAll('.period-tabs button').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.period === p);
@@ -437,16 +475,109 @@
       loadEvents(0);
     }
 
+    function setRange(range) {
+      currentRange = range;
+      document.querySelectorAll('.range-tabs button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.range === range);
+      });
+      document.getElementById('rangeDayWrap').style.display = range === 'day' ? 'flex' : 'none';
+      document.getElementById('rangeWeekWrap').style.display = range === 'week' ? 'flex' : 'none';
+      document.getElementById('rangeMonthWrap').style.display = range === 'month' ? 'flex' : 'none';
+      if (range !== 'day') selectedDate = null;
+      if (range !== 'week') selectedWeek = null;
+      if (range !== 'month') selectedMonth = null;
+      document.getElementById('selectedDateBar').style.display = 'none';
+      if (range === 'week') document.getElementById('weekSelect').value = '';
+      if (range === 'month') document.getElementById('monthSelect').value = '';
+      loadStats();
+      loadEvents(0);
+      if (range === 'day') renderCalendar(currentCalendarMonth);
+    }
+
     function setSelectedDate(dateStr) {
       selectedDate = dateStr;
+      selectedWeek = null;
+      selectedMonth = null;
       if (dateStr) {
         var d = new Date(dateStr + 'T12:00:00');
-        document.getElementById('selectedDateLabel').textContent = d.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('selectedRangeLabel').innerHTML = '📅 กำลังดูรายละเอียดวันที่ <strong>' + d.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' }) + '</strong>';
         document.getElementById('selectedDateBar').style.display = 'flex';
         loadStats();
         loadEvents(0);
       } else {
         document.getElementById('selectedDateBar').style.display = 'none';
+      }
+    }
+
+    function setSelectedWeek(weekVal) {
+      selectedWeek = weekVal || null;
+      selectedDate = null;
+      selectedMonth = null;
+      if (weekVal) {
+        var mon = new Date(weekVal + 'T12:00:00');
+        var sun = new Date(mon);
+        sun.setDate(mon.getDate() + 6);
+        var label = mon.getDate() + '–' + sun.getDate() + ' ' + mon.toLocaleDateString('th-TH', { month: 'short', year: 'numeric' });
+        document.getElementById('selectedRangeLabel').innerHTML = '📅 กำลังดูรายละเอียดสัปดาห์ <strong>' + label + '</strong>';
+        document.getElementById('selectedDateBar').style.display = 'flex';
+        loadStats();
+        loadEvents(0);
+      } else {
+        document.getElementById('selectedDateBar').style.display = 'none';
+      }
+    }
+
+    function setSelectedMonth(monthVal) {
+      selectedMonth = monthVal || null;
+      selectedDate = null;
+      selectedWeek = null;
+      if (monthVal) {
+        var d = new Date(monthVal + '-01T12:00:00');
+        var label = d.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
+        document.getElementById('selectedRangeLabel').innerHTML = '📅 กำลังดูรายละเอียดเดือน <strong>' + label + '</strong>';
+        document.getElementById('selectedDateBar').style.display = 'flex';
+        loadStats();
+        loadEvents(0);
+      } else {
+        document.getElementById('selectedDateBar').style.display = 'none';
+      }
+    }
+
+    function fillWeekOptions() {
+      var sel = document.getElementById('weekSelect');
+      if (!sel || sel.options.length > 1) return;
+      var weeks = [];
+      var d = new Date();
+      for (var i = 0; i < 16; i++) {
+        var daysFromMonday = (d.getDay() + 6) % 7;
+        var mon = new Date(d);
+        mon.setDate(d.getDate() - daysFromMonday - i * 7);
+        var sun = new Date(mon);
+        sun.setDate(mon.getDate() + 6);
+        var monStr = mon.getFullYear() + '-' + String(mon.getMonth() + 1).padStart(2, '0') + '-' + String(mon.getDate()).padStart(2, '0');
+        var label = mon.getDate() + '–' + sun.getDate() + ' ' + mon.toLocaleDateString('th-TH', { month: 'short', year: 'numeric' });
+        weeks.push({ value: monStr, label: label });
+      }
+      weeks.forEach(function(w) {
+        var opt = document.createElement('option');
+        opt.value = w.value;
+        opt.textContent = w.label;
+        sel.appendChild(opt);
+      });
+    }
+
+    function fillMonthOptions() {
+      var sel = document.getElementById('monthSelect');
+      if (!sel || sel.options.length > 1) return;
+      var d = new Date();
+      for (var i = 0; i < 12; i++) {
+        var m = new Date(d.getFullYear(), d.getMonth() - i, 1);
+        var ym = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0');
+        var label = m.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
+        var opt = document.createElement('option');
+        opt.value = ym;
+        opt.textContent = label;
+        sel.appendChild(opt);
       }
     }
 
@@ -536,6 +667,8 @@
       try {
         var q = 'period=' + currentPeriod;
         if (selectedDate) q = 'period=all&date=' + selectedDate;
+        if (selectedWeek) q = 'period=all&week=' + selectedWeek;
+        if (selectedMonth) q = 'period=all&month=' + selectedMonth;
         const res = await fetch('/api/bot-stats?' + q);
         const data = await res.json();
         totalEl.textContent = data.total.toLocaleString();
@@ -598,6 +731,8 @@
       try {
         var q = 'limit=' + LIMIT + '&offset=' + (offset || 0) + '&period=' + currentPeriod;
         if (selectedDate) q += '&date=' + selectedDate;
+        if (selectedWeek) q += '&week=' + selectedWeek;
+        if (selectedMonth) q += '&month=' + selectedMonth;
         const res = await fetch('/api/bot-events?' + q);
         const data = await res.json();
         currentOffset = data.offset;
@@ -630,13 +765,22 @@
       loadStats();
       loadEvents(currentOffset);
     });
-    document.getElementById('btnClearDate').addEventListener('click', function() {
+    document.getElementById('btnClearRange').addEventListener('click', function() {
       selectedDate = null;
+      selectedWeek = null;
+      selectedMonth = null;
       document.getElementById('selectedDateBar').style.display = 'none';
+      document.getElementById('weekSelect').value = '';
+      document.getElementById('monthSelect').value = '';
       loadStats();
       loadEvents(0);
       renderCalendar(currentCalendarMonth);
     });
+    document.getElementById('rangeDayBtn').addEventListener('click', function() { setRange('day'); });
+    document.getElementById('rangeWeekBtn').addEventListener('click', function() { setRange('week'); fillWeekOptions(); });
+    document.getElementById('rangeMonthBtn').addEventListener('click', function() { setRange('month'); fillMonthOptions(); });
+    document.getElementById('weekSelect').addEventListener('change', function() { setSelectedWeek(this.value || null); });
+    document.getElementById('monthSelect').addEventListener('change', function() { setSelectedMonth(this.value || null); });
     document.getElementById('calendarPrev').addEventListener('click', function() {
       var [y, m] = currentCalendarMonth.split('-').map(Number);
       m--;
@@ -661,6 +805,8 @@
       try {
         var q = 'period=' + currentPeriod;
         if (selectedDate) q += '&date=' + selectedDate;
+        if (selectedWeek) q += '&week=' + selectedWeek;
+        if (selectedMonth) q += '&month=' + selectedMonth;
         var res = await fetch('/api/bot-events-export?' + q);
         var data = await res.json();
         if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
@@ -668,7 +814,7 @@
         var csv = headers.join(',') + '\n' + data.events.map(function(e) {
           return [e.id, e.telegram_user_id, '"' + (e.username || '').replace(/"/g,'""') + '"', '"' + (e.first_name || '').replace(/"/g,'""') + '"', e.action, e.created_at || ''].join(',');
         }).join('\n');
-        var name = 'bot-events-' + (selectedDate || currentPeriod) + '.csv';
+        var name = 'bot-events-' + (selectedDate || selectedWeek || selectedMonth || currentPeriod) + '.csv';
         downloadFile(name, '\uFEFF' + csv, 'text/csv');
       } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
     });
@@ -677,10 +823,12 @@
       try {
         var q = 'period=' + currentPeriod;
         if (selectedDate) q += '&date=' + selectedDate;
+        if (selectedWeek) q += '&week=' + selectedWeek;
+        if (selectedMonth) q += '&month=' + selectedMonth;
         var res = await fetch('/api/bot-events-export?' + q);
         var data = await res.json();
         if (!data.events || !data.events.length) { alert('ไม่มีข้อมูลในช่วงนี้'); return; }
-        var name = 'bot-events-' + (selectedDate || currentPeriod) + '.json';
+        var name = 'bot-events-' + (selectedDate || selectedWeek || selectedMonth || currentPeriod) + '.json';
         downloadFile(name, JSON.stringify(data.events, null, 2), 'application/json');
       } catch (err) { alert('ส่งออกไม่สำเร็จ: ' + err.message); }
     });

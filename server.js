@@ -738,9 +738,28 @@ function insertBotEvent(payload) {
 
 // period: 'all' | 'day' | 'week' | 'month' — กรองตาม created_at
 // date: 'YYYY-MM-DD' (optional) — กรองเฉพาะวันนั้น
-function filterEventsByPeriod(events, period, date) {
+// month: 'YYYY-MM' (optional) — กรองทั้งเดือน
+// week: 'YYYY-MM-DD' (optional) — กรองทั้งสัปดาห์ (จันทร์–อาทิตย์) ที่มีวันนั้น
+function filterEventsByPeriod(events, period, date, month, week) {
   if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return events.filter(e => e.created_at && e.created_at.slice(0, 10) === date);
+  }
+  if (month && /^\d{4}-\d{2}$/.test(month)) {
+    return events.filter(e => e.created_at && e.created_at.slice(0, 7) === month);
+  }
+  if (week && /^\d{4}-\d{2}-\d{2}$/.test(week)) {
+    const d = new Date(week + 'T12:00:00');
+    const daysFromMonday = (d.getDay() + 6) % 7;
+    const monday = new Date(d);
+    monday.setDate(d.getDate() - daysFromMonday);
+    const monStr = monday.getFullYear() + '-' + String(monday.getMonth() + 1).padStart(2, '0') + '-' + String(monday.getDate()).padStart(2, '0');
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const sunStr = sunday.getFullYear() + '-' + String(sunday.getMonth() + 1).padStart(2, '0') + '-' + String(sunday.getDate()).padStart(2, '0');
+    return events.filter(e => {
+      const dayStr = e.created_at ? e.created_at.slice(0, 10) : '';
+      return dayStr >= monStr && dayStr <= sunStr;
+    });
   }
   if (!period || period === 'all') return events;
   const now = Date.now();
@@ -754,9 +773,9 @@ function filterEventsByPeriod(events, period, date) {
   });
 }
 
-function getBotStats(period, date) {
+function getBotStats(period, date, month, week) {
   const allEvents = readBotEvents();
-  const events = filterEventsByPeriod(allEvents, period, date);
+  const events = filterEventsByPeriod(allEvents, period, date, month, week);
   const total = events.length;
   const uniqueUsers = new Set(events.map(e => e.telegram_user_id)).size;
   const byAction = [];
@@ -785,21 +804,21 @@ function getBotStats(period, date) {
     userCount[uid].count++;
   });
   const topUsers = Object.values(userCount).sort((a, b) => b.count - a.count).slice(0, 20);
-  return { total, uniqueUsers, byAction, latest, byDay, topUsers, period: period || 'all', date: date || null };
+  return { total, uniqueUsers, byAction, latest, byDay, topUsers, period: period || 'all', date: date || null, month: month || null, week: week || null };
 }
 
-function getBotEvents(limit = 100, offset = 0, period, date) {
+function getBotEvents(limit = 100, offset = 0, period, date, month, week) {
   const limitNum = Math.min(Math.max(parseInt(limit, 10) || 100, 1), 500);
   const offsetNum = Math.max(parseInt(offset, 10) || 0, 0);
   const allEvents = readBotEvents();
-  const events = filterEventsByPeriod(allEvents, period, date);
+  const events = filterEventsByPeriod(allEvents, period, date, month, week);
   const sorted = events.slice().sort((a, b) => {
     const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
     const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
     return tb - ta;
   });
   const rows = sorted.slice(offsetNum, offsetNum + limitNum);
-  return { events: rows, total: events.length, limit: limitNum, offset: offsetNum, period: period || 'all', date: date || null };
+  return { events: rows, total: events.length, limit: limitNum, offset: offsetNum, period: period || 'all', date: date || null, month: month || null, week: week || null };
 }
 
 // คืนค่า byDay สำหรับทุกวันในเดือน (สำหรับปฏิทิน)
@@ -1340,7 +1359,9 @@ app.get('/api/bot-stats', (req, res) => {
   try {
     const period = req.query.period || 'all';
     const date = req.query.date || null;
-    res.json(getBotStats(period, date));
+    const month = req.query.month || null;
+    const week = req.query.week || null;
+    res.json(getBotStats(period, date, month, week));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1357,8 +1378,8 @@ app.get('/api/bot-stats-month', (req, res) => {
 
 app.get('/api/bot-events', (req, res) => {
   try {
-    const { limit, offset, period, date } = req.query;
-    res.json(getBotEvents(limit, offset, period, date));
+    const { limit, offset, period, date, month, week } = req.query;
+    res.json(getBotEvents(limit, offset, period, date, month, week));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1368,8 +1389,10 @@ app.get('/api/bot-events-export', (req, res) => {
   try {
     const period = req.query.period || 'all';
     const date = req.query.date || null;
+    const month = req.query.month || null;
+    const week = req.query.week || null;
     const allEvents = readBotEvents();
-    const events = filterEventsByPeriod(allEvents, period, date);
+    const events = filterEventsByPeriod(allEvents, period, date, month, week);
     const sorted = events.slice().sort((a, b) => {
       const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
       const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
