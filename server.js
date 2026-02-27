@@ -654,8 +654,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
 app.use(express.json());
 
 // ──────────────────────────────────────────────
-// Bot usage tracking (JSON file — ไม่ใช้ native module เพื่อให้ deploy ผ่านทุกโฮสต์)
-// Production: default เก็บที่ /app/data/bot-events.json — ใช้กับ docker-compose ที่ mount volume ที่ /app/data แล้ว deploy ครั้งหน้าข้อมูลไม่หาย
+// Bot usage tracking (JSON file)
+// Production default: /app/data/bot-events.json — ใช้กับ docker-compose ที่ mount volume ที่ /app/data
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -664,7 +664,7 @@ const defaultEventsPath = process.env.NODE_ENV === 'production'
   : path.join(DATA_DIR, 'bot-events.json');
 const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || defaultEventsPath;
 const BOT_EVENTS_BACKUP_FILE = process.env.BOT_EVENTS_BACKUP_PATH || null;
-// สร้างโฟลเดอร์ของ path ถ้าข้างนอกโปรเจกต์
+
 function ensureDirForFile(filePath) {
   const dir = path.dirname(filePath);
   if (dir !== DATA_DIR && !fs.existsSync(dir)) {
@@ -674,7 +674,6 @@ function ensureDirForFile(filePath) {
 ensureDirForFile(BOT_EVENTS_FILE);
 if (BOT_EVENTS_BACKUP_FILE) ensureDirForFile(BOT_EVENTS_BACKUP_FILE);
 
-// กู้ข้อมูลจาก backup ถ้าไฟล์หลักหายหรือว่าง (หลัง deploy ที่ล้าง disk)
 if (BOT_EVENTS_BACKUP_FILE && fs.existsSync(BOT_EVENTS_BACKUP_FILE)) {
   try {
     const primaryEmpty = !fs.existsSync(BOT_EVENTS_FILE) || fs.readFileSync(BOT_EVENTS_FILE, 'utf-8').trim() === '';
@@ -683,7 +682,7 @@ if (BOT_EVENTS_BACKUP_FILE && fs.existsSync(BOT_EVENTS_BACKUP_FILE)) {
       const arr = JSON.parse(backupRaw);
       if (Array.isArray(arr) && arr.length > 0) {
         fs.writeFileSync(BOT_EVENTS_FILE, backupRaw, 'utf-8');
-        console.log('[bot-usage] Restored ' + arr.length + ' events from backup: ' + BOT_EVENTS_BACKUP_FILE);
+        console.log('[bot-usage] Restored ' + arr.length + ' events from backup');
       }
     }
   } catch (e) {
@@ -766,7 +765,11 @@ function getBotStats(period, date) {
     actionCount[e.action] = (actionCount[e.action] || 0) + 1;
   });
   Object.keys(actionCount).forEach(action => byAction.push({ action, count: actionCount[action] }));
-  const latest = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 50);
+  const latest = events.slice().sort((a, b) => {
+    const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+    const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+    return tb - ta;
+  }).slice(0, 50);
   // เหตุการณ์ต่อวัน (สำหรับกราฟ)
   const byDayMap = {};
   events.forEach(e => {
@@ -790,7 +793,11 @@ function getBotEvents(limit = 100, offset = 0, period, date) {
   const offsetNum = Math.max(parseInt(offset, 10) || 0, 0);
   const allEvents = readBotEvents();
   const events = filterEventsByPeriod(allEvents, period, date);
-  const sorted = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0));
+  const sorted = events.slice().sort((a, b) => {
+    const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+    const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+    return tb - ta;
+  });
   const rows = sorted.slice(offsetNum, offsetNum + limitNum);
   return { events: rows, total: events.length, limit: limitNum, offset: offsetNum, period: period || 'all', date: date || null };
 }
@@ -1332,7 +1339,7 @@ app.get('/api/bot-check', async (req, res) => {
 app.get('/api/bot-stats', (req, res) => {
   try {
     const period = req.query.period || 'all';
-    const date = req.query.date || null; // YYYY-MM-DD
+    const date = req.query.date || null;
     res.json(getBotStats(period, date));
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -1341,7 +1348,7 @@ app.get('/api/bot-stats', (req, res) => {
 
 app.get('/api/bot-stats-month', (req, res) => {
   try {
-    const month = req.query.month; // YYYY-MM
+    const month = req.query.month;
     res.json(getBotStatsByMonth(month || ''));
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -1363,7 +1370,11 @@ app.get('/api/bot-events-export', (req, res) => {
     const date = req.query.date || null;
     const allEvents = readBotEvents();
     const events = filterEventsByPeriod(allEvents, period, date);
-    const sorted = events.slice().sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 10000);
+    const sorted = events.slice().sort((a, b) => {
+      const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+      return tb - ta;
+    }).slice(0, 10000);
     res.json({ events: sorted, total: sorted.length, period, date });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -1644,7 +1655,7 @@ app.listen(PORT, () => {
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
   console.log(`   Bot:     ${bot ? 'Active' : 'Disabled (no BOT_TOKEN)'}`);
-  console.log(`   Bot stats: ${BOT_EVENTS_FILE}` + (BOT_EVENTS_BACKUP_FILE ? ` + backup ${BOT_EVENTS_BACKUP_FILE}` : ' (set BOT_EVENTS_PATH + BOT_EVENTS_BACKUP_PATH to prevent data loss)'));
+  console.log(`   Bot stats: ${BOT_EVENTS_FILE}` + (BOT_EVENTS_BACKUP_FILE ? ` + backup ${BOT_EVENTS_BACKUP_FILE}` : ''));
   console.log(`   JILI:    ${loadGames().length} games loaded`);
   console.log(`   PP:      ${loadPPGames().length} games loaded`);
   console.log(`   Joker:   ${loadJokerGames().length} games loaded\n`);
