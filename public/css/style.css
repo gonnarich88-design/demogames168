@@ -623,19 +623,43 @@ body.catalog-page .category-tabs {
 
 /* ──────── Home Page: Hero ──────── */
 .home-hero {
-  padding: 28px 20px 20px;
+  padding: 28px 20px 24px;
   text-align: center;
   background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, transparent 100%);
 }
 
-.home-hero h2 {
+.home-hero-text {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.home-hero h2,
+.home-hero .home-hero-title {
   font-size: 22px;
   font-weight: 800;
   background: linear-gradient(135deg, #FFD700, #FF6B00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 6px;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.home-hero .home-hero-desc {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color);
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.home-hero .home-hero-cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tg-theme-link-color);
+  margin: 0;
+  line-height: 1.45;
+  opacity: 0.95;
 }
 
 .home-hero p {
@@ -802,15 +826,33 @@ body.home-page {
 
 .home-page .home-hero {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 50%, rgba(13, 13, 13, 0.4) 100%);
-  padding: 32px 20px 24px;
+  padding: 32px 20px 28px;
 }
 
-.home-page .home-hero h2 {
-  font-size: 24px;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+.home-page .home-hero h2,
+.home-page .home-hero .home-hero-title {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 40px rgba(255, 193, 7, 0.15);
+  margin-bottom: 12px;
+}
+
+.home-page .home-hero .home-hero-desc {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.home-page .home-hero .home-hero-cta {
+  color: #FFD700;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  letter-spacing: 0.02em;
 }
 
 .home-page .home-hero p {
