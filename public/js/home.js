@@ -2,7 +2,20 @@
   'use strict';
 
   const providerGrid = document.getElementById('providerGrid');
+  const categoryGrid = document.getElementById('categoryGrid');
+  const providerSection = document.getElementById('providerSection');
+  const categorySection = document.getElementById('categorySection');
+  const tabProvider = document.getElementById('tabProvider');
+  const tabCategory = document.getElementById('tabCategory');
   const loadingSpinner = document.getElementById('loadingSpinner');
+
+  const CATEGORIES = [
+    { id: 'slot', label: 'สล็อต', desc: 'รวมเกมสล็อตจากทุกค่าย' },
+    { id: 'fishing', label: 'ยิงปลา', desc: 'รวมเกมยิงปลาจากทุกค่าย' },
+    { id: 'baccarat', label: 'บาคาร่า', desc: 'รวมเกมบาคาร่าจากทุกค่าย' },
+    { id: 'table', label: 'เกมบนโต๊ะ', desc: 'บาคาร่า ไพ่ รูเล็ต ฯลฯ' },
+    { id: 'bingo', label: 'บิงโก', desc: 'รวมเกมบิงโกจากทุกค่าย' }
+  ];
 
   const PROVIDER_ICONS = {
     jili: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><path d="M12 8v8"/></svg>',
@@ -14,6 +27,64 @@
     if (typeof TelegramApp !== 'undefined') TelegramApp.init();
     sendBotEventIfTelegram('open_webapp');
     loadProviders();
+    renderCategoryCards();
+    bindTabs();
+  }
+
+  function bindTabs() {
+    if (!tabProvider || !tabCategory || !providerSection || !categorySection) return;
+    tabProvider.addEventListener('click', function () {
+      setMode('provider');
+    });
+    tabCategory.addEventListener('click', function () {
+      setMode('category');
+    });
+  }
+
+  function setMode(mode) {
+    var isProvider = mode === 'provider';
+    providerSection.style.display = isProvider ? '' : 'none';
+    categorySection.style.display = isProvider ? 'none' : '';
+    if (tabProvider) {
+      tabProvider.classList.toggle('active', isProvider);
+      tabProvider.setAttribute('aria-selected', isProvider ? 'true' : 'false');
+    }
+    if (tabCategory) {
+      tabCategory.classList.toggle('active', !isProvider);
+      tabCategory.setAttribute('aria-selected', !isProvider ? 'true' : 'false');
+    }
+    if (!isProvider) sendBotEventIfTelegram('open_category_tab');
+  }
+
+  function renderCategoryCards() {
+    if (!categoryGrid) return;
+    categoryGrid.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    CATEGORIES.forEach(function (cat) {
+      fragment.appendChild(createCategoryCard(cat));
+    });
+    categoryGrid.appendChild(fragment);
+  }
+
+  function createCategoryCard(cat) {
+    var card = document.createElement('div');
+    card.className = 'category-card';
+    var iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>';
+    card.innerHTML =
+      '<div class="category-card-icon">' + iconSvg + '</div>' +
+      '<div class="category-card-body">' +
+        '<div class="category-card-name">' + cat.label + '</div>' +
+        '<div class="category-card-desc">' + cat.desc + '</div>' +
+      '</div>' +
+      '<div class="provider-card-arrow">' +
+        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>' +
+      '</div>';
+    card.addEventListener('click', function () {
+      if (typeof TelegramApp !== 'undefined') TelegramApp.hapticFeedback('medium');
+      sendBotEventIfTelegram('open_category_' + cat.id);
+      window.location.href = '/catalog?mode=category&category=' + encodeURIComponent(cat.id);
+    });
+    return card;
   }
 
   function sendBotEventIfTelegram(action) {

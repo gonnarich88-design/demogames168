@@ -130,6 +130,69 @@ function loadProviders() {
 }
 
 // ──────────────────────────────────────────────
+// Global category mapping (for "เลือกตามประเภทเกม")
+// Uses data/categories-map.json to map provider categories → slot|fishing|baccarat|table|bingo
+// ──────────────────────────────────────────────
+let _categoriesMap = null;
+function loadCategoriesMap() {
+  if (_categoriesMap) return _categoriesMap;
+  const mapPath = path.join(__dirname, 'data', 'categories-map.json');
+  try {
+    if (fs.existsSync(mapPath)) {
+      _categoriesMap = JSON.parse(fs.readFileSync(mapPath, 'utf-8'));
+      return _categoriesMap;
+    }
+  } catch (err) {
+    console.warn('Failed to load categories-map.json:', err.message);
+  }
+  _categoriesMap = { globalCategories: [], providerMaps: {}, jiliByName: {} };
+  return _categoriesMap;
+}
+
+function toGlobalCategory(providerId, rawCategory, gameName) {
+  const map = loadCategoriesMap();
+  const providerMap = map.providerMaps && map.providerMaps[providerId];
+  if (!providerMap || !rawCategory) return null;
+  const normalized = String(rawCategory).trim();
+  let out = providerMap[normalized];
+  if (out === 'byName' && map.jiliByName && gameName) {
+    const name = String(gameName).trim();
+    for (const [key, val] of Object.entries(map.jiliByName)) {
+      if (name === key || name.includes(key)) return val;
+    }
+    return 'table';
+  }
+  return out || null;
+}
+
+function loadAllGamesWithProvider() {
+  const providers = loadProviders();
+  const list = [];
+  const providerList = [
+    { id: 'jili', slug: 'jili', name: 'JILI Games', games: loadGames(), playUrlFn: g => `/play/jili/${g.id}` },
+    { id: 'pp', slug: 'pp', name: 'Pragmatic Play', games: loadPPGames(), playUrlFn: g => `/play/pp/${g.slug}` },
+    { id: 'joker', slug: 'joker', name: 'Joker Gaming', games: loadJokerGames(), playUrlFn: g => `/play/joker/${encodeURIComponent(g.code)}` }
+  ];
+  for (const p of providerList) {
+    const enabled = providers.find(pr => pr.slug === p.slug && pr.enabled);
+    if (!enabled) continue;
+    for (const g of p.games) {
+      const name = g.name || '';
+      const rawCat = g.category || '';
+      const globalCat = toGlobalCategory(p.id, rawCat, name);
+      if (!globalCat) continue;
+      list.push({
+        ...g,
+        globalCategory: globalCat,
+        provider: { id: p.id, slug: p.slug, name: p.name },
+        playUrl: p.playUrlFn(g)
+      });
+    }
+  }
+  return list;
+}
+
+// ──────────────────────────────────────────────
 // Multi-domain Reverse Proxy for JILI Games
 // Proxies: jiligames.com, uat-wb-api.jiligames.com, casino-wbgame.jiligames.com
 // ──────────────────────────────────────────────
@@ -547,7 +610,8 @@ app.get('/game.html', (req, res) => {
 // Home page: Co168 provider selection
 app.get('/', serveInlineHtml('home.html', ['js/home.js']));
 
-// Catalog pages per provider
+// Catalog: by provider (/catalog/jili) or by category (/catalog?mode=category&category=slot)
+app.get('/catalog', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/joker', serveInlineHtml('index.html', ['js/app.js']));
@@ -896,6 +960,32 @@ app.get('/api/games/:id', (req, res) => {
 app.get('/api/providers', (req, res) => {
   const providers = loadProviders();
   res.json(providers);
+});
+
+// API: Get games by global category (aggregated from all providers)
+app.get('/api/games-by-category', (req, res) => {
+  const { category, search, page = 1, limit = 50 } = req.query;
+  if (!category || typeof category !== 'string') {
+    return res.status(400).json({ error: 'Missing category' });
+  }
+  const cat = category.toLowerCase().trim();
+  let games = loadAllGamesWithProvider().filter(g => g.globalCategory === cat);
+  if (search && typeof search === 'string') {
+    const term = search.toLowerCase();
+    games = games.filter(g => (g.name || '').toLowerCase().includes(term));
+  }
+  const total = games.length;
+  const p = Math.max(1, parseInt(page, 10) || 1);
+  const l = Math.min(100, Math.max(1, parseInt(limit, 10) || 50));
+  const start = (p - 1) * l;
+  const paged = games.slice(start, start + l);
+  res.json({
+    games: paged,
+    total,
+    page: p,
+    limit: l,
+    totalPages: Math.ceil(total / l)
+  });
 });
 
 // API: Get games for a specific provider
