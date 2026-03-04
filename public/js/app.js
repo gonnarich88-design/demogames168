@@ -1,24 +1,12 @@
 // ──────────────────────────────────────────────
-// Co168 - Game Catalog (Multi-provider or by category)
+// Co168 - Game Catalog (Multi-provider)
 // ──────────────────────────────────────────────
 
 (function () {
   'use strict';
 
-  const params = new URLSearchParams(window.location.search);
-  const isCategoryMode = params.get('mode') === 'category' && params.get('category');
-  const catalogMode = isCategoryMode ? 'category' : 'provider';
-  const categoryId = isCategoryMode ? (params.get('category') || 'slot').toLowerCase() : '';
-
   const pathParts = window.location.pathname.split('/').filter(Boolean);
   const currentProvider = (pathParts[0] === 'catalog' && pathParts[1]) ? pathParts[1] : 'jili';
-
-  const CATEGORY_LABELS = {
-    slot: 'สล็อต',
-    fishing: 'ยิงปลา',
-    baccarat: 'บาคาร่า',
-    other: 'อื่น ๆ'
-  };
 
   // Provider config
   const PROVIDER_CONFIG = {
@@ -65,7 +53,6 @@
 
   const config = PROVIDER_CONFIG[currentProvider] || PROVIDER_CONFIG.jili;
   const providerLogoUrl = config.logo;
-  const categoryLabel = CATEGORY_LABELS[categoryId] || categoryId || 'เกม';
 
   // State
   let allGames = [];
@@ -108,40 +95,29 @@
 
     const headerLogo = document.getElementById('headerProviderLogo');
     const headerTitle = document.getElementById('headerTitle');
-
-    if (catalogMode === 'category') {
-      if (headerLogo) headerLogo.style.display = 'none';
-      if (headerTitle) {
-        headerTitle.textContent = categoryLabel + ' (ทุกค่าย)';
+    if (headerLogo && headerTitle) {
+      if (config.logo) {
+        headerLogo.src = config.logo;
+        headerLogo.alt = config.name;
+        headerLogo.style.display = '';
+        headerTitle.style.display = 'none';
+      } else {
+        headerTitle.textContent = config.name;
         headerTitle.style.display = '';
+        headerLogo.style.display = 'none';
       }
-      if (viewTabs) viewTabs.style.display = 'none';
-      if (categoryTabs) categoryTabs.style.display = 'none';
-      if (totalCategoriesCount) totalCategoriesCount.textContent = '1';
-    } else {
-      if (headerLogo && headerTitle) {
-        if (config.logo) {
-          headerLogo.src = config.logo;
-          headerLogo.alt = config.name;
-          headerLogo.style.display = '';
-          headerTitle.style.display = 'none';
-        } else {
-          headerTitle.textContent = config.name;
-          headerTitle.style.display = '';
-          headerLogo.style.display = 'none';
-        }
-      }
-      buildCategoryTabs();
-      if (totalCategoriesCount) {
-        totalCategoriesCount.textContent = config.categories.length - 1;
-      }
-      const catParam = params.get('cat');
-      if (catParam) {
-        currentCategory = catParam;
-        document.querySelectorAll('.tab').forEach(t => {
-          t.classList.toggle('active', t.dataset.category === catParam);
-        });
-      }
+    }
+    buildCategoryTabs();
+    if (totalCategoriesCount) {
+      totalCategoriesCount.textContent = config.categories.length - 1;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const catParam = params.get('cat');
+    if (catParam) {
+      currentCategory = catParam;
+      document.querySelectorAll('.tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.category === catParam);
+      });
     }
 
     setupEventListeners();
@@ -225,15 +201,8 @@
     showSkeletons();
 
     try {
-      let url;
-      if (catalogMode === 'category') {
-        const search = searchTerm ? '&search=' + encodeURIComponent(searchTerm) : '';
-        url = '/api/games-by-category?category=' + encodeURIComponent(categoryId) + '&limit=500' + search;
-      } else {
-        const featuredParam = viewMode === 'featured' ? '&featured=1' : '';
-        url = '/api/providers/' + currentProvider + '/games?limit=500' + featuredParam;
-      }
-      const res = await fetch(url);
+      const featuredParam = viewMode === 'featured' ? '&featured=1' : '';
+      const res = await fetch('/api/providers/' + currentProvider + '/games?limit=500' + featuredParam);
       const data = await res.json();
       allGames = data.games || [];
       totalGamesCount.textContent = allGames.length;
@@ -251,7 +220,7 @@
   function renderGames() {
     let filtered = allGames;
 
-    if (catalogMode !== 'category' && currentCategory !== 'all') {
+    if (currentCategory !== 'all') {
       filtered = filtered.filter(g => {
         const cat = (g.category || '').toLowerCase().replace(/[\s&]+/g, '');
         return cat === currentCategory.toLowerCase().replace(/[\s&]+/g, '');
@@ -280,10 +249,9 @@
   function createGameCard(game) {
     const card = document.createElement('div');
     const hasRealImage = game.image && !game.image.includes('placeholder') && game.image.length > 0;
-    const placeholderLogo = (catalogMode === 'category' && game.provider && (PROVIDER_CONFIG[game.provider.slug] || {}).logo) || providerLogoUrl;
     card.className = 'game-card' + (hasRealImage ? '' : ' game-card--logo-placeholder');
 
-    let imgSrc = hasRealImage ? game.image : placeholderLogo;
+    let imgSrc = hasRealImage ? game.image : providerLogoUrl;
     if (hasRealImage && game.image.indexOf('pragmaticplay.com') !== -1) {
       imgSrc = '/api/proxy-image?url=' + encodeURIComponent(game.image);
     } else if (hasRealImage && game.image.indexOf('zhenwudadi.net') !== -1) {
@@ -292,26 +260,19 @@
     }
 
     const safeName = (game.name || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    const categoryLine = catalogMode === 'category' && game.provider
-      ? '<div class="game-category game-category--provider">จาก ' + (game.provider.name || game.provider.slug) + '</div>'
-      : '<div class="game-category">' + (game.category || '') + '</div>';
 
     card.innerHTML =
       '<span class="play-badge">DEMO</span>' +
       '<img class="card-img" src="' + imgSrc + '" alt="' + safeName + '" loading="lazy" ' +
-        'onerror="this.src=\'' + placeholderLogo + '\';this.onerror=null;this.parentElement.classList.add(\'game-card--logo-placeholder\');">' +
+        'onerror="this.src=\'' + providerLogoUrl + '\';this.onerror=null;this.parentElement.classList.add(\'game-card--logo-placeholder\');">' +
       '<div class="card-body">' +
         '<div class="game-name">' + (game.name || '') + '</div>' +
-        categoryLine +
+        '<div class="game-category">' + (game.category || '') + '</div>' +
       '</div>';
 
     card.addEventListener('click', () => {
       TelegramApp.hapticFeedback('medium');
-      if (catalogMode === 'category' && game.provider) {
-        sendBotEventIfTelegram('open_game_from_category_' + (game.provider.slug || '') + '_' + (game.id || game.slug || game.code || ''));
-      }
-      const playProvider = (catalogMode === 'category' && game.provider) ? game.provider.slug : currentProvider;
-      window.location.href = game.playUrl || ('/play/' + playProvider + '/' + (game.slug || game.id || game.code));
+      window.location.href = game.playUrl || ('/play/' + currentProvider + '/' + (game.slug || game.id || game.code));
     });
 
     return card;

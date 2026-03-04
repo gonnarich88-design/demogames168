@@ -611,8 +611,7 @@ app.get('/game.html', (req, res) => {
 // Home page: Co168 provider selection
 app.get('/', serveInlineHtml('home.html', ['js/home.js']));
 
-// Catalog: by provider (/catalog/jili) or by category (/catalog?mode=category&category=slot)
-app.get('/catalog', serveInlineHtml('index.html', ['js/app.js']));
+// Catalog pages per provider
 app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/joker', serveInlineHtml('index.html', ['js/app.js']));
