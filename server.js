@@ -6,6 +6,7 @@ const { Telegraf, Markup } = require('telegraf');
 const https = require('https');
 const url = require('url');
 const { HttpsProxyAgent } = require('https-proxy-agent');
+const WebSocket = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -247,6 +248,14 @@ function rewriteHtml(body, targetHost, targetPathDir = '/') {
       `window.fetch=function(u,o){u=toProxy(u);return F.call(this,u,o);};` +
       `var X=XMLHttpRequest.prototype.open;` +
       `XMLHttpRequest.prototype.open=function(m,u){arguments[1]=toProxy(u);return X.apply(this,arguments);};` +
+      `var N=window.WebSocket;` +
+      `window.WebSocket=function(u){` +
+        `if(typeof u==='string'&&u.indexOf('jiligames.com')!==-1){` +
+          `try{var m=u.match(/wss?:\\/\\/([^/]+)(\\/[^?]*)?(\\?.*)?$/);if(m)u=(location.protocol==='https:'?'wss:':'ws:')+'//'+location.host+'/jili-ws/'+encodeURIComponent(m[1])+(m[2]||'/')+(m[3]||'');` +
+          `}catch(e){}` +
+        `}` +
+        `return new N(u);` +
+      `};` +
       // Override Image, Script, Audio .src property to catch new Image().src = "/path"
       `var P=function(C,p){` +
         `var d=Object.getOwnPropertyDescriptor(C.prototype,p);` +
@@ -1759,9 +1768,36 @@ app.use((req, res, next) => {
 });
 
 // ──────────────────────────────────────────────
+// WebSocket proxy for JILI (Baccarat / live table games use WSS)
+// ──────────────────────────────────────────────
+const wssJili = new WebSocket.Server({ noServer: true });
+
+function handleJiliWsUpgrade(req, socket, head) {
+  const path = req.url || '';
+  if (!path.startsWith('/jili-ws/')) return false;
+  const rest = path.slice('/jili-ws/'.length);
+  const i = rest.indexOf('/');
+  const targetHost = i >= 0 ? decodeURIComponent(rest.slice(0, i)) : decodeURIComponent(rest);
+  const targetPath = i >= 0 ? rest.slice(i) : '/';
+  if (!targetHost || !targetHost.endsWith('jiligames.com')) return false;
+  const backendUrl = 'wss://' + targetHost + targetPath;
+  const agent = getJiliOutboundAgent(targetHost);
+  const backend = new WebSocket(backendUrl, { agent, handshakeTimeout: 12000 });
+  wssJili.handleUpgrade(req, socket, head, (clientWs) => {
+    clientWs.on('message', (data) => { try { backend.send(data); } catch (_) {} });
+    clientWs.on('close', () => { try { backend.close(); } catch (_) {} });
+    clientWs.on('error', () => { try { backend.close(); } catch (_) {} });
+    backend.on('message', (data) => { try { clientWs.send(data); } catch (_) {} });
+    backend.on('close', () => { try { clientWs.close(); } catch (_) {} });
+    backend.on('error', () => { try { clientWs.close(); } catch (_) {} });
+  });
+  return true;
+}
+
+// ──────────────────────────────────────────────
 // Start Express server
 // ──────────────────────────────────────────────
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`\n🚀 Co168 Mini App Server`);
   console.log(`   Local:   http://localhost:${PORT}`);
   console.log(`   WebApp:  ${WEBAPP_URL}`);
@@ -1770,4 +1806,9 @@ app.listen(PORT, () => {
   console.log(`   JILI:    ${loadGames().length} games loaded`);
   console.log(`   PP:      ${loadPPGames().length} games loaded`);
   console.log(`   Joker:   ${loadJokerGames().length} games loaded\n`);
+});
+
+server.on('upgrade', (req, socket, head) => {
+  if (handleJiliWsUpgrade(req, socket, head)) return;
+  socket.destroy();
 });

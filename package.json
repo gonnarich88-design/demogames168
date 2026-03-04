@@ -15,7 +15,8 @@
     "https-proxy-agent": "^7.0.6",
     "node-cron": "^3.0.3",
     "puppeteer": "^23.9.0",
-    "telegraf": "^4.16.3"
+    "telegraf": "^4.16.3",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
