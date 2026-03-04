@@ -160,8 +160,9 @@ function toGlobalCategory(providerId, rawCategory, gameName) {
     for (const [key, val] of Object.entries(map.jiliByName)) {
       if (name === key || name.includes(key)) return val;
     }
-    return 'table';
+    return 'other';
   }
+  if (out === 'table' || out === 'bingo') return 'other';
   return out || null;
 }
 

@@ -3,8 +3,7 @@
     { "id": "slot", "label": "สล็อต" },
     { "id": "fishing", "label": "ยิงปลา" },
     { "id": "baccarat", "label": "บาคาร่า" },
-    { "id": "table", "label": "เกมบนโต๊ะ" },
-    { "id": "bingo", "label": "บิงโก" }
+    { "id": "other", "label": "อื่น ๆ" }
   ],
   "providerMaps": {
     "jili": {

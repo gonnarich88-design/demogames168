@@ -13,8 +13,7 @@
     { id: 'slot', label: 'สล็อต', desc: 'รวมเกมสล็อตจากทุกค่าย' },
     { id: 'fishing', label: 'ยิงปลา', desc: 'รวมเกมยิงปลาจากทุกค่าย' },
     { id: 'baccarat', label: 'บาคาร่า', desc: 'รวมเกมบาคาร่าจากทุกค่าย' },
-    { id: 'table', label: 'เกมบนโต๊ะ', desc: 'บาคาร่า ไพ่ รูเล็ต ฯลฯ' },
-    { id: 'bingo', label: 'บิงโก', desc: 'รวมเกมบิงโกจากทุกค่าย' }
+    { id: 'other', label: 'อื่น ๆ', desc: 'เกมอื่นๆ จากทุกค่าย' }
   ];
 
   const PROVIDER_ICONS = {

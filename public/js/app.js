@@ -17,8 +17,7 @@
     slot: 'สล็อต',
     fishing: 'ยิงปลา',
     baccarat: 'บาคาร่า',
-    table: 'เกมบนโต๊ะ',
-    bingo: 'บิงโก'
+    other: 'อื่น ๆ'
   };
 
   // Provider config
