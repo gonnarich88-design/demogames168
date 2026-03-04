@@ -232,24 +232,21 @@ function rewriteHtml(body, targetHost, targetPathDir = '/') {
     if (!basePath.endsWith('/')) basePath += '/';
     const baseTag = `<base href="${basePath}">`;
 
-    // 2. fetch/XHR override — fixes absolute paths from JS runtime (e.g. "/lang/0604/en-us.json")
-    //    Rewrites "/xxx" → "/jili/{targetHost}/xxx" so they go through our proxy
+    // 2. fetch/XHR override — rewrites relative "/xxx" and full jiligames.com URLs so they go through our proxy
     const proxyBase = '/jili/' + targetHost;
     const overrideScript = `<script>(function(){` +
       `var B='${proxyBase}';` +
-      // Override fetch
+      `function toProxy(u){` +
+        `if(typeof u!=='string')return u;` +
+        `if(u.indexOf('/jili/')===0)return u;` +
+        `if(u.charAt(0)==='/')return B+u;` +
+        `try{var m=u.match(/^https?:\\/\\/([a-zA-Z0-9.-]*jiligames\\.com)(\\/[^?]*)?(\\?.*)?$/);if(m)return '/jili/'+m[1]+(m[2]||'/')+(m[3]||'');}catch(e){}` +
+        `return u;` +
+      `}` +
       `var F=window.fetch;` +
-      `window.fetch=function(u,o){` +
-        `if(typeof u==='string'&&u.charAt(0)==='/'&&u.indexOf('/jili/')!==0)u=B+u;` +
-        `return F.call(this,u,o);` +
-      `};` +
-      // Override XMLHttpRequest
+      `window.fetch=function(u,o){u=toProxy(u);return F.call(this,u,o);};` +
       `var X=XMLHttpRequest.prototype.open;` +
-      `XMLHttpRequest.prototype.open=function(m,u){` +
-        `if(typeof u==='string'&&u.charAt(0)==='/'&&u.indexOf('/jili/')!==0)` +
-          `arguments[1]=B+u;` +
-        `return X.apply(this,arguments);` +
-      `};` +
+      `XMLHttpRequest.prototype.open=function(m,u){arguments[1]=toProxy(u);return X.apply(this,arguments);};` +
       // Override Image, Script, Audio .src property to catch new Image().src = "/path"
       `var P=function(C,p){` +
         `var d=Object.getOwnPropertyDescriptor(C.prototype,p);` +
@@ -1077,7 +1074,7 @@ function httpsGet(targetUrl) {
       });
     });
     req.on('error', reject);
-    req.setTimeout(10000, () => { req.destroy(); reject(new Error('Timeout')); });
+    req.setTimeout(18000, () => { req.destroy(); reject(new Error('Timeout')); });
     req.end();
   });
 }
