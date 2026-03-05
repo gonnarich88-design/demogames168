@@ -27,6 +27,15 @@
     "logo": "/images/joker-logo.png"
   },
   {
+    "id": "cq9",
+    "name": "CQ9 Gaming",
+    "slug": "cq9",
+    "enabled": true,
+    "description": "สล็อต ยิงปลา อาร์เคด",
+    "gameCount": 1,
+    "logo": ""
+  },
+  {
     "id": "pg",
     "name": "PG Soft",
     "slug": "pg",

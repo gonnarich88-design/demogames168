@@ -101,10 +101,38 @@ function loadJokerGames() {
 }
 
 // ──────────────────────────────────────────────
+// Load CQ9 game data
+// ──────────────────────────────────────────────
+function loadCQ9Games() {
+  const gamesPath = path.join(__dirname, 'data', 'cq9-games.json');
+  const seedPath = path.join(__dirname, 'data', 'cq9-seed-games.json');
+
+  try {
+    if (fs.existsSync(gamesPath)) {
+      return JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+    }
+  } catch (err) {
+    console.warn('Failed to load cq9-games.json, falling back to seed data:', err.message);
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+  } catch (err) {
+    console.error('Failed to load cq9-seed-games.json:', err.message);
+    return [];
+  }
+}
+
+// ──────────────────────────────────────────────
 // Load featured game IDs/slugs/codes per provider (for hybrid: แนะนำ vs ดูทั้งหมด)
 // ──────────────────────────────────────────────
 function loadFeaturedIds(provider) {
-  const fileMap = { jili: 'jili-featured.json', pp: 'pp-featured.json', joker: 'joker-featured.json' };
+  const fileMap = {
+    jili: 'jili-featured.json',
+    pp: 'pp-featured.json',
+    joker: 'joker-featured.json',
+    cq9: 'cq9-featured.json'
+  };
   const file = path.join(__dirname, 'data', fileMap[provider]);
   try {
     if (fs.existsSync(file)) {
@@ -621,6 +649,7 @@ app.get('/', serveInlineHtml('home.html', ['js/home.js']));
 app.get('/catalog/jili', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/pp', serveInlineHtml('index.html', ['js/app.js']));
 app.get('/catalog/joker', serveInlineHtml('index.html', ['js/app.js']));
+app.get('/catalog/cq9', serveInlineHtml('index.html', ['js/app.js']));
 
 // Admin: bot usage stats (same origin only; consider adding auth in production)
 app.get('/admin', (req, res) => {
@@ -1011,6 +1040,9 @@ app.get('/api/providers/:provider/games', (req, res) => {
   } else if (provider === 'joker') {
     rawGames = loadJokerGames();
     playUrlFn = g => `/play/joker/${encodeURIComponent(g.code)}`;
+  } else if (provider === 'cq9') {
+    rawGames = loadCQ9Games();
+    playUrlFn = g => `/play/cq9/${g.game_id}`;
   } else {
     const providers = loadProviders();
     const found = providers.find(p => p.slug === provider);
@@ -1024,7 +1056,12 @@ app.get('/api/providers/:provider/games', (req, res) => {
   if (req.query.featured === '1') {
     const featuredSet = loadFeaturedIds(provider);
     if (featuredSet.size > 0) {
-      const key = provider === 'jili' ? 'id' : provider === 'pp' ? 'slug' : 'code';
+      let key;
+      if (provider === 'jili') key = 'id';
+      else if (provider === 'pp') key = 'slug';
+      else if (provider === 'joker') key = 'code';
+      else if (provider === 'cq9') key = 'game_id';
+      else key = 'id';
       games = games.filter(g => featuredSet.has(g[key]));
     }
   }
@@ -1267,6 +1304,56 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
     const q = new URLSearchParams({ id: slug, provider: 'pp', error: 'Failed to resolve: ' + err.message });
     res.redirect(302, '/game.html?' + q.toString());
   }
+});
+
+// ──────────────────────────────────────────────
+// CQ9 Gaming: Simple Detail page iframe
+// Uses demo.cqgame.games/en/Game/Detail?game_id=XXX
+// ──────────────────────────────────────────────
+app.get('/play/cq9/:gameId', (req, res) => {
+  const gameId = req.params.gameId;
+  if (!gameId) return res.redirect('/catalog/cq9');
+
+  const detailUrl = `https://demo.cqgame.games/en/Game/Detail?game_id=${encodeURIComponent(gameId)}`;
+  const html = `<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>CQ9 Demo Game</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:system-ui,sans-serif}
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:10px;padding:8px 12px;
+  background:rgba(0,0,0,0.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,215,0,0.2)}
+.bar a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;
+  justify-content:center;text-decoration:none;flex-shrink:0}
+.bar a svg{width:18px;height:18px;fill:#e8e8e8}
+.bar .name{color:#e8e8e8;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .badge{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000;font-size:9px;font-weight:700;
+  padding:2px 8px;border-radius:10px;flex-shrink:0}
+iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:none;background:#000}
+.loading{position:fixed;top:52px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:#000;color:rgba(255,255,255,0.6);font-size:14px;z-index:50}
+.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FFD700;
+  border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head><body>
+<div class="bar">
+  <a href="/catalog/cq9"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+  <span class="name">CQ9 Demo Game</span>
+  <span class="badge">DEMO</span>
+</div>
+<div class="loading" id="loader"><div class="spinner"></div>กำลังโหลดเกมจาก CQ9...</div>
+<iframe src="${detailUrl}" allow="autoplay; fullscreen" allowfullscreen
+  referrerpolicy="no-referrer"
+  onload="document.getElementById('loader').style.display='none'"></iframe>
+</body></html>`;
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  res.send(html);
 });
 
 // ──────────────────────────────────────────────
