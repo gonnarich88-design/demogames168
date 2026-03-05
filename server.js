@@ -25,6 +25,11 @@ function getJiliOutboundAgent(hostname) {
   return _jiliProxyAgent;
 }
 
+function escapeHtml(s) {
+  if (typeof s !== 'string') return '';
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 // Request logging
 app.use((req, res, next) => {
   console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
@@ -121,6 +126,65 @@ function loadCQ9Games() {
     console.error('Failed to load cq9-seed-games.json:', err.message);
     return [];
   }
+}
+
+// Parse CQ9 game list from demo site HTML/JSON (__NEXT_DATA__ or regex fallback)
+function parseCQ9GamesFromBody(body) {
+  const games = [];
+  const seen = new Set();
+
+  function add(id, name, category) {
+    const n = Number(id);
+    if (!Number.isInteger(n) || n <= 0 || seen.has(n)) return;
+    seen.add(n);
+    games.push({
+      game_id: n,
+      name: name || `Game ${n}`,
+      category: category || 'Slot',
+      image: ''
+    });
+  }
+
+  try {
+    const nextDataMatch = body.match(/<script\s+id="__NEXT_DATA__"\s+type="application\/json">([\s\S]*?)<\/script>/);
+    if (nextDataMatch) {
+      const data = JSON.parse(nextDataMatch[1]);
+      const props = data.props && data.props.pageProps;
+      const list = props && (props.games || props.gameList || props.list || props.initialGames);
+      if (Array.isArray(list)) {
+        list.forEach(g => {
+          const id = g.game_id ?? g.gameId ?? g.id;
+          if (id != null) add(id, g.name ?? g.gameName ?? g.title, g.category ?? g.type);
+        });
+        if (games.length > 0) return games;
+      }
+      const buildId = data.buildId;
+      const page = data.props && data.props.pageProps;
+      if (page && typeof page === 'object') {
+        const walk = (o) => {
+          if (!o || typeof o !== 'object') return;
+          if (Array.isArray(o)) return o.forEach(walk);
+          if (o.game_id != null || o.gameId != null) {
+            add(o.game_id ?? o.gameId, o.name ?? o.gameName ?? o.title, o.category ?? o.type);
+            return;
+          }
+          Object.values(o).forEach(walk);
+        };
+        walk(page);
+        if (games.length > 0) return games;
+      }
+    }
+  } catch (e) {
+    // ignore JSON/parse errors, fall back to regex
+  }
+
+  const idRegex = /(?:game_id|gameId)["\s:=]+(\d+)/gi;
+  let m;
+  while ((m = idRegex.exec(body)) !== null) add(m[1]);
+  const linkRegex = /Detail\?game_id=(\d+)/g;
+  while ((m = linkRegex.exec(body)) !== null) add(m[1]);
+
+  return games;
 }
 
 // ──────────────────────────────────────────────
@@ -1307,19 +1371,23 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
 });
 
 // ──────────────────────────────────────────────
-// CQ9 Gaming: Simple Detail page iframe
-// Uses demo.cqgame.games/en/Game/Detail?game_id=XXX
+// CQ9 Gaming: Embed game directly in iframe (no "Open Link" dialog)
+// Use h5c.cqgame.games/h5/{gameId}/ so the game runs inside the app.
 // ──────────────────────────────────────────────
 app.get('/play/cq9/:gameId', (req, res) => {
   const gameId = req.params.gameId;
   if (!gameId) return res.redirect('/catalog/cq9');
 
-  const detailUrl = `https://demo.cqgame.games/en/Game/Detail?game_id=${encodeURIComponent(gameId)}`;
+  const games = loadCQ9Games();
+  const game = Array.isArray(games) ? games.find(g => String(g.game_id) === String(gameId)) : null;
+  const gameName = (game && game.name) ? game.name : `CQ9 Game ${gameId}`;
+
+  const gameUrl = `https://h5c.cqgame.games/h5/${encodeURIComponent(gameId)}/?language=en&token=guest&t=${Date.now()}`;
   const html = `<!DOCTYPE html>
 <html lang="th"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>CQ9 Demo Game</title>
+<title>${escapeHtml(gameName)} - CQ9 Demo</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:system-ui,sans-serif}
@@ -1342,11 +1410,11 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
 </head><body>
 <div class="bar">
   <a href="/catalog/cq9"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
-  <span class="name">CQ9 Demo Game</span>
+  <span class="name">${escapeHtml(gameName)}</span>
   <span class="badge">DEMO</span>
 </div>
 <div class="loading" id="loader"><div class="spinner"></div>กำลังโหลดเกมจาก CQ9...</div>
-<iframe src="${detailUrl}" allow="autoplay; fullscreen" allowfullscreen
+<iframe src="${gameUrl.replace(/"/g, '&quot;')}" allow="autoplay; fullscreen" allowfullscreen
   referrerpolicy="no-referrer"
   onload="document.getElementById('loader').style.display='none'"></iframe>
 </body></html>`;
@@ -1354,6 +1422,39 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
   res.send(html);
+});
+
+// ──────────────────────────────────────────────
+// API: Refresh CQ9 game list from demo.cqgame.games/en/Home
+// Fetches the page, parses __NEXT_DATA__ or game_id links, writes data/cq9-games.json
+// ──────────────────────────────────────────────
+app.post('/api/cq9-refresh-games', async (req, res) => {
+  const homeUrl = 'https://demo.cqgame.games/en/Home';
+  try {
+    const resp = await httpsGetInsecure(homeUrl);
+    if (resp.statusCode !== 200) {
+      return res.status(502).json({ error: 'CQ9 demo site returned ' + resp.statusCode });
+    }
+    const games = parseCQ9GamesFromBody(resp.body);
+    if (games.length === 0) {
+      return res.status(502).json({ error: 'No games parsed from CQ9 Home page (page may be client-rendered only)' });
+    }
+    const gamesPath = path.join(__dirname, 'data', 'cq9-games.json');
+    fs.writeFileSync(gamesPath, JSON.stringify(games, null, 2), 'utf-8');
+    const providersPath = path.join(__dirname, 'data', 'providers.json');
+    if (fs.existsSync(providersPath)) {
+      const providers = JSON.parse(fs.readFileSync(providersPath, 'utf-8'));
+      const cq9 = providers.find(p => p.id === 'cq9');
+      if (cq9) {
+        cq9.gameCount = games.length;
+        fs.writeFileSync(providersPath, JSON.stringify(providers, null, 2), 'utf-8');
+      }
+    }
+    return res.json({ ok: true, count: games.length, games });
+  } catch (err) {
+    console.error('[CQ9-REFRESH]', err.message);
+    return res.status(500).json({ error: err.message });
+  }
 });
 
 // ──────────────────────────────────────────────
