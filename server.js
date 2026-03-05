@@ -1489,6 +1489,62 @@ app.post('/api/cq9-refresh-games', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────
+// API: อัปเดตชื่อเกม CQ9 จากลิสต์ที่ส่งมา
+// POST /api/cq9-names
+// Body: { "names": { "209": "The Cupids", "220": "Floating Market" } }
+//   หรือ { "list": [ { "game_id": 209, "name": "The Cupids" }, ... ] }
+//   หรือ { "lines": "220  Floating Market\n209  The Cupids" }
+// ──────────────────────────────────────────────
+app.post('/api/cq9-names', (req, res) => {
+  const namesPath = path.join(__dirname, 'data', 'cq9-names.json');
+  let updates = {};
+  if (req.body && req.body.names && typeof req.body.names === 'object') {
+    Object.entries(req.body.names).forEach(([k, v]) => {
+      if (/^\d+$/.test(String(k)) && typeof v === 'string' && v.trim()) updates[String(k)] = v.trim();
+    });
+  } else if (Array.isArray(req.body?.list)) {
+    req.body.list.forEach(item => {
+      const id = item.game_id != null ? String(item.game_id) : null;
+      const name = typeof item.name === 'string' ? item.name.trim() : '';
+      if (id && /^\d+$/.test(id) && name) updates[id] = name;
+    });
+  } else if (typeof req.body?.lines === 'string') {
+    req.body.lines.split(/\r?\n/).forEach(line => {
+      const t = line.trim();
+      if (!t || t.startsWith('#')) return;
+      const m = t.match(/game_id=(\d+)/i);
+      const id = m ? m[1] : (t.match(/^(\d+)\s+/) ? t.match(/^(\d+)\s+/)[1] : null);
+      const name = m ? t.replace(/^[\s\S]*?game_id=\d+[\s&]*/i, '').trim() : t.replace(/^\d+\s+/, '').trim();
+      if (id && name) updates[id] = name;
+    });
+  }
+  if (Object.keys(updates).length === 0) {
+    return res.status(400).json({ error: 'ส่ง names หรือ list หรือ lines มาใน body' });
+  }
+  try {
+    let existing = {};
+    if (fs.existsSync(namesPath)) {
+      const data = JSON.parse(fs.readFileSync(namesPath, 'utf-8'));
+      if (data && typeof data === 'object') {
+        Object.keys(data).forEach(k => {
+          if (k.startsWith('_') || typeof data[k] !== 'string') return;
+          existing[k] = data[k];
+        });
+        if (data._comment) existing._comment = data._comment;
+      }
+    }
+    const merged = { _comment: existing._comment || 'ชื่อเกมจริงตาม game_id' };
+    Object.assign(merged, existing);
+    Object.assign(merged, updates);
+    fs.writeFileSync(namesPath, JSON.stringify(merged, null, 2), 'utf-8');
+    return res.json({ ok: true, updated: Object.keys(updates).length, names: updates });
+  } catch (err) {
+    console.error('[CQ9-NAMES]', err.message);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// ──────────────────────────────────────────────
 // Joker Gaming: Resolve demo game URL
 // Calls joker123.net API to get a free-play session URL, then follows redirects
 // to get the final game page URL on the game server.

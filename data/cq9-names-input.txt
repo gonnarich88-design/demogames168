@@ -1,0 +1,7 @@
+# ใส่ลิสต์ URL + ชื่อเกม หรือ game_id + ชื่อ (บรรทัดละ 1 เกม)
+# ตัวอย่าง:
+# 220  Floating Market
+# 209  The Cupids
+# https://demo.cqgame.games/en/Game/Detail?game_id=221  Sung Wukong
+220  Floating Market
+209  The Cupids
