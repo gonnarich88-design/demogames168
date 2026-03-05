@@ -114,7 +114,9 @@ function loadCQ9Games() {
 
   try {
     if (fs.existsSync(gamesPath)) {
-      return JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+      const list = JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+      if (Array.isArray(list) && list.length >= 5) return list;
+      console.warn('cq9-games.json has too few games (' + (list?.length || 0) + '), using seed');
     }
   } catch (err) {
     console.warn('Failed to load cq9-games.json, falling back to seed data:', err.message);
