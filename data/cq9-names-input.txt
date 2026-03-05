@@ -3,5 +3,7 @@
 # 220  Floating Market
 # 209  The Cupids
 # https://demo.cqgame.games/en/Game/Detail?game_id=221  Sung Wukong
-220  Floating Market
-209  The Cupids
+https://demo.cqgame.games/en/Game/Detail?game_id=GO06 Paradise 2
+https://demo.cqgame.games/en/Game/Detail?game_id=253 Sung Wukong
+https://demo.cqgame.games/en/Game/Detail?game_id=GO03 Thai Pok Deng
+https://demo.cqgame.games/en/Game/Detail?game_id=207 Thai HILO

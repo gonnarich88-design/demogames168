@@ -7,9 +7,9 @@
 //
 // รูปแบบที่รับได้ (บรรทัดละอย่างใดอย่างหนึ่ง):
 //   https://demo.cqgame.games/en/Game/Detail?game_id=220  Floating Market
+//   https://demo.cqgame.games/en/Game/Detail?game_id=GO06  Paradise 2
 //   220  Floating Market
-//   220	Floating Market
-//   game_id=220  Floating Market
+//   game_id=GO06  Paradise 2
 // ──────────────────────────────────────────────
 
 const fs = require('fs');
@@ -24,10 +24,11 @@ function parseLine(line) {
   if (!t || t.startsWith('#')) return null;
   let gameId = null;
   let name = '';
-  const matchUrl = t.match(/game_id=(\d+)/i);
+  const matchUrl = t.match(/game_id=([^&\s]+)/i);
   if (matchUrl) {
     gameId = matchUrl[1];
-    name = t.replace(/^[\s\S]*?game_id=\d+[\s&]*/i, '').replace(/^\s+/, '').trim();
+    const afterId = t.substring(t.toLowerCase().indexOf('game_id=' + gameId.toLowerCase()) + ('game_id='.length + gameId.length));
+    name = afterId.replace(/^[\s&]+/, '').trim();
     if (!name) {
       const parts = t.split(/\s{2,}|\t/);
       if (parts.length >= 2) name = parts.slice(1).join(' ').trim();
@@ -35,7 +36,7 @@ function parseLine(line) {
   } else {
     const parts = t.split(/\s{2,}|\t/);
     const first = parts[0].trim();
-    if (/^\d+$/.test(first)) {
+    if (/^\d+$/.test(first) || /^[A-Za-z0-9]+$/.test(first)) {
       gameId = first;
       name = parts.slice(1).join(' ').trim();
     }

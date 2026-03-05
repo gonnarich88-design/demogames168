@@ -30,9 +30,9 @@
     "id": "cq9",
     "name": "CQ9 Gaming",
     "slug": "cq9",
-    "enabled": false,
+    "enabled": true,
     "description": "สล็อต ยิงปลา อาร์เคด",
-    "gameCount": 41,
+    "gameCount": 43,
     "logo": "/images/cq9-logo.png"
   },
   {

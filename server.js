@@ -1500,21 +1500,26 @@ app.post('/api/cq9-names', (req, res) => {
   let updates = {};
   if (req.body && req.body.names && typeof req.body.names === 'object') {
     Object.entries(req.body.names).forEach(([k, v]) => {
-      if (/^\d+$/.test(String(k)) && typeof v === 'string' && v.trim()) updates[String(k)] = v.trim();
+      const key = String(k).trim();
+      if (key && !key.startsWith('_') && typeof v === 'string' && v.trim()) updates[key] = v.trim();
     });
   } else if (Array.isArray(req.body?.list)) {
     req.body.list.forEach(item => {
-      const id = item.game_id != null ? String(item.game_id) : null;
+      const id = item.game_id != null ? String(item.game_id).trim() : null;
       const name = typeof item.name === 'string' ? item.name.trim() : '';
-      if (id && /^\d+$/.test(id) && name) updates[id] = name;
+      if (id && name) updates[id] = name;
     });
   } else if (typeof req.body?.lines === 'string') {
     req.body.lines.split(/\r?\n/).forEach(line => {
       const t = line.trim();
       if (!t || t.startsWith('#')) return;
-      const m = t.match(/game_id=(\d+)/i);
-      const id = m ? m[1] : (t.match(/^(\d+)\s+/) ? t.match(/^(\d+)\s+/)[1] : null);
-      const name = m ? t.replace(/^[\s\S]*?game_id=\d+[\s&]*/i, '').trim() : t.replace(/^\d+\s+/, '').trim();
+      const m = t.match(/game_id=([^&\s]+)/i);
+      const id = m ? m[1] : (t.match(/^(\d+)\s+/) ? t.match(/^(\d+)\s+/)[1] : (t.match(/^([A-Za-z0-9]+)\s+/) ? t.match(/^([A-Za-z0-9]+)\s+/)[1] : null);
+      let name = '';
+      if (m) {
+        const afterId = t.substring(t.toLowerCase().indexOf('game_id=' + m[1].toLowerCase()) + ('game_id='.length + m[1].length));
+        name = afterId.replace(/^[\s&]+/, '').trim();
+      } else if (id) name = t.substring(t.indexOf(id) + id.length).replace(/^\s+/, '').trim();
       if (id && name) updates[id] = name;
     });
   }

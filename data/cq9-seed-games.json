@@ -39,5 +39,7 @@
   { "game_id": 237, "name": "เกม #237", "category": "Slot", "image": "" },
   { "game_id": 238, "name": "เกม #238", "category": "Slot", "image": "" },
   { "game_id": 239, "name": "เกม #239", "category": "Slot", "image": "" },
-  { "game_id": 240, "name": "เกม #240", "category": "Slot", "image": "" }
+  { "game_id": 240, "name": "เกม #240", "category": "Slot", "image": "" },
+  { "game_id": "GO06", "name": "เกม #GO06", "category": "Slot", "image": "" },
+  { "game_id": 253, "name": "เกม #253", "category": "Slot", "image": "" }
 ]
