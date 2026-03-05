@@ -106,28 +106,57 @@ function loadJokerGames() {
 }
 
 // ──────────────────────────────────────────────
-// Load CQ9 game data
+// Load CQ9 game data (seed or cq9-games.json) and apply name overrides from cq9-names.json
+// cq9-names.json: { "209": "The Cupids", "220": "Floating Market", ... } for correct display names
 // ──────────────────────────────────────────────
+function loadCQ9NameOverrides() {
+  const namesPath = path.join(__dirname, 'data', 'cq9-names.json');
+  try {
+    if (fs.existsSync(namesPath)) {
+      const o = JSON.parse(fs.readFileSync(namesPath, 'utf-8'));
+      return o && typeof o === 'object' ? o : {};
+    }
+  } catch (err) {
+    console.warn('Failed to load cq9-names.json:', err.message);
+  }
+  return {};
+}
+
 function loadCQ9Games() {
   const gamesPath = path.join(__dirname, 'data', 'cq9-games.json');
   const seedPath = path.join(__dirname, 'data', 'cq9-seed-games.json');
 
+  let list = [];
   try {
     if (fs.existsSync(gamesPath)) {
-      const list = JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
-      if (Array.isArray(list) && list.length >= 5) return list;
-      console.warn('cq9-games.json has too few games (' + (list?.length || 0) + '), using seed');
+      const parsed = JSON.parse(fs.readFileSync(gamesPath, 'utf-8'));
+      if (Array.isArray(parsed) && parsed.length >= 5) list = parsed;
+      else console.warn('cq9-games.json has too few games (' + (parsed?.length || 0) + '), using seed');
     }
   } catch (err) {
     console.warn('Failed to load cq9-games.json, falling back to seed data:', err.message);
   }
 
-  try {
-    return JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
-  } catch (err) {
-    console.error('Failed to load cq9-seed-games.json:', err.message);
-    return [];
+  if (list.length === 0) {
+    try {
+      list = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+    } catch (err) {
+      console.error('Failed to load cq9-seed-games.json:', err.message);
+      return [];
+    }
   }
+
+  const nameOverrides = loadCQ9NameOverrides();
+  if (Object.keys(nameOverrides).length > 0) {
+    list = list.map(g => {
+      const key = String(g.game_id);
+      if (nameOverrides[key] && typeof nameOverrides[key] === 'string') {
+        return { ...g, name: nameOverrides[key].trim() };
+      }
+      return g;
+    });
+  }
+  return list;
 }
 
 // Parse CQ9 game list from demo site HTML/JSON (__NEXT_DATA__ or regex fallback)

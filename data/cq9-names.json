@@ -1,0 +1,5 @@
+{
+  "_comment": "ชื่อเกมจริงตาม game_id (แก้ได้ตรงนี้ หรือรัน node scripts/fetch-cq9-names-puppeteer.js)",
+  "209": "The Cupids",
+  "220": "Floating Market"
+}

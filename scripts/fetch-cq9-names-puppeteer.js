@@ -22,26 +22,31 @@ function loadSeed() {
 async function getNameFromDetail(page, gameId) {
   const url = `https://demo.cqgame.games/en/Game/Detail?game_id=${gameId}`;
   try {
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 15000 });
-    await new Promise(r => setTimeout(r, 2000));
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 20000 });
+    await new Promise(r => setTimeout(r, 3500));
     const name = await page.evaluate(() => {
-      const sel = 'h1, [class*="game-name"], [class*="gameName"], [class*="title"], .game-title, [class*="GameName"]';
-      const el = document.querySelector(sel);
-      if (el && el.textContent) {
-        const t = el.textContent.trim();
-        if (t && t.length < 100 && !/^CQ9|^Return|^Normal|^Themed|^DEMO$/i.test(t)) return t;
+      const skip = /^(CQ9|Return|Normal|Themed|DEMO|Volatility|Maximum|RTP|©|Link|Contact|Game Info|More Info|[\d]+)$/i;
+      const sel = 'h1, h2, [class*="game-name"], [class*="gameName"], [class*="title"], .game-title, [class*="GameName"], [class*="game-name"]';
+      for (const el of document.querySelectorAll(sel)) {
+        const t = (el.textContent || '').trim();
+        if (t && t.length >= 2 && t.length < 80 && !skip.test(t)) return t;
       }
-      const all = document.body.innerText || '';
-      const lines = all.split('\n').map(s => s.trim()).filter(s => s.length > 0 && s.length < 80);
-      for (const line of lines) {
-        if (!/^(CQ9|Return|Normal|Themed|DEMO|Volatility|Maximum|RTP|©|Link|Contact|[\d]+)$/i.test(line))
-          return line;
+      const iframe = document.querySelector('iframe[src*="h5c.cqgame"]');
+      if (iframe && iframe.contentDocument) {
+        try {
+          const title = iframe.contentDocument.title;
+          if (title && title !== 'Welcome' && title.length < 80) return title;
+        } catch (_) {}
+      }
+      const all = (document.body.innerText || '').split('\n').map(s => s.trim()).filter(s => s.length > 0 && s.length < 80);
+      for (const line of all) {
+        if (!skip.test(line) && !/^\d+$/.test(line)) return line;
       }
       return null;
     });
-    return name || `Game ${gameId}`;
+    return name || `เกม #${gameId}`;
   } catch (e) {
-    return `Game ${gameId}`;
+    return `เกม #${gameId}`;
   }
 }
 
