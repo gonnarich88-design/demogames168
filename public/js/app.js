@@ -41,6 +41,18 @@
         { key: 'ecasino', label: 'E-Games' }
       ]
     },
+    cq9: {
+      logo: '/images/cq9-logo.png',
+      name: 'CQ9 Gaming',
+      categories: [
+        { key: 'all', label: 'ทั้งหมด' },
+        { key: 'slot', label: 'สล็อต' },
+        { key: 'fishing', label: 'ยิงปลา' },
+        { key: 'table', label: 'ไพ่ / บาคาร่า' },
+        { key: 'arcade', label: 'อาร์เคด' },
+        { key: 'other', label: 'อื่น ๆ' }
+      ]
+    },
     pg: {
       logo: '/images/pgsoft-logo.png',
       name: 'PG Soft',
