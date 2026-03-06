@@ -826,7 +826,7 @@ app.get('/admin/bot-stats', (req, res) => {
 // Supports OUTBOUND_PROXY_URL for regions where pragmaticplay.com is blocked
 // Also caches downloaded images locally in public/images/pp/
 // ──────────────────────────────────────────────
-const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com', 'dl.zhenwudadi.net'];
+const ALLOWED_IMAGE_HOSTS = ['www.pragmaticplay.com', 'pragmaticplay.com', 'dl.zhenwudadi.net', 'images.hfyali.com'];
 const IMG_CACHE_DIR = path.join(__dirname, 'public', 'images', 'cache');
 const PP_IMG_CACHE_DIR = path.join(__dirname, 'public', 'images', 'pp');
 if (!fs.existsSync(PP_IMG_CACHE_DIR)) fs.mkdirSync(PP_IMG_CACHE_DIR, { recursive: true });

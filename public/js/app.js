@@ -269,6 +269,8 @@
     } else if (hasRealImage && game.image.indexOf('zhenwudadi.net') !== -1) {
       var fullUrl = game.image.startsWith('//') ? 'https:' + game.image : game.image;
       imgSrc = '/api/proxy-image?url=' + encodeURIComponent(fullUrl);
+    } else if (hasRealImage && (game.image.indexOf('http://') === 0 || game.image.indexOf('https://') === 0)) {
+      imgSrc = '/api/proxy-image?url=' + encodeURIComponent(game.image);
     }
 
     const safeName = (game.name || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
