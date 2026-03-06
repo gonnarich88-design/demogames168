@@ -411,5 +411,5 @@ Priority: `~/.agent-browser/config.json` < `./agent-browser.json` < env vars < C
 
 ## Project Setup (this repo)
 
-- **Package:** `agent-browser` is in `devDependencies`. Use `npx agent-browser <command>`.
-- **First run:** Ensure Chromium is installed: `npx agent-browser install`
+- **Usage:** Use without adding to package.json: `npx agent-browser <command>` (downloads on first use).
+- **First run:** `npx agent-browser install` to download Chromium. Optional: install globally for faster runs: `npm install -g agent-browser`.
