@@ -43,7 +43,9 @@
 
     if (errorFromUrl) {
       await loadGame(gameId);
-      showIframeError(decodeURIComponent(errorFromUrl), hintFromUrl ? decodeURIComponent(hintFromUrl) : '');
+      const provider = params.get('provider');
+      const retryUrl = provider ? '/play/' + provider + '/' + encodeURIComponent(gameId) : '/play/' + gameId;
+      showIframeError(decodeURIComponent(errorFromUrl), hintFromUrl ? decodeURIComponent(hintFromUrl) : '', retryUrl);
       return;
     }
 
@@ -104,15 +106,19 @@
     }
   }
 
-  // ──────── Start Game: go to /play/:id so server redirects to game (no fetch in WebView) ────────
+  // ──────── Start Game: go to /play/:id or /play/:provider/:id so server redirects to game ────────
   function startGame() {
-    if (!gameData || isPlaying) return;
+    if (isPlaying) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const gameId = params.get('id');
+    const provider = params.get('provider');
+    if (!gameId) return;
 
     try { TelegramApp.hapticFeedback('success'); } catch (_) {}
-    const gameId = new URLSearchParams(window.location.search).get('id');
-    if (!gameId) return;
-    // Single navigation — server resolves and redirects; works in Telegram WebView without fetch
-    window.location.href = '/play/' + gameId;
+    // Use provider when present (PP/Joker error redirect); else /play/:id (JILI)
+    const playUrl = provider ? '/play/' + provider + '/' + encodeURIComponent(gameId) : '/play/' + gameId;
+    window.location.href = playUrl;
   }
 
   // ──────── Stop Game ────────
@@ -168,7 +174,7 @@
   }
 
   // ──────── Show Iframe Error ────────
-  function showIframeError(message, hint) {
+  function showIframeError(message, hint, retryUrl) {
     const iframe = document.getElementById('gameFrame');
     if (iframe) iframe.remove();
     isPlaying = false;
@@ -177,13 +183,16 @@
     const title = escape(message || 'Game loading failed');
     const sub = escape(hint || 'Please try again or go back to catalog.');
 
+    const retryLink = retryUrl
+      ? '<a href="' + escape(retryUrl) + '" style="color: #FFD700; text-decoration: underline; font-size: 16px; margin-right: 16px;">ลองอีกครั้ง</a>'
+      : '';
     playOverlay.classList.remove('hidden');
     playOverlay.innerHTML = `
       <div style="text-align: center; color: #fff; padding: 20px;">
         <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
         <h3 style="margin-bottom: 8px;">${title}</h3>
         <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">${sub}</p>
-        <a href="/" style="color: #FFD700; text-decoration: underline; font-size: 16px;">Back to Games</a>
+        ${retryLink}<a href="/" style="color: #FFD700; text-decoration: underline; font-size: 16px;">Back to Games</a>
       </div>
     `;
   }
@@ -191,12 +200,19 @@
   // ──────── Show Error ────────
   function showError(message) {
     gameName.textContent = message;
+    const params = new URLSearchParams(window.location.search);
+    const gameId = params.get('id');
+    const provider = params.get('provider');
+    const retryUrl = gameId ? (provider ? '/play/' + provider + '/' + encodeURIComponent(gameId) : '/play/' + gameId) : '';
+    const retryLink = retryUrl
+      ? '<a href="' + retryUrl + '" style="color: #FFD700; margin-right: 12px;">ลองอีกครั้ง</a>'
+      : '';
     playOverlay.innerHTML = `
       <div style="text-align: center; color: #fff; padding: 20px;">
         <div style="font-size: 48px; margin-bottom: 16px;">😔</div>
         <h3>${message}</h3>
         <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px;">
-          <a href="/" style="color: #FFD700;">Go back to catalog</a>
+          ${retryLink}<a href="/" style="color: #FFD700;">Go back to catalog</a>
         </p>
       </div>
     `;
