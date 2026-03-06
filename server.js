@@ -486,6 +486,9 @@ app.use('/jili', (req, res) => {
 
     // Check content type — if HTML, buffer and rewrite URLs
     const ct = (proxyRes.headers['content-type'] || '').toLowerCase();
+    const accept = String(req.headers['accept'] || '').toLowerCase();
+    const fetchDest = String(req.headers['sec-fetch-dest'] || '').toLowerCase();
+    const looksLikeDocument = fetchDest === 'document' || accept.includes('text/html');
     if (ct.includes('text/html')) {
       const chunks = [];
       proxyRes.on('data', chunk => chunks.push(chunk));
@@ -495,6 +498,70 @@ app.use('/jili', (req, res) => {
         // Remove content-length since we changed the body
         res.removeHeader('content-length');
         res.end(html);
+      });
+    } else if (looksLikeDocument && (ct.includes('application/json') || ct.includes('text/json') || ct.includes('application/problem+json'))) {
+      // Some JILI endpoints occasionally return JSON errors (e.g. {"ErrorCode":18,"Message":"Game disabled"...})
+      // When loaded as a document in Telegram WebView, show a friendly HTML page instead of raw JSON.
+      const chunks = [];
+      let total = 0;
+      const LIMIT = 128 * 1024; // 128KB safety cap
+      proxyRes.on('data', (chunk) => {
+        total += chunk.length;
+        if (total <= LIMIT) chunks.push(chunk);
+      });
+      proxyRes.on('end', () => {
+        const raw = Buffer.concat(chunks).toString('utf-8').trim();
+        let obj = null;
+        try { obj = JSON.parse(raw); } catch (_) {}
+
+        if (obj && typeof obj === 'object' && (obj.ErrorCode != null || obj.errorCode != null) && (obj.Message || obj.message)) {
+          const code = obj.ErrorCode ?? obj.errorCode;
+          const msg = obj.Message ?? obj.message;
+          const title = code === 18 ? 'เกมนี้ถูกปิดใช้งานชั่วคราว' : 'ไม่สามารถเปิดเกมได้';
+          const detail = `${String(msg)}${code != null ? ` (ErrorCode: ${String(code)})` : ''}`;
+
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+          res.removeHeader('content-length');
+          res.end(`<!doctype html>
+<html lang="th"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <title>${escapeHtml(title)}</title>
+  <style>
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:#0b0b12;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+    .card{max-width:520px;width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,215,0,0.18);border-radius:16px;padding:22px 18px;text-align:center}
+    .icon{font-size:44px;line-height:1;margin-bottom:10px}
+    h1{font-size:18px;margin:0 0 8px}
+    p{margin:0 0 14px;color:rgba(255,255,255,0.72);font-size:13px;line-height:1.5;word-break:break-word}
+    .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+    a{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:12px;padding:10px 14px;font-weight:700}
+    .primary{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000}
+    .ghost{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.10)}
+    .meta{margin-top:12px;font-size:12px;color:rgba(255,255,255,0.45)}
+  </style>
+</head><body>
+  <div class="card">
+    <div class="icon">⚠️</div>
+    <h1>${escapeHtml(title)}</h1>
+    <p>${escapeHtml(detail)}</p>
+    <div class="btns">
+      <a class="primary" href="/catalog/jili">กลับไปเลือกเกม</a>
+      <a class="ghost" href="javascript:location.reload()">ลองโหลดใหม่</a>
+    </div>
+    <div class="meta">${escapeHtml(targetHost + targetPath)}</div>
+  </div>
+</body></html>`);
+          return;
+        }
+
+        // Not an error object → return original JSON
+        res.setHeader('Content-Type', proxyRes.headers['content-type'] || 'application/json');
+        res.removeHeader('content-length');
+        res.end(raw);
       });
     } else {
       // Non-HTML: pipe directly

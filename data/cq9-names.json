@@ -1,7 +1,9 @@
 {
+  "207": "Thai HILO",
   "209": "The Cupids",
   "220": "Floating Market",
   "253": "Sung Wukong",
+  "GO06": "Paradise 2",
   "_comment": "ชื่อเกมจริงตาม game_id (แก้ได้ตรงนี้ หรือรัน node scripts/fetch-cq9-names-puppeteer.js)",
-  "GO06": "Paradise 2"
+  "GO03": "Thai Pok Deng"
 }

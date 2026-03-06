@@ -61,3 +61,22 @@ curl -X POST https://your-domain.com/api/cq9-names \
 ```
 
 หลังอัปเดตแล้ว ชื่อในแคตตาล็อก CQ9 จะใช้จาก `cq9-names.json` ทันที (เกมที่ยังไม่มีในลิสต์จะแสดงเป็น "เกม #200" ฯลฯ)
+
+---
+
+## ดึงรายชื่อเกมจากเว็บ CQ9 (ทางเลือก B)
+
+ถ้าอยากให้ลิสต์เกม + ชื่อ มาจากเว็บ CQ9 จริง ๆ:
+
+- **API (ตอน deploy แล้ว):** ส่ง `POST /api/cq9-refresh-games` → server จะไปดึงหน้า demo.cqgame.games แล้วเขียน `data/cq9-games.json`  
+  ปัจจุบันเว็บ CQ9 โหลดรายชื่อด้วย JavaScript ฝั่ง client บางครั้ง API นี้ได้ 0 เกม (แล้วใช้ seed ต่อ)
+
+- **สคริปต์ Puppeteer (เครื่องตัวเอง):** รัน `node scripts/fetch-cq9-games-puppeteer.js`  
+  ต้องติดตั้ง Chrome ก่อน: `npx puppeteer browsers install chrome` (ใช้พื้นที่ ~150MB+)
+
+- **ไม่ดึงจากเว็บ:** ใช้ seed + ชื่อที่แมปเอง แล้วสร้างไฟล์ลิสต์เกม:
+  1. ใส่ URL/ชื่อใน `data/cq9-names-input.txt`
+  2. รัน `node scripts/import-cq9-names.js` (อัปเดต `cq9-names.json`)
+  3. รัน `node scripts/build-cq9-games-from-names.js` (สร้าง `data/cq9-games.json` จาก seed + ชื่อ)
+
+  หลังรัน 2 สคริปต์แล้ว restart server แคตตาล็อกจะโชว์ชื่อจาก `cq9-names.json` ครบ (และเกมที่มีแค่ใน names เช่น GO03 จะถูกเพิ่มเข้าไปในลิสต์ด้วย)
