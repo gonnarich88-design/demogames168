@@ -854,8 +854,10 @@ app.use(express.json());
 // ──────────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-const defaultEventsPath = process.env.NODE_ENV === 'production'
-  ? '/app/data/stats/bot-events.json'
+const STATS_DIR = '/app/data/stats';
+const useStatsDir = process.env.NODE_ENV === 'production' || fs.existsSync(STATS_DIR);
+const defaultEventsPath = useStatsDir
+  ? path.join(STATS_DIR, 'bot-events.json')
   : path.join(DATA_DIR, 'bot-events.json');
 const BOT_EVENTS_FILE = process.env.BOT_EVENTS_PATH || defaultEventsPath;
 const BOT_EVENTS_BACKUP_FILE = process.env.BOT_EVENTS_BACKUP_PATH || null;
