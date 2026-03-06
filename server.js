@@ -1514,7 +1514,9 @@ app.post('/api/cq9-names', (req, res) => {
       const t = line.trim();
       if (!t || t.startsWith('#')) return;
       const m = t.match(/game_id=([^&\s]+)/i);
-      const id = m ? m[1] : (t.match(/^(\d+)\s+/) ? t.match(/^(\d+)\s+/)[1] : (t.match(/^([A-Za-z0-9]+)\s+/) ? t.match(/^([A-Za-z0-9]+)\s+/)[1] : null);
+      const numM = t.match(/^(\d+)\s+/);
+      const alphaM = t.match(/^([A-Za-z0-9]+)\s+/);
+      const id = m ? m[1] : (numM ? numM[1] : (alphaM ? alphaM[1] : null));
       let name = '';
       if (m) {
         const afterId = t.substring(t.toLowerCase().indexOf('game_id=' + m[1].toLowerCase()) + ('game_id='.length + m[1].length));
