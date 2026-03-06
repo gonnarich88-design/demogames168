@@ -240,7 +240,7 @@
     "image": "https://images.hfyali.com/cherry/icon/basJ8VxG.png"
   },
   {
-    "game_id": GO05,
+    "game_id": "GO05",
     "name": "Onestick Fishing",
     "category": "Fishing",
     "image": "https://images.hfyali.com/cherry/icon/Qbx0D3m8.png"
@@ -252,51 +252,9 @@
     "image": "https://images.hfyali.com/cherry/icon/7SAqzloT.png"
   },      
   {
-    "game_id": GB14,
+    "game_id": "GB14",
     "name": "Funky Bingo",
     "category": "Arcade",
     "image": "https://images.hfyali.com/cherry/icon/AoziSxLK.png"
-  },  
-  {
-    "game_id": 239,
-    "name": "Kung Fu Master 2",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/O1qyE16O.png"
-  },  
-  {
-    "game_id": 238,
-    "name": "Kung Fu Master 3",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/41Q9YrJz.png"
-  },  
-  {
-    "game_id": 237,
-    "name": "Kung Fu Master 4",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/qTtUHlVq.png"
-  },  
-  {
-    "game_id": 236,
-    "name": "Kung Fu Master 5",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/qV7LtT1J.png"
-  },  
-  {
-    "game_id": 235,
-    "name": "Kung Fu Master 6",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/E06U0O0J.png"
-  },  
-  {
-    "game_id": 234,
-    "name": "Kung Fu Master 7",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/mXqP9O62.png"
-  },  
-  {
-    "game_id": 233,
-    "name": "Kung Fu Master 8",
-    "category": "Slot",
-    "image": "https://images.hfyali.com/cherry/icon/HtZzH6wE.png"
   }
 ]
