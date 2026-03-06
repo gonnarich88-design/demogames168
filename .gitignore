@@ -4,3 +4,4 @@ data/games.json
 *.log
 .DS_Store
 .claude/
+.cursor/
