@@ -2,54 +2,54 @@
   {
     "game_id": 200,
     "name": "Alice Run",
-    "category": "Slot",
+    "category": "Arcade",
     "image": ""
   },
   {
     "game_id": 201,
-    "name": "เกม #201",
+    "name": "MuayThai",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 202,
-    "name": "เกม #202",
+    "name": "OrientalBeauty",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 203,
-    "name": "เกม #203",
+    "name": "RaveHigh",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 204,
-    "name": "เกม #204",
+    "name": "LuckyBoxes",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 205,
-    "name": "เกม #205",
+    "name": "DiscoNight",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 206,
-    "name": "เกม #206",
+    "name": "Sweet POP",
     "category": "Slot",
     "image": ""
   },
   {
     "game_id": 207,
     "name": "Thai HILO",
-    "category": "Slot",
+    "category": "Arcade",
     "image": ""
   },
   {
     "game_id": 208,
-    "name": "เกม #208",
+    "name": "Money Tree",
     "category": "Slot",
     "image": ""
   },
@@ -57,7 +57,7 @@
     "game_id": 209,
     "name": "The Cupids",
     "category": "Slot",
-    "image": ""
+    "image": "https://images.hfyali.com/cherry/icon/8LAvHcm3.png"
   },
   {
     "game_id": 210,
@@ -248,7 +248,7 @@
   {
     "game_id": "GO06",
     "name": "Paradise 2",
-    "category": "Slot",
+    "category": "Fishing",
     "image": ""
   },
   {
