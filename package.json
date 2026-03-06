@@ -19,6 +19,7 @@
     "ws": "^8.19.0"
   },
   "devDependencies": {
+    "agent-browser": "^0.7.2",
     "nodemon": "^3.1.7"
   }
 }
